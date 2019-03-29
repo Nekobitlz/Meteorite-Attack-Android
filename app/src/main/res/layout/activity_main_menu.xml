@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".views.MainMenuActivity">
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/menu_background"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="369dp"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true">
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="401dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/menu_logo"
+                android:cropToPadding="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/money_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true" android:visibility="visible">
+        <TextView
+                android:textStyle="bold"
+                android:text="MONEY: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:textSize="30sp"
+                tools:textColor="@android:color/white"
+                android:visibility="visible"
+                android:textSize="30sp"
+                app:fontFamily="@font/iceberg_regular"
+                android:textColor="@android:color/white"/>
+        <TextView
+                android:textStyle="bold"
+                android:id="@+id/money"
+                android:text="100"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30sp"
+                tools:textColor="@android:color/white"
+                android:visibility="visible"
+                app:fontFamily="@font/iceberg_regular"
+                android:textColor="@android:color/white"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="248dp"
+            android:orientation="vertical"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true">
+
+        <Button
+                android:id="@+id/play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/custom_button_background"
+                android:text="PLAY"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        <Button
+                android:id="@+id/high_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/custom_button_background"
+                android:text="HIGH SCORE"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        <Button
+                android:id="@+id/exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_background"
+                android:text="EXIT"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
