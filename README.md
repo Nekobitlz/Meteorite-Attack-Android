@@ -1,6 +1,6 @@
 Small 2D space shooter on Android
 
-//TODO() 
+>TODO(): 
   1. TESTS
   2. Make a shop
   3. Make a settings, including choice of control
