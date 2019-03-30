@@ -291,10 +291,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void drawHealth(Meteorite meteor, int x, int y, Paint paint) {
         Bitmap meteorBitmap = meteor.getBitmap();
 
-        paint.setTextSize(40);
-        paint.setColor(Color.WHITE);
-        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
-        paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
+        setHealthPaintSettings();
 
         canvas.drawText("" + meteor.getHealth(), x + meteorBitmap.getWidth() / 2 - 10,
                 y + meteorBitmap.getHeight() / 2, paint);
@@ -304,13 +301,17 @@ public class GameView extends SurfaceView implements Runnable {
     private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
         Bitmap enemyBitmap = enemy.getBitmap();
 
+        setHealthPaintSettings();
+
+        canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - 10,
+                y + enemyBitmap.getHeight() / 2, paint);
+    }
+
+    private void setHealthPaintSettings() {
         paint.setTextSize(40);
         paint.setColor(Color.WHITE);
         paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
         paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
-
-        canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - 10,
-                y + enemyBitmap.getHeight() / 2, paint);
     }
 
     private void drawScore() {

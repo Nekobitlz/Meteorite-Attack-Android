@@ -125,7 +125,7 @@ public class Enemy {
     }
 
     public void destroy() {
-        y = screenSizeY++;
+        y = screenSizeY + 1;
         soundPlayer.playCrash();
     }
 

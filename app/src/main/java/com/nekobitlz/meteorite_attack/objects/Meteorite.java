@@ -106,7 +106,7 @@ public class Meteorite {
     }
 
     public void destroy() {
-        y = screenSizeY++;
+        y = screenSizeY + 1;
         soundPlayer.playCrash();
     }
 
