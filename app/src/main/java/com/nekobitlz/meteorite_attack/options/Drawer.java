@@ -1,0 +1,172 @@
+package com.nekobitlz.meteorite_attack.options;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.SurfaceHolder;
+import com.nekobitlz.meteorite_attack.enums.GameStatus;
+import com.nekobitlz.meteorite_attack.objects.*;
+
+import java.util.ArrayList;
+
+import static com.nekobitlz.meteorite_attack.views.GameView.MONEY;
+import static com.nekobitlz.meteorite_attack.views.GameView.SCORE;
+
+public class Drawer {
+    private int screenSizeX;
+    private int screenSizeY;
+
+    private Player player;
+    private Paint paint;
+    private SharedPreferencesManager spm;
+    private Canvas canvas;
+    private SurfaceHolder surfaceHolder;
+
+    private ArrayList<Meteorite> meteors;
+    private ArrayList<Enemy> enemies;
+    private AnimatedBackground background;
+
+    public Drawer(int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
+                  SurfaceHolder surfaceHolder, SharedPreferencesManager spm) {
+        this.surfaceHolder = surfaceHolder;
+        this.screenSizeX = screenSizeX;
+        this.screenSizeY = screenSizeY;
+        this.paint = paint;
+        this.spm = spm;
+        this.canvas = canvas;
+    }
+
+    public void draw(GameStatus currentGameStatus) {
+        if (surfaceHolder.getSurface().isValid()) {
+            canvas = surfaceHolder.lockCanvas();
+            canvas.drawColor(Color.BLACK);
+
+            //Draw player
+            canvas.drawBitmap(player.getBitmap(), player.getX(), player.getY(), paint);
+
+            for (Star s : background.getStars()) {
+                canvas.drawBitmap(s.getBitmap(), s.getX(), s.getY(), paint);
+            }
+
+            for (Laser l : player.getLasers()) {
+                canvas.drawBitmap(l.getBitmap(), l.getX(), l.getY(), paint);
+            }
+
+            for (Meteorite m : meteors) {
+                canvas.drawBitmap(m.getBitmap(), m.getX(), m.getY(), paint);
+                drawHealth(m, m.getX(), m.getY(), paint);
+            }
+
+            for (Enemy e : enemies) {
+                canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
+                drawHealth(e, e.getX(), e.getY(), paint);
+            }
+
+            drawScore();
+
+            if (currentGameStatus == GameStatus.GameOver || currentGameStatus == GameStatus.NewHighScore) {
+                drawGameOver(currentGameStatus);
+            }
+
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void drawHealth(Meteorite meteor, int x, int y, Paint paint) {
+        Bitmap meteorBitmap = meteor.getBitmap();
+
+        setHealthPaintSettings();
+
+        canvas.drawText("" + meteor.getHealth(), x + meteorBitmap.getWidth() / 2 - 10,
+                y + meteorBitmap.getHeight() / 2, paint);
+    }
+
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
+        Bitmap enemyBitmap = enemy.getBitmap();
+
+        setHealthPaintSettings();
+
+        canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - 10,
+                y + enemyBitmap.getHeight() / 2, paint);
+    }
+
+    private void setHealthPaintSettings() {
+        paint.setTextSize(40);
+        paint.setColor(Color.WHITE);
+        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
+    }
+
+    private void drawScore() {
+        Paint score = new Paint();
+        score.setTextSize(30);
+        score.setColor(Color.WHITE);
+
+        canvas.drawText("Score : " + SCORE, 100, 50, score);
+    }
+
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void drawGameOver(GameStatus currentGameStatus) {
+        Paint gameOver = new Paint();
+        gameOver.setTextSize(100);
+        gameOver.setTextAlign(Paint.Align.CENTER);
+        gameOver.setColor(Color.WHITE);
+
+        canvas.drawText("GAME OVER", screenSizeX / 2, screenSizeY / 2, gameOver);
+
+        Paint money = new Paint();
+        money.setTextSize(50);
+        money.setTextAlign(Paint.Align.CENTER);
+        money.setColor(Color.WHITE);
+
+        canvas.drawText("Money : " + MONEY, screenSizeX / 2, (screenSizeY / 2) + 60, money);
+
+        //Draw high score
+        Paint highScore = new Paint();
+        highScore.setTextSize(50);
+        highScore.setTextAlign(Paint.Align.CENTER);
+        highScore.setColor(Color.WHITE);
+
+        //Draw new high score and stat
+        if (currentGameStatus == GameStatus.NewHighScore) {
+            canvas.drawText("New High Score : " + spm.getHighScore(),
+                    screenSizeX / 2, (screenSizeY / 2) + 120, highScore);
+
+            Paint enemyDestroyed = new Paint();
+            enemyDestroyed.setTextSize(50);
+            enemyDestroyed.setTextAlign(Paint.Align.CENTER);
+            enemyDestroyed.setColor(Color.WHITE);
+
+            canvas.drawText(
+                    "Enemy Destroyed : " + spm.getEnemyDestroyed(),
+                    screenSizeX / 2, (screenSizeY / 2) + 180, enemyDestroyed);
+
+            Paint meteorDestroyed = new Paint();
+            meteorDestroyed.setTextSize(50);
+            meteorDestroyed.setTextAlign(Paint.Align.CENTER);
+            meteorDestroyed.setColor(Color.WHITE);
+
+            canvas.drawText("Meteor Destroyed : " + spm.getMeteorDestroyed(),
+                    screenSizeX / 2, (screenSizeY / 2) + 240, meteorDestroyed);
+        }
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setMeteors(ArrayList<Meteorite> meteors) {
+        this.meteors = meteors;
+    }
+
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setBackground(AnimatedBackground background) {
+        this.background = background;
+    }
+}
