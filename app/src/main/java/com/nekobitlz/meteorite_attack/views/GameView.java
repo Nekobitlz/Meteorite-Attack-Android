@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.*;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -49,11 +50,11 @@ public class GameView extends SurfaceView implements Runnable {
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
         spm = new SharedPreferencesManager(context);
-        
+
         soundPlayer = new SoundPlayer(context);
         paint = new Paint();
         surfaceHolder = getHolder();
-        
+
         reset();
     }
 
@@ -251,6 +252,10 @@ public class GameView extends SurfaceView implements Runnable {
         gameThread.start();
     }
 
+    public GameStatus getCurrentStatus() {
+        return currentStatus;
+    }
+
     public void draw() {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
@@ -259,20 +264,20 @@ public class GameView extends SurfaceView implements Runnable {
             //Draw player
             canvas.drawBitmap(player.getBitmap(), player.getX(), player.getY(), paint);
 
-            for (Star s: background.getStars()) {
+            for (Star s : background.getStars()) {
                 canvas.drawBitmap(s.getBitmap(), s.getX(), s.getY(), paint);
             }
 
-            for (Laser l: player.getLasers()) {
+            for (Laser l : player.getLasers()) {
                 canvas.drawBitmap(l.getBitmap(), l.getX(), l.getY(), paint);
             }
 
-            for (Meteorite m: meteors) {
+            for (Meteorite m : meteors) {
                 canvas.drawBitmap(m.getBitmap(), m.getX(), m.getY(), paint);
                 drawHealth(m, m.getX(), m.getY(), paint);
             }
 
-            for (Enemy e: enemies) {
+            for (Enemy e : enemies) {
                 canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
                 drawHealth(e, e.getX(), e.getY(), paint);
             }
@@ -368,16 +373,22 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    //package-private
+    void setMainMenuActivity() {
+        ((Activity) getContext()).finish();
+        getContext().startActivity(new Intent(getContext(), MainMenuActivity.class));
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             //When game is over - touch the screen tosses into main menu
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN: {
                 if (currentStatus == GameStatus.GameOver) {
-                    ((Activity) getContext()).finish();
-                    getContext().startActivity(new Intent(getContext(), MainMenuActivity.class));
+                    setMainMenuActivity();
                 }
-                break;
+            }
+            break;
         }
 
         return super.onTouchEvent(event);
