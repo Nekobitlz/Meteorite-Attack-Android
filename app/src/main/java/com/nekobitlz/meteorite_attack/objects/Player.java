@@ -104,7 +104,7 @@ public class Player {
 
     //Add lasers on the playing field
     public void fire() {
-        lasers.add(new Laser(context, screenSizeX, screenSizeY, x, y, bitmap, false));
+        lasers.add(new Laser(context, screenSizeX, screenSizeY, x, y, bitmap));
         soundPlayer.playLaser();
     }
 
