@@ -29,7 +29,7 @@ public class SharedPreferencesManager {
         e.putInt("meteorite", meteorDestroyed);
         e.putInt("enemy", enemyDestroyed);
 
-        e.commit(); //TODO()
+        e.commit();
     }
 
     public int getHighScore() {
@@ -54,5 +54,24 @@ public class SharedPreferencesManager {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
         return sp.getInt("money", 0);
+    }
+
+    public void removeMoney() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.remove("money");
+        e.commit();
+    }
+
+    public void removeHighScore() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.remove("high score");
+        e.remove("enemy");
+        e.remove("meteorite");
+
+        e.commit();
     }
 }
