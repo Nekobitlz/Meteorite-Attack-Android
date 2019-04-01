@@ -6,18 +6,27 @@ import com.nekobitlz.meteorite_attack.objects.Star;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+    Animated background with stars while playing
+*/
 public class AnimatedBackground {
     private int screenSizeY;
     private int screenSizeX;
     private Context context;
     private ArrayList<Star> stars;
 
+    /*
+        Background initialization
+    */
     public AnimatedBackground(Context context, int screenSizeX, int screenSizeY) {
         this.context = context;
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
     }
 
+    /*
+        Creates background
+    */
     public void create() {
         stars = new ArrayList<>();
 
@@ -26,6 +35,9 @@ public class AnimatedBackground {
         }
     }
 
+    /*
+       Creates random star position on background
+    */
     public void createRandom() {
         Random random = new Random();
 
@@ -34,12 +46,18 @@ public class AnimatedBackground {
         }
     }
 
+    /*
+        Updates stars on background stay
+    */
     public void update() {
         for (Star s : stars) {
             s.update();
         }
     }
 
+    /*
+        Deletes stars from background
+    */
     public void deleteStars() {
         boolean deleting = true;
 
@@ -55,6 +73,9 @@ public class AnimatedBackground {
         }
     }
 
+    /*
+        GETTERS
+    */
     public ArrayList<Star> getStars() {
         return stars;
     }

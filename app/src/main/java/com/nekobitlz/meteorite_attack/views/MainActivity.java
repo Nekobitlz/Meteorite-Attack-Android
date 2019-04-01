@@ -15,6 +15,9 @@ import android.view.WindowManager;
 
 import com.nekobitlz.meteorite_attack.enums.Direction;
 
+/*
+    Activity with game
+*/
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private GameView gameView;
@@ -43,18 +46,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
+    /*
+        Resumes the game
+    */
     @Override
     protected void onResume() {
         super.onResume();
         gameView.resume();
     }
 
+    /*
+        Pauses the game
+    */
     @Override
     protected void onPause() {
         super.onPause();
         gameView.pause();
     }
 
+    /*
+        Reads acceleration changes
+    */
     @Override
     public void onSensorChanged(SensorEvent event) {
         float xTemp = event.values[0];
@@ -72,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //TODO()
     }
 
+    /*
+        Reads back button click
+    */
     @Override
     public void onBackPressed() {
         gameView.setMainMenuActivity();

@@ -3,15 +3,24 @@ package com.nekobitlz.meteorite_attack.options;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/*
+    Saving settings in memory
+*/
 public class SharedPreferencesManager {
 
     private String name = "MeteoriteAttack";
     private Context context;
 
+    /*
+        Settings initialization
+    */
     public SharedPreferencesManager(Context context) {
         this.context = context;
     }
 
+    /*
+        Saves money in memory
+    */
     public void saveMoney(int money) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
@@ -21,6 +30,9 @@ public class SharedPreferencesManager {
         e.commit();
     }
 
+    /*
+        Saves high score and count of meteors and enemy that were destroyed
+     */
     public void saveHighScore(int score, int meteorDestroyed, int enemyDestroyed) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
@@ -32,6 +44,9 @@ public class SharedPreferencesManager {
         e.commit();
     }
 
+    /*
+        GETTERS
+    */
     public int getHighScore() {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
@@ -56,6 +71,10 @@ public class SharedPreferencesManager {
         return sp.getInt("money", 0);
     }
 
+    /*
+        REMOVERS
+        (need for tests)
+    */
     public void removeMoney() {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();

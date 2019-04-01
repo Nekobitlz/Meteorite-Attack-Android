@@ -13,6 +13,9 @@ import java.util.Random;
 
 import static com.nekobitlz.meteorite_attack.views.GameView.*;
 
+/*
+    Enemy flying ship
+*/
 public class Enemy {
 
     private Bitmap bitmap;
@@ -34,6 +37,9 @@ public class Enemy {
     private int level;
     private int value; //"value" coins are awarded for killing
 
+    /*
+        Enemy initialization
+    */
     public Enemy(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
@@ -67,6 +73,9 @@ public class Enemy {
         collision = new Rect(x, y, x + bitmap.getWidth(), y + bitmap.getHeight());
     }
 
+    /*
+        Gets a random amount of health for an enemy in a given range
+    */
     private int getRandomHealth(int level) {
         int minRange = getRange(level - 1) + 1;
         int maxRange = getRange(level);
@@ -78,7 +87,9 @@ public class Enemy {
         return health;
     }
 
-    //get range of random
+    /*
+        Gets range of random
+    */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private int getRange(int level) {
         if (level % 10 == 0)
@@ -87,6 +98,9 @@ public class Enemy {
         return level % 10 * 5;
     }
 
+    /*
+        Updates enemy state
+    */
     public void update() {
         y += 7 * speed;
 
@@ -106,11 +120,9 @@ public class Enemy {
         collision.bottom = y + bitmap.getHeight();
     }
 
-    public Rect getCollision() {
-        return collision;
-    }
-
-    //Captures a hit on enemy and if the hit is decisive, it kills the enemy
+    /*
+        Captures a hit on enemy and if the hit is decisive, it kills the enemy
+    */
     public void hit() {
         health -= WEAPON_POWER;
 
@@ -124,9 +136,19 @@ public class Enemy {
         }
     }
 
+    /*
+        Destroys enemy
+    */
     public void destroy() {
         y = screenSizeY + 1;
         soundPlayer.playCrash();
+    }
+
+    /*
+        GETTERS
+    */
+    public Rect getCollision() {
+        return collision;
     }
 
     public Bitmap getBitmap() {

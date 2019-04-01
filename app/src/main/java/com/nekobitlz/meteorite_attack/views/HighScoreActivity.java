@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 
+/*
+   Activity that show your high score
+*/
 public class HighScoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView back;
@@ -39,6 +42,9 @@ public class HighScoreActivity extends AppCompatActivity implements View.OnClick
         loadHighScore();
     }
 
+    /*
+        Loads your saved high score
+    */
     @SuppressLint("SetTextI18n")
     private void loadHighScore() {
         SharedPreferencesManager spm = new SharedPreferencesManager(this);
@@ -56,6 +62,9 @@ public class HighScoreActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /*
+        Reads views clicks
+    */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

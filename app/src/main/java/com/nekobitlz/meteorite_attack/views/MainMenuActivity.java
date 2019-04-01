@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 
+/*
+    Activity with main menu
+*/
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button play, highScore, exit; //TODO(): Shop
@@ -42,12 +45,18 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         loadMoney();
     }
 
+    /*
+        Loads your saved money
+    */
     @SuppressLint("SetTextI18n")
     private void loadMoney() {
         SharedPreferencesManager spm = new SharedPreferencesManager(this);
         money.setText(spm.getMoney() + "");
     }
 
+    /*
+        Reads views clicks
+    */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

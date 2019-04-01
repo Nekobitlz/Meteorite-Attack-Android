@@ -11,6 +11,9 @@ import java.util.Random;
 
 import static com.nekobitlz.meteorite_attack.views.GameView.*;
 
+/*
+    Hostile flying meteorite
+*/
 public class Meteorite {
 
     private Bitmap bitmap;
@@ -33,6 +36,9 @@ public class Meteorite {
     private Rect collision;
     private SoundPlayer soundPlayer;
 
+    /*
+        Meteorite initialization
+    */
     public Meteorite(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
@@ -63,6 +69,9 @@ public class Meteorite {
         collision = new Rect(x, y, x + bitmap.getWidth(), y + bitmap.getHeight());
     }
 
+    /*
+       Gets a random amount of health for an enemy in a given range
+    */
     private int getRandomHealth(int level) {
         int minRange = getRange(level - 1) + 1;
         int maxRange = getRange(level);
@@ -74,7 +83,9 @@ public class Meteorite {
         return health;
     }
 
-    //get range of random
+    /*
+        Gets range of random
+    */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private int getRange(int level) {
         if (level % 10 == 0)
@@ -83,6 +94,9 @@ public class Meteorite {
         return level % 10 * 5;
     }
 
+    /*
+        Updates meteorite state
+    */
     public void update() {
         y += speed * 7;
 
@@ -92,6 +106,9 @@ public class Meteorite {
         collision.bottom = y + bitmap.getHeight();
     }
 
+    /*
+        Captures a hit on meteorite and if the hit is decisive, it kills the meteorite
+    */
     public void hit() {
         health -= WEAPON_POWER;
 
@@ -105,11 +122,17 @@ public class Meteorite {
         }
     }
 
+    /*
+        Destroys meteorite
+    */
     public void destroy() {
         y = screenSizeY + 1;
         soundPlayer.playCrash();
     }
 
+    /*
+        GETTERS
+    */
     public Rect getCollision() {
         return collision;
     }

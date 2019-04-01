@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
+/*
+  The main player to be managed by the user
+*/
 public class Player {
 
     private Bitmap bitmap;
@@ -35,6 +38,9 @@ public class Player {
     private Context context;
     private SoundPlayer soundPlayer;
 
+    /*
+        Player initialization
+    */
     public Player(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer) {
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
@@ -60,6 +66,9 @@ public class Player {
         collision = new Rect(x, y, x + bitmap.getWidth(), y + bitmap.getHeight());
     }
 
+    /*
+        Updates player state
+    */
     public void update() {
         if (currentDirection == Direction.Left) {
             x -= headingSpeed * 10;
@@ -85,7 +94,9 @@ public class Player {
         deleteLasers();
     }
 
-    //Remove lasers off the screen
+    /*
+        Remove lasers off the screen
+    */
     private void deleteLasers() {
         boolean deleting = true;
 
@@ -102,17 +113,33 @@ public class Player {
         }
     }
 
-    //Add lasers on the playing field
+    /*
+        Add lasers on the playing field
+    */
     public void fire() {
         lasers.add(new Laser(context, screenSizeX, screenSizeY, x, y, bitmap));
         soundPlayer.playLaser();
     }
 
+    /*
+        Sets direction for player
+    */
     public void setCurrentDirection(Direction direction, float speed) {
         currentDirection = direction;
         headingSpeed = abs(speed);
     }
 
+    /*
+        Sets image for player
+        (need for shop)
+    */
+    public void setPlayerImage(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    /*
+        GETTERS
+    */
     public Rect getCollision() {
         return collision;
     }

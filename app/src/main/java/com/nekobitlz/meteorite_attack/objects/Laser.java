@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import com.nekobitlz.meteorite_attack.R;
 
+/*
+    Bullet that the player shoots
+*/
 public class Laser {
 
     private Bitmap bitmap;
@@ -17,6 +20,9 @@ public class Laser {
 
     private Rect collision;
 
+    /*
+        Laser initialization
+    */
     public Laser(Context context, int screenSizeX, int screenSizeY, int playerX,
                  int playerY, Bitmap playerBitmap) {
         this.screenSizeX = screenSizeX;
@@ -33,6 +39,9 @@ public class Laser {
         collision = new Rect(x, y, x + bitmap.getWidth(), y + bitmap.getHeight());
     }
 
+    /*
+        Updates laser state
+    */
     public void update() {
         y -= bitmap.getHeight() - 10;
 
@@ -42,10 +51,16 @@ public class Laser {
         collision.bottom = y + bitmap.getHeight();
     }
 
+    /*
+        Destroys laser
+    */
     public void destroy() {
         y = -bitmap.getHeight();
     }
 
+    /*
+        GETTERS
+    */
     public int getX() {
         return x;
     }

@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import static com.nekobitlz.meteorite_attack.views.GameView.MONEY;
 import static com.nekobitlz.meteorite_attack.views.GameView.SCORE;
 
+/*
+     Draws all the drawings
+*/
 public class Drawer {
     private int screenSizeX;
     private int screenSizeY;
@@ -27,6 +30,9 @@ public class Drawer {
     private ArrayList<Enemy> enemies;
     private AnimatedBackground background;
 
+    /*
+        Drawer initialization
+    */
     public Drawer(int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
                   SurfaceHolder surfaceHolder, SharedPreferencesManager spm) {
         this.surfaceHolder = surfaceHolder;
@@ -37,6 +43,9 @@ public class Drawer {
         this.canvas = canvas;
     }
 
+    /*
+        Draws all bitmaps and states
+    */
     public void draw(GameStatus currentGameStatus) {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
@@ -73,6 +82,9 @@ public class Drawer {
         }
     }
 
+    /*
+        Draws meteors health
+    */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawHealth(Meteorite meteor, int x, int y, Paint paint) {
         Bitmap meteorBitmap = meteor.getBitmap();
@@ -83,6 +95,9 @@ public class Drawer {
                 y + meteorBitmap.getHeight() / 2, paint);
     }
 
+    /*
+        Draws enemies health
+    */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
         Bitmap enemyBitmap = enemy.getBitmap();
@@ -93,6 +108,9 @@ public class Drawer {
                 y + enemyBitmap.getHeight() / 2, paint);
     }
 
+    /*
+        Sets settings for drawHealth()
+    */
     private void setHealthPaintSettings() {
         paint.setTextSize(40);
         paint.setColor(Color.WHITE);
@@ -100,6 +118,9 @@ public class Drawer {
         paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
     }
 
+    /*
+        Draws score
+    */
     private void drawScore() {
         Paint score = new Paint();
         score.setTextSize(30);
@@ -108,6 +129,9 @@ public class Drawer {
         canvas.drawText("Score : " + SCORE, 100, 50, score);
     }
 
+    /*
+        Draws GameOver state
+    */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawGameOver(GameStatus currentGameStatus) {
         Paint gameOver = new Paint();
@@ -154,6 +178,9 @@ public class Drawer {
         }
     }
 
+    /*
+        SETTERS
+    */
     public void setPlayer(Player player) {
         this.player = player;
     }

@@ -7,7 +7,9 @@ import com.nekobitlz.meteorite_attack.R;
 
 import java.util.Random;
 
-//Object for ANIMATED BACKGROUND
+/*
+    Star is just for ANIMATED BACKGROUND
+*/
 public class Star {
 
     private Bitmap bitmap;
@@ -21,6 +23,9 @@ public class Star {
     private int speed;
     private int[] stars = new int[] { R.drawable.star_1, R.drawable.star_2, R.drawable.star_3 }; //TODO(): More stars
 
+    /*
+        Star initialization
+    */
     public Star(Context context, int screenSizeX, int screenSizeY, boolean randomY){
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
@@ -44,10 +49,16 @@ public class Star {
             y = -bitmap.getHeight();
     }
 
+    /*
+        Updates star state
+    */
     public void update(){
         y += 7 * speed;
     }
 
+    /*
+        GETTERS
+    */
     public Bitmap getBitmap() {
         return bitmap;
     }

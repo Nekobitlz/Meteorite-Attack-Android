@@ -9,6 +9,9 @@ import android.os.Build;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 
+/*
+    Sounds playback
+*/
 public class SoundPlayer implements Runnable {
 
     private Thread soundThread;
@@ -18,6 +21,9 @@ public class SoundPlayer implements Runnable {
     private int explodeId, laserId, crashId;
     private boolean isLaserPlaying, isExplodePlaying, isCrashPlaying;
 
+    /*
+        Sounds initialization
+    */
     @SuppressWarnings("deprecation")
     public SoundPlayer(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -40,6 +46,9 @@ public class SoundPlayer implements Runnable {
         crashId = soundPool.load(context, R.raw.rock_explode_2, 1);
     }
 
+    /*
+        Playback
+    */
     @Override
     public void run() {
         while (currentStatus == GameStatus.Playing) {
@@ -60,18 +69,30 @@ public class SoundPlayer implements Runnable {
         }
     }
 
+    /*
+        Sets crashPlaying state for playback
+    */
     public void playCrash() {
         isCrashPlaying = true;
     }
 
+    /*
+        Sets laserPlaying state for playback
+    */
     public void playLaser() {
         isLaserPlaying = true;
     }
 
+    /*
+        Sets explodePlaying state for playback
+    */
     public void playExplode() {
         isExplodePlaying = true;
     }
 
+    /*
+        Resumes sound playback after pause
+    */
     public void resume() {
         currentStatus = GameStatus.Playing;
 
@@ -79,6 +100,9 @@ public class SoundPlayer implements Runnable {
         soundThread.start();
     }
 
+    /*
+        Pauses sound playback
+    */
     public void pause() throws InterruptedException {
         currentStatus = GameStatus.Paused;
 

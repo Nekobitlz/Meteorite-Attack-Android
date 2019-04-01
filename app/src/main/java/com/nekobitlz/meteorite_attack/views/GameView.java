@@ -16,6 +16,9 @@ import com.nekobitlz.meteorite_attack.options.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+    MAIN GAME ENGINE
+*/
 public class GameView extends SurfaceView implements Runnable {
 
     public static int SCORE = 0;
@@ -44,6 +47,9 @@ public class GameView extends SurfaceView implements Runnable {
     private SoundPlayer soundPlayer;
     private SharedPreferencesManager spm;
 
+    /*
+        Game engine initialization
+    */
     public GameView(Context context, int screenSizeX, int screenSizeY) {
         super(context);
 
@@ -55,12 +61,15 @@ public class GameView extends SurfaceView implements Runnable {
         paint = new Paint();
         surfaceHolder = getHolder();
 
-        drawer = new Drawer(screenSizeX, screenSizeY,canvas, paint, surfaceHolder, spm);
+        drawer = new Drawer(screenSizeX, screenSizeY, canvas, paint, surfaceHolder, spm);
         initDrawer();
 
         reset();
     }
 
+    /*
+        Resets all settings for new game
+    */
     private void reset() {
         SCORE = 0;
         MONEY = 0;
@@ -78,6 +87,9 @@ public class GameView extends SurfaceView implements Runnable {
         currentStatus = GameStatus.Playing;
     }
 
+    /*
+        Drawer initialization
+    */
     private void initDrawer() {
         drawer.setBackground(background);
         drawer.setEnemies(enemies);
@@ -85,6 +97,9 @@ public class GameView extends SurfaceView implements Runnable {
         drawer.setPlayer(player);
     }
 
+    /*
+        Runs game
+    */
     @Override
     public void run() {
         while (currentStatus == GameStatus.Playing) {
@@ -94,6 +109,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Updates game state
+    */
     public void update() {
         SCORE++;
 
@@ -131,6 +149,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Deletes objects from game field
+    */
     private void deleteObjects(Objects objectName) {
         boolean deleting = true;
 
@@ -167,6 +188,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Updates objects state
+    */
     private void objectsUpdate(Objects objectName) { //TODO(): Optimize method
         switch (objectName) {
             case Meteorite: {
@@ -213,6 +237,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Sets game over state
+    */
     private void setGameOver() {
         currentStatus = GameStatus.GameOver;
         MONEY += SCORE / 100;
@@ -225,11 +252,16 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Sets player direction
+    */
     public void setDirection(Direction currentDirection, float speed) {
         player.setCurrentDirection(currentDirection, speed);
     }
 
-    //Playing field update frequency
+    /*
+        Playing field update frequency
+    */
     public void control() {
         try {
             if (fps == 10000) {
@@ -243,6 +275,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Pauses the game
+    */
     public void pause() {
         currentStatus = GameStatus.Paused;
 
@@ -254,6 +289,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /*
+        Resumes the game
+    */
     public void resume() {
         currentStatus = GameStatus.Playing;
         soundPlayer.resume();
@@ -262,16 +300,29 @@ public class GameView extends SurfaceView implements Runnable {
         gameThread.start();
     }
 
+    /*
+        GETTERS
+    */
     public GameStatus getCurrentStatus() {
         return currentStatus;
     }
 
-    //package-private
+    public Player getPlayer() {
+        return player;
+    }
+
+    /*
+         !package-private!
+        Sets main menu activity
+    */
     void setMainMenuActivity() {
         ((Activity) getContext()).finish();
         getContext().startActivity(new Intent(getContext(), MainMenuActivity.class));
     }
 
+    /*
+        Reads buttons presses
+    */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
