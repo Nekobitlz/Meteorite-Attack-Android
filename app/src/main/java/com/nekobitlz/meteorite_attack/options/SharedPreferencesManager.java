@@ -2,6 +2,7 @@ package com.nekobitlz.meteorite_attack.options;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.nekobitlz.meteorite_attack.R;
 
 /*
     Saving settings in memory
@@ -88,13 +89,13 @@ public class SharedPreferencesManager {
     public int getPlayerImage() {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
-        return sp.getInt("player_image", 0);
+        return sp.getInt("player_image", R.drawable.player_ship_1_red);
     }
 
     public int getWeaponPower() {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
-        return sp.getInt("weapon_power", 0);
+        return sp.getInt("weapon_power", 1);
     }
 
     /*

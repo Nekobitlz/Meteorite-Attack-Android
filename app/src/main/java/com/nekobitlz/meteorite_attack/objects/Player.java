@@ -50,16 +50,9 @@ public class Player {
         this.soundPlayer = soundPlayer;
         spm = new SharedPreferencesManager(context);
 
-        //Set player image
-        if (spm.getPlayerImage() == 0) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_ship_1_red);
-            bitmap = Bitmap.createScaledBitmap(
-                    bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
-        } else {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), spm.getPlayerImage());
-            bitmap = Bitmap.createScaledBitmap(
-                    bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
-        }
+        bitmap = BitmapFactory.decodeResource(context.getResources(), spm.getPlayerImage());
+        bitmap = Bitmap.createScaledBitmap(
+                bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
 
         maxX = screenSizeX - bitmap.getWidth();
         maxY = screenSizeY - bitmap.getHeight();
