@@ -16,6 +16,8 @@ import com.nekobitlz.meteorite_attack.options.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.nekobitlz.meteorite_attack.views.MainMenuActivity.loadMoney;
+
 /*
     MAIN GAME ENGINE
 */
@@ -25,7 +27,7 @@ public class GameView extends SurfaceView implements Runnable {
     public static int METEOR_DESTROYED = 0;
     public static int ENEMY_DESTROYED = 0;
     public static int MONEY = 0;
-    public static int WEAPON_POWER = 1;
+    public static int WEAPON_POWER;
 
     private Thread gameThread;
     private volatile GameStatus currentStatus = GameStatus.Paused;
@@ -73,6 +75,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void reset() {
         SCORE = 0;
         MONEY = 0;
+        WEAPON_POWER = spm.getWeaponPower();
         level = 1;
 
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
@@ -307,17 +310,13 @@ public class GameView extends SurfaceView implements Runnable {
         return currentStatus;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     /*
          !package-private!
         Sets main menu activity
     */
     void setMainMenuActivity() {
         ((Activity) getContext()).finish();
-        getContext().startActivity(new Intent(getContext(), MainMenuActivity.class));
+        loadMoney();
     }
 
     /*

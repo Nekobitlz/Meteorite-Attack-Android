@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.enums.Direction;
+import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Player {
     private Direction currentDirection = Direction.Stopped;
     private float headingSpeed;
     private Rect collision;
+    private SharedPreferencesManager spm;
 
     private ArrayList<Laser> lasers;
     private Context context;
@@ -46,11 +48,18 @@ public class Player {
         this.screenSizeY = screenSizeY;
         this.context = context;
         this.soundPlayer = soundPlayer;
+        spm = new SharedPreferencesManager(context);
 
         //Set player image
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_ship_1_red);
-        bitmap = Bitmap.createScaledBitmap(
-                bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
+        if (spm.getPlayerImage() == 0) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_ship_1_red);
+            bitmap = Bitmap.createScaledBitmap(
+                    bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
+        } else {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), spm.getPlayerImage());
+            bitmap = Bitmap.createScaledBitmap(
+                    bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
+        }
 
         maxX = screenSizeX - bitmap.getWidth();
         maxY = screenSizeY - bitmap.getHeight();
@@ -127,14 +136,6 @@ public class Player {
     public void setCurrentDirection(Direction direction, float speed) {
         currentDirection = direction;
         headingSpeed = abs(speed);
-    }
-
-    /*
-        Sets image for player
-        (need for shop)
-    */
-    public void setPlayerImage(Bitmap bitmap) {
-        this.bitmap = bitmap;
     }
 
     /*

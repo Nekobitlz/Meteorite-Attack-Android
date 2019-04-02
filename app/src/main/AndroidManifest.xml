@@ -11,23 +11,27 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".views.MainActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".views.MainMenuActivity"
                 android:label="@string/title_activity_main_menu"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".views.HighScoreActivity"
-                  android:theme="@style/AppTheme.NoActionBar"
-                  android:screenOrientation="portrait"></activity>
+        <activity
+                android:name=".views.HighScoreActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".views.ShopActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
-
 
 </manifest>

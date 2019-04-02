@@ -45,6 +45,20 @@ public class SharedPreferencesManager {
     }
 
     /*
+        Saves player image and weapon power
+        (need for shop)
+    */
+    public void savePlayer(int playerImage, int weaponPower) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.putInt("player_image", playerImage);
+        e.putInt("weapon_power", weaponPower);
+
+        e.commit();
+    }
+
+    /*
         GETTERS
     */
     public int getHighScore() {
@@ -69,6 +83,18 @@ public class SharedPreferencesManager {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
         return sp.getInt("money", 0);
+    }
+
+    public int getPlayerImage() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("player_image", 0);
+    }
+
+    public int getWeaponPower() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("weapon_power", 0);
     }
 
     /*

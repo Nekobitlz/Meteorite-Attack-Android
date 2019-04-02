@@ -17,9 +17,11 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button play, highScore, exit; //TODO(): Shop
-    private TextView money;
+    private Button play, highScore, exit, shop;
     private LinearLayout moneyContainer;
+
+    private static TextView money;
+    private static SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +39,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         exit = findViewById(R.id.exit);
         moneyContainer = findViewById(R.id.money_container);
         money = findViewById(R.id.money);
+        shop = findViewById(R.id.shop);
 
         play.setOnClickListener(this);
+        shop.setOnClickListener(this);
         highScore.setOnClickListener(this);
         exit.setOnClickListener(this);
 
+        spm = new SharedPreferencesManager(this);
         loadMoney();
     }
 
@@ -49,8 +54,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         Loads your saved money
     */
     @SuppressLint("SetTextI18n")
-    private void loadMoney() {
-        SharedPreferencesManager spm = new SharedPreferencesManager(this);
+    public static void loadMoney() {
         money.setText(spm.getMoney() + "");
     }
 
@@ -60,10 +64,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.play:
+            case R.id.play: {
                 startActivity(new Intent(this, MainActivity.class));
-                finish();
-                break;
+            }
+            break;
+
+            case R.id.shop: {
+                startActivity(new Intent(this, ShopActivity.class));
+            }
+            break;
 
             case R.id.high_score:
                 startActivity(new Intent(this, HighScoreActivity.class));
