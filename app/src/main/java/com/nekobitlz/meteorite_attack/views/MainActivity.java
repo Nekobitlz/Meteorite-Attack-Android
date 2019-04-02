@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     */
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float xTemp = event.values[0];
+        float speed = event.values[0];
 
-        if (event.values[0] > 1)
-            gameView.setDirection(Direction.Left, xTemp);
-        else if (event.values[0] < -1)
-            gameView.setDirection(Direction.Right, xTemp);
+        if (speed > 1)
+            gameView.setDirection(Direction.Left, speed);
+        else if (speed < -1)
+            gameView.setDirection(Direction.Right, speed);
         else
             gameView.setDirection(Direction.Stopped, 0);
     }
