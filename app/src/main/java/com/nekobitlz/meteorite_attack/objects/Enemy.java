@@ -126,7 +126,7 @@ public class Enemy {
     public void hit() {
         health -= WEAPON_POWER;
 
-        if (health == 0) {
+        if (health <= 0) {
             SCORE += level * 20;
             ENEMY_DESTROYED++;
             MONEY += value;

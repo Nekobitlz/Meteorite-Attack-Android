@@ -112,7 +112,7 @@ public class Meteorite {
     public void hit() {
         health -= WEAPON_POWER;
 
-        if (health == 0) {
+        if (health <= 0) {
             SCORE += level * 10;
             METEOR_DESTROYED++;
             MONEY += value;
