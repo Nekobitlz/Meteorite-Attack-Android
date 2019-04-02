@@ -45,8 +45,8 @@ public class Meteorite {
         this.soundPlayer = soundPlayer;
         this.level = level;
 
-        value = health;
         health = getRandomHealth(level);
+        value = health;
         meteors = new int[] { R.drawable.meteor_1, R.drawable.meteor_2, R.drawable.meteor_3, R.drawable.meteor_4 };
 
         //Set random meteor image
