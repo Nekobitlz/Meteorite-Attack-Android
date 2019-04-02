@@ -10,27 +10,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/menu_background"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            android:src="@drawable/menu_background"/>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="369dp"
-            android:orientation="vertical"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true">
+            android:orientation="vertical">
 
         <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="401dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/menu_logo"
-                android:cropToPadding="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"/>
+                android:cropToPadding="true"/>
     </LinearLayout>
     <LinearLayout
             android:id="@+id/money_container"
@@ -77,35 +68,49 @@
 
         <Button
                 android:id="@+id/play"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/custom_button_background"
                 android:text="PLAY"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
         <Button
+                android:id="@+id/shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/custom_button_background"
+                android:text="SHOP"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+        <Button
                 android:id="@+id/high_score"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/custom_button_background"
                 android:text="HIGH SCORE"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
         <Button
                 android:id="@+id/exit"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button_background"
                 android:text="EXIT"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
     </LinearLayout>
 
