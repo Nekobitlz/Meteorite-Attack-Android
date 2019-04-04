@@ -17,8 +17,10 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button play, highScore, exit, shop;
-    private LinearLayout moneyContainer;
+    private Button play;
+    private Button highScore;
+    private Button exit;
+    private Button shop;
 
     private static TextView money;
     private static SharedPreferencesManager spm;
@@ -37,7 +39,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         play = findViewById(R.id.play);
         highScore = findViewById(R.id.high_score);
         exit = findViewById(R.id.exit);
-        moneyContainer = findViewById(R.id.money_container);
         money = findViewById(R.id.money);
         shop = findViewById(R.id.shop);
 

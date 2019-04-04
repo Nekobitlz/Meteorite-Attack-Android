@@ -17,7 +17,12 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 public class HighScoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView back;
-    private TextView score, meteor, enemy, nullHighScore;
+
+    private TextView score;
+    private TextView meteor;
+    private TextView enemy;
+    private TextView nullHighScore;
+
     private LinearLayout highScoreContainer;
 
     @Override

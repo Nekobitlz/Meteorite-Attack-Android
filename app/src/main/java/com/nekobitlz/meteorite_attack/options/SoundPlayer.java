@@ -18,8 +18,13 @@ public class SoundPlayer implements Runnable {
     private volatile GameStatus currentStatus = GameStatus.Paused;
 
     private SoundPool soundPool;
-    private int explodeId, laserId, crashId;
-    private boolean isLaserPlaying, isExplodePlaying, isCrashPlaying;
+    private int explodeId;
+    private int laserId;
+    private int crashId;
+
+    private boolean isLaserPlaying;
+    private boolean isExplodePlaying;
+    private boolean isCrashPlaying;
 
     /*
         Sounds initialization

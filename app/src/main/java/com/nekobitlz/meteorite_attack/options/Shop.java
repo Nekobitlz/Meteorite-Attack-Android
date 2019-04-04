@@ -18,9 +18,12 @@ public class Shop {
     private SharedPreferencesManager spm;
 
     private Button selectedButton;
-    private int image, weaponPower;
     private TextView selectedPrice;
-    private int currentMoney, moneyPrice;
+
+    private int image;
+    private int weaponPower;
+    private int currentMoney;
+    private int moneyPrice;
 
     public Shop(Context context) {
         this.context = context;

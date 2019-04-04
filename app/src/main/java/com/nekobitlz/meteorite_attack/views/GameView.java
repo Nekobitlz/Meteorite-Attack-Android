@@ -42,7 +42,8 @@ public class GameView extends SurfaceView implements Runnable {
     private AnimatedBackground background;
     private Drawer drawer;
 
-    private int screenSizeX, screenSizeY;
+    private int screenSizeX;
+    private int screenSizeY;
     private int level;
     private int fps = 0;
 

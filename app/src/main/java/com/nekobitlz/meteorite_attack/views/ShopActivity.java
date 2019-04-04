@@ -27,8 +27,13 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     private final int PRICE_3 = 300;
 
     private ImageView back;
-    private TextView pricePlayer1, pricePlayer2, pricePlayer3;
-    private Button buttonPlayer1, buttonPlayer2, buttonPlayer3;
+    private TextView pricePlayer1;
+    private TextView pricePlayer2;
+    private TextView pricePlayer3;
+
+    private Button buttonPlayer1;
+    private Button buttonPlayer2;
+    private Button buttonPlayer3;
 
     private Shop shop;
     private ArrayList<Shop.ShopViewsSetup> shopViewsList;

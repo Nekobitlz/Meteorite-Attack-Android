@@ -26,7 +26,8 @@ public class Player {
     private int minX;
     private int maxY;
     private int minY;
-    private int screenSizeX, screenSizeY;
+    private int screenSizeX;
+    private int screenSizeY;
 
     private int margin = 16; //indent from edge
     private int speed;
