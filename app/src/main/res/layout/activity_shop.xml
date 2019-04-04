@@ -67,7 +67,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true">
             <Button
-                    android:text="USED"
+                    android:text="@string/status_used"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonPlayer1"
@@ -76,7 +76,7 @@
                     android:background="@drawable/custom_button_background"
                     android:textColor="@android:color/white"/>
             <Button
-                    android:text="BUY"
+                    android:text="@string/status_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonPlayer2"
@@ -85,7 +85,7 @@
                     android:background="@drawable/custom_button_background"
                     android:textColor="@android:color/white"/>
             <Button
-                    android:text="BUY"
+                    android:text="@string/status_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonPlayer3"
@@ -135,4 +135,5 @@
                     android:layout_weight="1"/>
         </LinearLayout>
     </RelativeLayout>
+
 </RelativeLayout>

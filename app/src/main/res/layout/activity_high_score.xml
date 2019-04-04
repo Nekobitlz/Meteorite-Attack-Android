@@ -28,16 +28,16 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
         <TextView
-                android:text="HIGH SCORE"
+                android:text="@string/high_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:fontFamily="@font/iceberg_regular"
-                android:textSize="32dp"/>
+                app:fontFamily="@font/iceberg_regular"
+                android:textSize="32sp"/>
         <TextView
                 android:id="@+id/null_high_score"
                 android:layout_marginTop="16dp"
-                android:text="New High Score"
+                android:text="@string/new_high_score"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -60,7 +60,7 @@
                     android:layout_marginBottom="16dp">
                 <TextView
                         android:textStyle="bold"
-                        android:text="SCORE: "
+                        android:text="@string/score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 <TextView
@@ -81,7 +81,8 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:layout_marginRight="8dp"/>
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"/>
                 <TextView
                         android:textStyle="bold"
                         android:id="@+id/meteor"
@@ -99,7 +100,8 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:layout_marginRight="8dp"/>
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"/>
                 <TextView
                         android:textStyle="bold"
                         android:id="@+id/enemy"
