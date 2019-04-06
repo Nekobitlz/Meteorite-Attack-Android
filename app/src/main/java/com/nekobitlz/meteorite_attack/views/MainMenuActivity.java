@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
@@ -18,9 +19,9 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button play;
-    private Button highScore;
     private Button exit;
-    private Button shop;
+    private ImageButton shop;
+    private ImageButton highScore;
 
     private static TextView money;
     private static SharedPreferencesManager spm;

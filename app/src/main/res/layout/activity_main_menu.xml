@@ -13,16 +13,21 @@
             android:src="@drawable/menu_background"/>
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="369dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp"
+            android:layout_alignParentLeft="true">
 
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="401dp"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:src="@drawable/menu_logo"
                 android:cropToPadding="true"/>
     </LinearLayout>
+
     <LinearLayout
             android:id="@+id/money_container"
             android:layout_width="wrap_content"
@@ -32,7 +37,9 @@
             android:layout_marginStart="10dp"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
-            android:layout_alignParentLeft="true" android:visibility="visible">
+            android:layout_alignParentLeft="true"
+            android:visibility="visible"
+            android:layout_marginTop="5dp">
         <TextView
                 android:textStyle="bold"
                 android:text="@string/money"
@@ -56,51 +63,56 @@
                 app:fontFamily="@font/iceberg_regular"
                 android:textColor="@android:color/white"/>
     </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/imageButtons"
+            android:layout_marginEnd="11dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="11dp">
+        <ImageButton
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/icon_shop"
+                android:id="@+id/shop"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_background"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"/>
+        <ImageButton
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/icon_highscore"
+                android:id="@+id/high_score"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_background"/>
+    </LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="248dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
+            android:gravity="center_vertical|center"
+            android:layout_marginBottom="100dp"
             android:layout_alignParentLeft="true">
 
         <Button
                 android:id="@+id/play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/custom_button_background"
                 android:text="@string/button_play"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
-                android:layout_gravity="center"/>
-
-        <Button
-                android:id="@+id/shop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/custom_button_background"
-                android:text="@string/button_shop"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
-        <Button
-                android:id="@+id/high_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/custom_button_background"
-                android:text="@string/high_score"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
-
+                android:layout_gravity="center" android:layout_height="75dp"/>
         <Button
                 android:id="@+id/exit"
                 android:layout_width="wrap_content"
