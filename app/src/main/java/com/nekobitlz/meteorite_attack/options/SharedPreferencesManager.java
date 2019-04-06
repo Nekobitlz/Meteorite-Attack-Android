@@ -59,6 +59,15 @@ public class SharedPreferencesManager {
         e.commit();
     }
 
+    public void saveStatus(String tag, String status) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.putString(tag, status);
+
+        e.commit();
+    }
+
     /*
         GETTERS
     */
@@ -96,6 +105,12 @@ public class SharedPreferencesManager {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
         return sp.getInt("weapon_power", 1);
+    }
+
+    public String getStatus(String tag) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getString(tag, "NONE");
     }
 
     /*

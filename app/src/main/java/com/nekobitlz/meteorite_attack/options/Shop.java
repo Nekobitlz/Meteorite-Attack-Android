@@ -5,7 +5,6 @@ import android.util.Pair;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nekobitlz.meteorite_attack.enums.ShopStatus;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,8 @@ import java.util.ArrayList;
 */
 public class Shop {
     private Context context;
-    private ShopStatus status;
+    private String status;
+    private String statusTag;
     private SharedPreferencesManager spm;
 
     private Button selectedButton;
@@ -24,6 +24,9 @@ public class Shop {
     private int weaponPower;
     private int currentMoney;
     private int moneyPrice;
+
+    private String use = "USE";
+    private String used = "USED";
 
     public Shop(Context context) {
         this.context = context;
@@ -42,25 +45,26 @@ public class Shop {
     public void processSelectedItem(ArrayList<ShopViewsSetup> shopViewsList, ShopViewsSetup shopViewsSetup) {
         selectedButton = shopViewsSetup.getButton();
         selectedPrice = shopViewsSetup.getPriceView();
-        status = shopViewsSetup.getStatus();
+        statusTag = shopViewsSetup.getStatusTag();
+        status = spm.getStatus(statusTag);
         moneyPrice = shopViewsSetup.getPrice();
 
         image = shopViewsSetup.getPlayerSetup().first;
         weaponPower = shopViewsSetup.getPlayerSetup().second;
 
         switch (status) {
-            case Use: {
+            case "USE" : {
                 makeStatusUsed(shopViewsList);
                 Toast.makeText(context, "Ship changed", Toast.LENGTH_SHORT).show();
             }
             break;
 
-            case Used: {
+            case "USED" : {
                 Toast.makeText(context, "You already use this ship", Toast.LENGTH_SHORT).show();
             }
             break;
 
-            case Buy: {
+            case "BUY" : {
                 currentMoney = spm.getMoney();
 
                 if (currentMoney >= moneyPrice) {
@@ -77,7 +81,7 @@ public class Shop {
             break;
         }
 
-        shopViewsSetup.setStatus(status);
+        spm.saveStatus(statusTag, status);
     }
 
     /*
@@ -85,16 +89,28 @@ public class Shop {
         Also sets an already used item to "Use" status
     */
     private void makeStatusUsed(ArrayList<ShopViewsSetup> shopViewsList) {
-        status = ShopStatus.Used;
+        status = used;
+
+        //default setText() method not working
+        selectedButton.post(new Runnable() {
+            @Override
+            public void run() {
+                selectedButton.setText(status);
+            }
+        });
+
+        //Saving parameters for further load
         spm.savePlayer(image, weaponPower);
-        selectedButton.setText("USED");
+        spm.saveStatus(String.valueOf(image), status);
 
-        for (ShopViewsSetup aShopViewsList : shopViewsList) {
-            ShopStatus itemStatus = aShopViewsList.getStatus();
+        //Remove status "used" from the previous used ship
+        for (ShopViewsSetup item : shopViewsList) {
+            String itemStatus = spm.getStatus(item.getStatusTag());
 
-            if (itemStatus == ShopStatus.Used) {
-                aShopViewsList.getButton().setText("USE");
-                aShopViewsList.setStatus(ShopStatus.Use);
+            if (itemStatus.equals(used)) {
+                item.getButton().setText(use);
+                spm.saveStatus(item.getStatusTag(), use);
+                spm.saveStatus(String.valueOf(item.playerSetup.first), use);
             }
         }
     }
@@ -103,16 +119,16 @@ public class Shop {
         Auxiliary class for storing shop item information
     */
     public static class ShopViewsSetup {
-        private ShopStatus status;
+        private String statusTag;
         private Button button;
         private TextView priceView;
         private int price;
         private Pair<Integer, Integer> playerSetup;
 
         public ShopViewsSetup(
-                ShopStatus status, Button button, TextView priceView,
+                String statusTag, Button button, TextView priceView,
                 int price, Pair<Integer, Integer> playerSetup) {
-            this.status = status;
+            this.statusTag = statusTag;
             this.button = button;
             this.priceView = priceView;
             this.price = price;
@@ -120,14 +136,10 @@ public class Shop {
         }
 
         /*
-            GETTERS & SETTERS
+            GETTERS
         */
-        public void setStatus(ShopStatus status) {
-            this.status = status;
-        }
-
-        public ShopStatus getStatus() {
-            return status;
+        public String getStatusTag() {
+            return statusTag;
         }
 
         public Button getButton() {
