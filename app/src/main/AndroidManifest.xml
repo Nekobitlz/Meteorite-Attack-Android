@@ -28,9 +28,10 @@
                 android:name=".views.HighScoreActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".views.ShopActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".views.ShopActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
