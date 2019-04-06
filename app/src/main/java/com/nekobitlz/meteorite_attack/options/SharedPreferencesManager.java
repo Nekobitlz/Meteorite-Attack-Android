@@ -28,7 +28,7 @@ public class SharedPreferencesManager {
 
         e.putInt("money", getMoney() + money);
 
-        e.commit();
+        e.apply();
     }
 
     /*
@@ -42,7 +42,7 @@ public class SharedPreferencesManager {
         e.putInt("meteorite", meteorDestroyed);
         e.putInt("enemy", enemyDestroyed);
 
-        e.commit();
+        e.apply();
     }
 
     /*
@@ -56,7 +56,7 @@ public class SharedPreferencesManager {
         e.putInt("player_image", playerImage);
         e.putInt("weapon_power", weaponPower);
 
-        e.commit();
+        e.apply();
     }
 
     public void saveStatus(String tag, String status) {
@@ -65,7 +65,7 @@ public class SharedPreferencesManager {
 
         e.putString(tag, status);
 
-        e.commit();
+        e.apply();
     }
 
     /*
@@ -122,7 +122,7 @@ public class SharedPreferencesManager {
         SharedPreferences.Editor e = sp.edit();
 
         e.remove("money");
-        e.commit();
+        e.apply();
     }
 
     public void removeHighScore() {
@@ -133,6 +133,6 @@ public class SharedPreferencesManager {
         e.remove("enemy");
         e.remove("meteorite");
 
-        e.commit();
+        e.apply();
     }
 }
