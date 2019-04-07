@@ -87,11 +87,14 @@ public class Drawer {
     */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawHealth(Meteorite meteor, int x, int y, Paint paint) {
+        //Shift health drawing point, it is necessary so that
+        // regardless of amount of health is always in the middle
+        int shift = String.valueOf(meteor.getHealth()).length();
         Bitmap meteorBitmap = meteor.getBitmap();
 
         setHealthPaintSettings();
 
-        canvas.drawText("" + meteor.getHealth(), x + meteorBitmap.getWidth() / 2 - 10,
+        canvas.drawText("" + meteor.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
                 y + meteorBitmap.getHeight() / 2, paint);
     }
 
@@ -100,11 +103,14 @@ public class Drawer {
     */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
+        //Shift health drawing point, it is necessary so that
+        // regardless of amount of health is always in the middle
+        int shift = String.valueOf(enemy.getHealth()).length();
         Bitmap enemyBitmap = enemy.getBitmap();
 
         setHealthPaintSettings();
 
-        canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - 10,
+        canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - shift * 10,
                 y + enemyBitmap.getHeight() / 2, paint);
     }
 
