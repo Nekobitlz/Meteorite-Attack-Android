@@ -105,6 +105,7 @@
 
         <Button
                 android:id="@+id/play"
+                app:fontFamily="@font/iceberg_regular"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/custom_button_background"
@@ -112,9 +113,11 @@
                 android:textColor="@android:color/white"
                 android:textSize="35sp"
                 android:textStyle="bold"
-                android:layout_gravity="center" android:layout_height="75dp"/>
+                android:layout_gravity="center"
+                android:layout_height="75dp"/>
         <Button
                 android:id="@+id/exit"
+                app:fontFamily="@font/iceberg_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button_background"
