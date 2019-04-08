@@ -47,7 +47,6 @@ public class SharedPreferencesManager {
 
     /*
         Saves player image and weapon power
-        (need for shop)
     */
     public void savePlayer(int playerImage, int weaponPower) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -59,6 +58,9 @@ public class SharedPreferencesManager {
         e.apply();
     }
 
+    /*
+        Saves shop status ("USED", "BUY", "USE") for shop item tag
+    */
     public void saveStatus(String tag, String status) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
@@ -132,6 +134,25 @@ public class SharedPreferencesManager {
         e.remove("high score");
         e.remove("enemy");
         e.remove("meteorite");
+
+        e.apply();
+    }
+
+    public void removePlayer() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.remove("player_image");
+        e.remove("weapon_power");
+
+        e.apply();
+    }
+
+    public void removeStatus(String tag) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.remove(tag);
 
         e.apply();
     }
