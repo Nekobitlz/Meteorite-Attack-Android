@@ -113,4 +113,11 @@ public class SoundPlayer implements Runnable {
 
         soundThread.join();
     }
+
+    /*
+        Removes all loaded sounds from SoundPool and frees up memory
+    */
+    public void release() {
+        soundPool.release();
+    }
 }

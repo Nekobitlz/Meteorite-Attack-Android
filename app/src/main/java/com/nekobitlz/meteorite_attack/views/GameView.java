@@ -2,21 +2,28 @@ package com.nekobitlz.meteorite_attack.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.*;
-import android.view.KeyEvent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.nekobitlz.meteorite_attack.enums.*;
-import com.nekobitlz.meteorite_attack.objects.*;
-import com.nekobitlz.meteorite_attack.options.*;
+import com.nekobitlz.meteorite_attack.enums.Direction;
+import com.nekobitlz.meteorite_attack.enums.GameStatus;
+import com.nekobitlz.meteorite_attack.enums.Objects;
+
+import com.nekobitlz.meteorite_attack.objects.Enemy;
+import com.nekobitlz.meteorite_attack.objects.Laser;
+import com.nekobitlz.meteorite_attack.objects.Meteorite;
+import com.nekobitlz.meteorite_attack.objects.Player;
+import com.nekobitlz.meteorite_attack.options.AnimatedBackground;
+import com.nekobitlz.meteorite_attack.options.Drawer;
+import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
+import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 import java.util.ArrayList;
-import java.util.Random;
-
-import static com.nekobitlz.meteorite_attack.views.MainMenuActivity.loadMoney;
 
 /*
     MAIN GAME ENGINE
@@ -313,11 +320,11 @@ public class GameView extends SurfaceView implements Runnable {
 
     /*
          !package-private!
-        Sets main menu activity
+        Sets main menu activity and clears sounds pool
     */
     void setMainMenuActivity() {
         ((Activity) getContext()).finish();
-        loadMoney();
+        soundPlayer.release();
     }
 
     /*
