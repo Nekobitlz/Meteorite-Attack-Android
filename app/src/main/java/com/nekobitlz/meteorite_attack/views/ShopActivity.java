@@ -14,8 +14,6 @@ import com.nekobitlz.meteorite_attack.options.Shop;
 
 import java.util.ArrayList;
 
-import static com.nekobitlz.meteorite_attack.views.MainMenuActivity.loadMoney;
-
 /*
     Activity where the shop is located
 */
@@ -151,7 +149,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.back:
                 finish();
-                loadMoney();
                 break;
         }
     }
@@ -164,6 +161,5 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         finish();
-        loadMoney();
     }
 }

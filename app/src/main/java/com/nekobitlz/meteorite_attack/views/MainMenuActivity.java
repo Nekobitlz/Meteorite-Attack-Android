@@ -23,8 +23,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private ImageButton shop;
     private ImageButton highScore;
 
-    private static TextView money;
-    private static SharedPreferencesManager spm;
+    private TextView money;
+    private SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         Loads your saved money
     */
     @SuppressLint("SetTextI18n")
-    public static void loadMoney() {
+    public void loadMoney() {
         money.setText(spm.getMoney() + "");
     }
 
@@ -76,13 +76,22 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             }
             break;
 
-            case R.id.high_score:
+            case R.id.high_score: {
                 startActivity(new Intent(this, HighScoreActivity.class));
-                break;
+            }
+            break;
 
-            case R.id.exit:
+            case R.id.exit: {
                 finish();
-                break;
+            }
+            break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadMoney();
     }
 }
