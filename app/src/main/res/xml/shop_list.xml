@@ -16,12 +16,12 @@
             price="300"
             weapon_power="5"/>
     <item
-            name="player4"
+            name="player_4"
             image="enemy_black_1"
             price="500"
             weapon_power="7"/>
     <item
-            name="player5"
+            name="player_5"
             image="enemy_black_3"
             price="700"
             weapon_power="10"/>
