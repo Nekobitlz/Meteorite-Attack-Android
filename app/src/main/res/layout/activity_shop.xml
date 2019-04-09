@@ -12,128 +12,17 @@
             android:scaleType="centerCrop"
             android:src="@drawable/menu_background"/>
 
+    <LinearLayout
+            android:id="@+id/rootContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    </LinearLayout>
     <ImageView
             android:layout_margin="16dp"
             android:id="@+id/back"
             android:src="@drawable/arrow_left_circle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    <RelativeLayout
-            android:layout_width="354dp"
-            android:layout_height="436dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="44dp">
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="79dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="68dp"
-                android:layout_alignParentLeft="true">
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/player_ship_1_red"
-                    android:id="@+id/player1"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/player_ship_2_red"
-                    android:id="@+id/player2"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/player_ship_3_red"
-                    android:id="@+id/player3"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true">
-            <Button
-                    android:text="@string/status_used"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonPlayer1"
-                    android:onClick="onClick"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_button_background"
-                    android:textColor="@android:color/white"/>
-            <Button
-                    android:text="@string/status_buy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonPlayer2"
-                    android:onClick="onClick"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_button_background"
-                    android:textColor="@android:color/white"/>
-            <Button
-                    android:text="@string/status_buy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonPlayer3"
-                    android:onClick="onClick"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_button_background"
-                    android:textColor="@android:color/white"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="156dp"
-                android:layout_alignParentLeft="true">
-            <TextView
-                    android:text=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/pricePlayer1"
-                    android:textColor="@android:color/white"
-                    app:fontFamily="@font/iceberg_regular"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-            <TextView
-                    android:text="100"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/pricePlayer2"
-                    android:textColor="@android:color/white"
-                    app:fontFamily="@font/iceberg_regular"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
-            <TextView
-                    android:text="300"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/pricePlayer3"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    app:fontFamily="@font/iceberg_regular"
-                    android:layout_weight="1"/>
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_height="wrap_content" android:onClick="onClick"/>
 
 </RelativeLayout>

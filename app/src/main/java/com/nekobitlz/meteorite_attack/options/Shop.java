@@ -70,7 +70,8 @@ public class Shop {
                 if (currentMoney >= moneyPrice) {
                     spm.saveMoney(-moneyPrice);
 
-                    selectedPrice.setText("");
+                    selectedPrice.setTextSize(14);
+                    selectedPrice.setText("Purchased");
                     makeStatusUsed(shopViewsList);
 
                     Toast.makeText(context, "You successfully buy new ship!", Toast.LENGTH_SHORT).show();
@@ -116,7 +117,7 @@ public class Shop {
     }
 
     /*
-        Auxiliary class for storing shop item information
+        Auxiliary class for storing shop item information with Views
     */
     public static class ShopViewsSetup {
         private String statusTag;

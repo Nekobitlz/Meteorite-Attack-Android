@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shop_list>
+    <item
+            name="player_1"
+            image="player_ship_1_red"
+            price="0"
+            weapon_power="1"/>
+    <item
+            name="player_2"
+            image="player_ship_2_red"
+            price="100"
+            weapon_power="3"/>
+    <item
+            name="player_3"
+            image="player_ship_3_red"
+            price="300"
+            weapon_power="5"/>
+    <item
+            name="player4"
+            image="enemy_black_1"
+            price="500"
+            weapon_power="7"/>
+    <item
+            name="player5"
+            image="enemy_black_3"
+            price="700"
+            weapon_power="10"/>
+</shop_list>
