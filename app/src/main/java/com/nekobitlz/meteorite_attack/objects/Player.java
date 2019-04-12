@@ -4,14 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import com.nekobitlz.meteorite_attack.R;
-import com.nekobitlz.meteorite_attack.enums.Direction;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 import java.util.ArrayList;
-
-import static java.lang.Math.abs;
 
 /*
   The main player to be managed by the user
@@ -20,20 +16,12 @@ public class Player {
 
     private Bitmap bitmap;
 
-    private int x;
-    private int y;
-    private int maxX;
-    private int minX;
-    private int maxY;
-    private int minY;
+    private float x;
+    private float y;
     private int screenSizeX;
     private int screenSizeY;
 
     private int margin = 16; //indent from edge
-    private int speed;
-
-    private Direction currentDirection = Direction.Stopped;
-    private float headingSpeed;
     private Rect collision;
     private SharedPreferencesManager spm;
 
@@ -55,40 +43,22 @@ public class Player {
         bitmap = Bitmap.createScaledBitmap(
                 bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
 
-        maxX = screenSizeX - bitmap.getWidth();
-        maxY = screenSizeY - bitmap.getHeight();
-        minX = 0;
-        minY = 0;
-        speed = 1;
-
         x = screenSizeX / 2 - bitmap.getWidth() / 2;
         y = screenSizeY - bitmap.getHeight() - margin;
 
         lasers = new ArrayList<>();
 
-        collision = new Rect(x, y, x + bitmap.getWidth(), y + bitmap.getHeight());
+        collision = new Rect((int) x, (int) y, (int) x + bitmap.getWidth(), (int) y + bitmap.getHeight());
     }
 
     /*
         Updates player state
     */
     public void update() {
-        if (currentDirection == Direction.Left) {
-            x -= headingSpeed * 10;
-
-            if (x < minX)
-                x = minX;
-        } else if (currentDirection == Direction.Right) {
-            x += headingSpeed * 10;
-
-            if (x > maxX)
-                x = maxX;
-        }
-
-        collision.left = x;
-        collision.top = y;
-        collision.right = x + bitmap.getWidth();
-        collision.bottom = y + bitmap.getHeight();
+        collision.left = (int) x;
+        collision.top = (int) y;
+        collision.right = (int) (x + bitmap.getWidth());
+        collision.bottom = (int) (y + bitmap.getHeight());
 
         for (Laser l : lasers) {
             l.update();
@@ -120,16 +90,8 @@ public class Player {
         Add lasers on the playing field
     */
     public void fire() {
-        lasers.add(new Laser(context, screenSizeX, screenSizeY, x, y, bitmap));
+        lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
         soundPlayer.playLaser();
-    }
-
-    /*
-        Sets direction for player
-    */
-    public void setCurrentDirection(Direction direction, float speed) {
-        currentDirection = direction;
-        headingSpeed = abs(speed);
     }
 
     /*
@@ -147,11 +109,19 @@ public class Player {
         return bitmap;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 }

@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.nekobitlz.meteorite_attack.enums.Direction;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.enums.Objects;
 
@@ -53,6 +52,10 @@ public class GameView extends SurfaceView implements Runnable {
     private int screenSizeY;
     private int level;
     private int fps = 0;
+
+    private boolean isDragged = false;
+    private float dragX = 0;
+    private float dragY = 0;
 
     private SoundPlayer soundPlayer;
     private SharedPreferencesManager spm;
@@ -264,13 +267,6 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /*
-        Sets player direction
-    */
-    public void setDirection(Direction currentDirection, float speed) {
-        player.setCurrentDirection(currentDirection, speed);
-    }
-
-    /*
         Playing field update frequency
     */
     public void control() {
@@ -328,20 +324,46 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /*
-        Reads buttons presses
+        Initializes and handles controls by dragging the player
     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        float evX = event.getX();
+        float evY = event.getY();
+
         switch (event.getAction()) {
-            //When game is over - touch the screen tosses into main menu
-            case MotionEvent.ACTION_DOWN: {
-                if (currentStatus == GameStatus.GameOver || currentStatus == GameStatus.NewHighScore) {
-                    setMainMenuActivity();
+            case MotionEvent.ACTION_DOWN:
+                if (currentStatus == GameStatus.Playing) {
+                    // If the touch is within the square
+                    if (evX >= player.getX()
+                            && evX <= player.getX() + player.getBitmap().getWidth()
+                            && evY >= player.getY()
+                            && evY <= player.getY() + player.getBitmap().getHeight()) {
+                        // Activate the drag mode
+                        isDragged = true;
+                        dragX = evX - player.getX();
+                        dragY = evY - player.getY();
+                    }
+                } else {
+                    // When the game is over pressing the screen returns to the main menu
+                    if (currentStatus == GameStatus.GameOver || currentStatus == GameStatus.NewHighScore) {
+                        setMainMenuActivity();
+                    }
                 }
-            }
-            break;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (isDragged) {
+                    // Defines new coordinates for drawing
+                    player.setX(evX - dragX);
+                    player.setY(evY - dragY);
+                    invalidate();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                isDragged = false;
+                break;
         }
 
-        return super.onTouchEvent(event);
+        return true;
     }
 }

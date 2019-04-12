@@ -1,13 +1,6 @@
 package com.nekobitlz.meteorite_attack.views;
 
-import android.content.Context;
 import android.graphics.Point;
-
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -18,7 +11,7 @@ import com.nekobitlz.meteorite_attack.enums.Direction;
 /*
     Activity with game
 */
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;
 
@@ -39,11 +32,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         gameView = new GameView(this, point.x, point.y);
         setContentView(gameView);
-
-        //The accelerometer sensor is used to move the player to the right and left
-        SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-        manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
     /*
@@ -62,26 +50,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onPause() {
         super.onPause();
         gameView.pause();
-    }
-
-    /*
-        Reads acceleration changes
-    */
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        float speed = event.values[0];
-
-        if (speed > 1)
-            gameView.setDirection(Direction.Left, speed);
-        else if (speed < -1)
-            gameView.setDirection(Direction.Right, speed);
-        else
-            gameView.setDirection(Direction.Stopped, 0);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        //TODO()
     }
 
     /*
