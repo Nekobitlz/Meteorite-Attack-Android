@@ -22,6 +22,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private TextView money;
     private SharedPreferencesManager spm;
+    private long backPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,5 +91,18 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         super.onResume();
 
         loadMoney();
+    }
+
+    /*
+        Exit from the application by double clicking on the Back button
+    */
+    @Override
+    public void onBackPressed() {
+        if (backPressed + 2000 > System.currentTimeMillis())
+            super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+
+        backPressed = System.currentTimeMillis();
     }
 }

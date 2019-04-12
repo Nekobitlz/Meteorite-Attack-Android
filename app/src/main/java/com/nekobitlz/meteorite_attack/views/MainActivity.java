@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.WindowManager;
-
-import com.nekobitlz.meteorite_attack.enums.Direction;
+import android.widget.Toast;
 
 /*
     Activity with game
@@ -14,6 +13,7 @@ import com.nekobitlz.meteorite_attack.enums.Direction;
 public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;
+    private long backPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +53,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-        Reads back button click
+        Exit to MainMenu by double clicking on the Back button
     */
     @Override
     public void onBackPressed() {
-        gameView.setMainMenuActivity();
+        if (backPressed + 2000 > System.currentTimeMillis())
+            gameView.setMainMenuActivity();
+        else
+            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+
+        backPressed = System.currentTimeMillis();
     }
 }
