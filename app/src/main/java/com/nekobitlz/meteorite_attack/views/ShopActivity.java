@@ -1,13 +1,16 @@
 package com.nekobitlz.meteorite_attack.views;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.Toast;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.Shop;
@@ -20,16 +23,20 @@ import java.util.ArrayList;
 */
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener{
     private ImageView back;
+    private ViewPager pager;
+    private PagerAdapter pagerAdapter;
 
-    private Shop shop;
-    private ArrayList<Shop.ShopViewsSetup> shopViewsList;
     private ArrayList<ShopActivity.ShopItem> shopItemList;
     private SharedPreferencesManager spm;
 
     private String image;
-    private String name;
-    private String price;
+    private String health;
+    private String shipPrice;
+    private String xScore;
+    private String upgradePrice;
     private String weaponPower;
+
+    private int PAGE_COUNT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,42 +49,51 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         //Make the display always turn on if the activity is active
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        shop = new Shop(this);
         spm = new SharedPreferencesManager(this);
-
-        shopViewsList = new ArrayList<>();
         shopItemList = new ArrayList<>();
 
         XmlPullParser shopParser = getResources().getXml(R.xml.shop_list);
         parseXml(shopParser);
+        setStatusTags();
+
+        PAGE_COUNT = shopItemList.size();
 
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
-        setStatusTags();
-        drawShopItem();
+        pager = findViewById(R.id.pager);
+        pagerAdapter = new ShopPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
     }
 
     /*
         Sets status tags
 
+            STATUS == BUTTON TEXT
+
             If there is saved data -> it gets it
             If not ->
                 status of the first item is "USED",
-                for the remaining items status is "BUY"
+                for the remaining items status is equal to price
     */
     private void setStatusTags() {
-        String firstItemTag = shopItemList.get(0).getName();
+        String firstItemTag = String.valueOf(shopItemList.get(0).getImage());
 
         if (android.text.TextUtils.equals(spm.getStatus(firstItemTag), "NONE")) {
             spm.saveStatus(firstItemTag, "USED");
+            spm.savePlayer(shopItemList.get(0).getImage());
         }
 
         for (ShopActivity.ShopItem item : shopItemList) {
-            String itemName = item.getName();
+            String itemName = String.valueOf(item.getImage());
 
             if (android.text.TextUtils.equals(spm.getStatus(itemName), "NONE")) {
-                spm.saveStatus(itemName, "BUY");
+                spm.saveStatus(itemName, item.getShipPrice());
+                spm.saveUpgrade(
+                        itemName,
+                        Integer.parseInt(item.getHealth()),
+                        Integer.parseInt(item.getXScore()),
+                        Integer.parseInt(item.getWeaponPower()));
             }
         }
     }
@@ -90,12 +106,15 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
             while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
                 if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("item")) {
                     // Gets xml attributes
-                    image = parser.getAttributeValue(0);
-                    name = parser.getAttributeValue(1);
-                    price = parser.getAttributeValue(2);
-                    weaponPower = parser.getAttributeValue(3);
+                    health = parser.getAttributeValue(0);
+                    image = parser.getAttributeValue(1);
+                    shipPrice = parser.getAttributeValue(2);
+                    upgradePrice = parser.getAttributeValue(3);
+                    weaponPower = parser.getAttributeValue(4);
+                    xScore = parser.getAttributeValue(5);
 
-                    shopItemList.add(new ShopActivity.ShopItem(name, image, price, weaponPower));
+                    shopItemList.add(
+                            new ShopActivity.ShopItem(image, shipPrice, upgradePrice, health, weaponPower, xScore));
                 }
 
                 parser.next();
@@ -103,111 +122,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Throwable t) {
             Toast.makeText(this,
                     "Error loading shop items: " + t.toString(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /*
-        Draws all items in shop in the format:
-              <LinearLayout> (rootContainer)
-                <ScrollView>
-                    <LinearLayout>
-                      <LinearLayout> (Layout where each item is located)
-                        <ImageView> (Item image)
-                        <TextView> (Price)
-                        <Button> ("USE", "USED", "BUY")
-    */
-    private void drawShopItem() {
-        ScrollView scrollView = new ScrollView(this);
-        LinearLayout linearLayout = new LinearLayout(this);
-
-        LinearLayout.LayoutParams paramsMM = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        LinearLayout.LayoutParams paramsMW = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams paramsWW = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams priceParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT + 150, 60);
-
-        paramsMW.setMargins(0, 30, 0, 0);
-        paramsMW.gravity = Gravity.CENTER;
-
-        paramsWW.setMargins(0, 30, 0, 30);
-        paramsWW.gravity = Gravity.CENTER;
-
-        priceParams.setMargins(0, 30, 0, 0);
-        priceParams.gravity = Gravity.CENTER;
-
-        scrollView.setLayoutParams(paramsMM);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setLayoutParams(paramsMW);
-
-        scrollView.addView(linearLayout);
-
-        // Draws picture, price and processing button for each item
-        for (final ShopActivity.ShopItem item : shopItemList) {
-            LinearLayout itemLayout = new LinearLayout(this);
-            itemLayout.setBackgroundColor(Color.WHITE);
-            itemLayout.setOrientation(LinearLayout.VERTICAL);
-            itemLayout.setLayoutParams(paramsWW);
-
-            // IMAGE
-            ImageView playerImageView = new ImageView(this);
-
-            playerImageView.setLayoutParams(paramsMW);
-            playerImageView.setImageResource(item.getImage());
-
-            itemLayout.addView(playerImageView);
-
-            // PRICE
-            TextView priceTextView = new TextView(this);
-
-            priceTextView.setLayoutParams(priceParams);
-            priceTextView.setTextColor(Color.WHITE);
-            priceTextView.setGravity(Gravity.CENTER);
-            priceTextView.setBackgroundColor(Color.parseColor("#A87D00"));
-
-            // If item can be bought, the price is put
-            if (spm.getStatus(item.getName()).equals("BUY")) {
-                priceTextView.setText(item.getPrice());
-                priceTextView.setTextSize(15);
-            } else {
-                priceTextView.setText("Purchased");
-            }
-
-            itemLayout.addView(priceTextView);
-
-            // BUTTON
-            Button statusButton = new Button(this);
-
-            statusButton.setTextColor(Color.WHITE);
-            statusButton.setText(spm.getStatus(item.getName()));
-            statusButton.setBackgroundResource(R.drawable.custom_button_background);
-            statusButton.setLayoutParams(paramsWW);
-
-            itemLayout.addView(statusButton);
-
-            // Sets onClickListener and initializes the processing of the item in the shop
-            final Shop.ShopViewsSetup currentShopView = new Shop.ShopViewsSetup(
-                    item.getName(), statusButton, priceTextView, Integer.parseInt(item.getPrice()),
-                    new Pair<>(item.getImage(), item.getWeaponPower()));
-            shopViewsList.add(currentShopView);
-
-            View.OnClickListener oclStatusButton = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    shop.processSelectedItem(shopViewsList, currentShopView);
-                }
-            };
-
-            statusButton.setOnClickListener(oclStatusButton);
-            linearLayout.addView(itemLayout);
-        }
-
-        LinearLayout rootContainer = findViewById(R.id.rootContainer);
-
-        if (rootContainer != null) {
-            rootContainer.addView(scrollView);
         }
     }
 
@@ -224,6 +138,13 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /*
+        Returns a list of all items in the shop
+    */
+    public ArrayList<ShopItem> getShopItemList() {
+        return shopItemList;
+    }
+
+    /*
         Handles pressing "back" button
     */
     @Override
@@ -235,36 +156,73 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         Class describing characteristics of item in shop
     */
     public class ShopItem {
-        private String name;
         private String image;
-        private String price;
+        private String shipPrice;
+        private String upgradePrice;
+        private String health;
         private String weaponPower;
+        private String xScore;
 
-        public ShopItem(String name, String image, String price, String weaponPower) {
-            this.name = name;
+        public ShopItem(String image, String shipPrice, String upgradePrice,
+                        String health, String weaponPower, String xScore) {
             this.image = image;
-            this.price = price;
+            this.shipPrice = shipPrice;
+            this.upgradePrice = upgradePrice;
+            this.health = health;
             this.weaponPower = weaponPower;
+            this.xScore = xScore;
         }
 
         /*
             GETTERS
         */
-        public String getName() {
-            return name;
-        }
 
         // Immediately gets a link to get a picture
         public int getImage() {
             return getResources().getIdentifier(image, "drawable", getPackageName());
         }
 
-        public String getPrice() {
-            return price;
+        public String getShipPrice() {
+            return shipPrice;
         }
 
-        public int getWeaponPower() {
-            return Integer.parseInt(weaponPower);
+        public String getUpgradePrice() {
+            return upgradePrice;
+        }
+
+        public String getHealth() {
+            return health;
+        }
+
+        public String getXScore() {
+            return xScore;
+        }
+
+        public String getWeaponPower() {
+            return weaponPower;
+        }
+    }
+
+    /*
+        Adapter for the fragment that contains the item from the shop
+    */
+    private class ShopPagerAdapter extends FragmentPagerAdapter {
+
+        public ShopPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        /*
+            GETTERS
+        */
+        @Override
+        public Fragment getItem(int position) {
+            return ShopItemFragment.newInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            return PAGE_COUNT;
         }
     }
 }

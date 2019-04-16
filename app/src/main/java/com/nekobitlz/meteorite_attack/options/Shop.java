@@ -5,25 +5,30 @@ import android.util.Pair;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.nekobitlz.meteorite_attack.views.ShopActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static android.app.PendingIntent.getActivity;
 
 /*
     Class shop implements
 */
 public class Shop {
     private Context context;
-    private String status;
     private String statusTag;
+    private String upgradeTag;
     private SharedPreferencesManager spm;
+    private static HashMap<String, Button> shipPriceButtonMap = new HashMap<>();
 
-    private Button selectedButton;
-    private TextView selectedPrice;
-
-    private int image;
     private int weaponPower;
     private int currentMoney;
     private int moneyPrice;
+    private int level;
+    private int xScore;
+    private int health;
+    private int shipPrice;
 
     private String use = "USE";
     private String used = "USED";
@@ -34,45 +39,103 @@ public class Shop {
     }
 
     /*
-        Handles click on item
+        Handles click on upgrade
+
+        If upgrade name is
+            "health" ->
+                    If the level of upgrade is not more than 5 & the user has enough money
+                                -> health increases
+
+            "score multiplier" (xScore) ->
+                    If the level of upgrade is not more than 5 & the user has enough money
+                                -> score multiplier increases
+
+            "weapon power" ->
+                    If the level of upgrade is not more than 5 & the user has enough money
+                                -> weapon power increases
+    */
+    public void processUpgrade(ShopActivity.ShopItem shopItem, String upgradeName,
+                               Button priceButton, TextView levelView, int maxValue) {
+        moneyPrice = Integer.parseInt(shopItem.getUpgradePrice());
+        upgradeTag = String.valueOf(shopItem.getImage());
+        health = spm.getHealth(upgradeTag);
+        xScore = spm.getXScore(upgradeTag);
+        weaponPower = spm.getWeaponPower(upgradeTag);
+        currentMoney = spm.getMoney();
+
+        switch (upgradeName) {
+            case "health" : level = spm.getHealth(upgradeTag);
+            break;
+            case "score multiplier" : level = spm.getXScore(upgradeTag);
+            break;
+            case "weapon power" : level = spm.getWeaponPower(upgradeTag);
+            break;
+            default: level = 1; /* NEVER HAPPEN */
+        }
+
+        if (level < maxValue) {
+            if (moneyPrice <= currentMoney) {
+                level++;
+
+                switch (upgradeName) {
+                    case "health" : health++;
+                    break;
+                    case "score multiplier" : xScore++;
+                    break;
+                    case "weapon power" : weaponPower++;
+                    break;
+                }
+
+                spm.saveMoney(-moneyPrice);
+                spm.saveUpgrade(upgradeTag, health, xScore, weaponPower);
+
+                if (level < maxValue) {
+                    levelView.setText(String.valueOf(level));
+                } else {
+                    levelView.setText("MAX");
+                    priceButton.setText("");
+                    priceButton.setActivated(false);
+                }
+
+                Toast.makeText(context, "You successfully upgrade " + upgradeName, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "You don't have enough money", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(context, "You have already reached maximum level", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /*
+        Handles click on price button
 
         If status of item is:
                 Use -> Ship changing
                 Used -> Nothing happens and toast pops up that the ship is already in use
-                Buy -> If user has money, money is spent and ship goes to status "Used",
+                *Price* -> If user has money, money is spent and ship goes to status "Used",
                        if not, then a toast with error comes out
     */
-    public void processSelectedItem(ArrayList<ShopViewsSetup> shopViewsList, ShopViewsSetup shopViewsSetup) {
-        selectedButton = shopViewsSetup.getButton();
-        selectedPrice = shopViewsSetup.getPriceView();
-        statusTag = shopViewsSetup.getStatusTag();
-        status = spm.getStatus(statusTag);
-        moneyPrice = shopViewsSetup.getPrice();
+    public void processShip(ShopActivity.ShopItem shopItem, Button shipPriceButton) {
+        shipPrice = Integer.parseInt(shopItem.getShipPrice());
+        statusTag = String.valueOf(shopItem.getImage());
+        currentMoney = spm.getMoney();
 
-        image = shopViewsSetup.getPlayerSetup().first;
-        weaponPower = shopViewsSetup.getPlayerSetup().second;
-
-        switch (status) {
+        switch (shipPriceButton.getText().toString()) {
             case "USE" : {
-                makeStatusUsed(shopViewsList);
+                makeStatusUsed(shopItem, shipPriceButton);
+
                 Toast.makeText(context, "Ship changed", Toast.LENGTH_SHORT).show();
             }
             break;
-
             case "USED" : {
                 Toast.makeText(context, "You already use this ship", Toast.LENGTH_SHORT).show();
             }
             break;
-
-            case "BUY" : {
-                currentMoney = spm.getMoney();
-
-                if (currentMoney >= moneyPrice) {
-                    spm.saveMoney(-moneyPrice);
-
-                    selectedPrice.setTextSize(14);
-                    selectedPrice.setText("Purchased");
-                    makeStatusUsed(shopViewsList);
+            /* default situation will be when the button displays PRICE */
+            default: {
+                if (shipPrice <= currentMoney) {
+                    spm.saveMoney(-shipPrice);
+                    makeStatusUsed(shopItem, shipPriceButton);
 
                     Toast.makeText(context, "You successfully buy new ship!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -81,82 +144,32 @@ public class Shop {
             }
             break;
         }
-
-        spm.saveStatus(statusTag, status);
     }
 
     /*
         Saves player status and sets item status to "Used"
         Also sets an already used item to "Use" status
     */
-    private void makeStatusUsed(ArrayList<ShopViewsSetup> shopViewsList) {
-        status = used;
+    private void makeStatusUsed(ShopActivity.ShopItem shopItem, Button shipPriceButton) {
+        for (HashMap.Entry<String, Button> entry: shipPriceButtonMap.entrySet()) {
+            String tag = entry.getKey();
+            final Button button = entry.getValue();
 
-        //default setText() method not working
-        selectedButton.post(new Runnable() {
-            @Override
-            public void run() {
-                selectedButton.setText(status);
-            }
-        });
-
-        //Saving parameters for further load
-        spm.savePlayer(image, weaponPower);
-        spm.saveStatus(String.valueOf(image), status);
-
-        //Remove status "used" from the previous used ship
-        for (ShopViewsSetup item : shopViewsList) {
-            String itemStatus = spm.getStatus(item.getStatusTag());
-
-            if (itemStatus.equals(used)) {
-                item.getButton().setText(use);
-                spm.saveStatus(item.getStatusTag(), use);
-                spm.saveStatus(String.valueOf(item.playerSetup.first), use);
+            if (button.getText().toString().equals(used)) {
+                spm.saveStatus(tag, use);
+                button.setText(use);
             }
         }
+
+        spm.savePlayer(shopItem.getImage());
+        spm.saveStatus(statusTag, used);
+        shipPriceButton.setText(used);
     }
 
     /*
-        Auxiliary class for storing shop item information with Views
+        Adds a button to the general list of buttons (needed for setting "USE" status)
     */
-    public static class ShopViewsSetup {
-        private String statusTag;
-        private Button button;
-        private TextView priceView;
-        private int price;
-        private Pair<Integer, Integer> playerSetup;
-
-        public ShopViewsSetup(
-                String statusTag, Button button, TextView priceView,
-                int price, Pair<Integer, Integer> playerSetup) {
-            this.statusTag = statusTag;
-            this.button = button;
-            this.priceView = priceView;
-            this.price = price;
-            this.playerSetup = playerSetup;
-        }
-
-        /*
-            GETTERS
-        */
-        public String getStatusTag() {
-            return statusTag;
-        }
-
-        public Button getButton() {
-            return button;
-        }
-
-        public TextView getPriceView() {
-            return priceView;
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public Pair<Integer, Integer> getPlayerSetup() {
-            return playerSetup;
-        }
+    public void addPriceButtonToMap(String statusTag, Button shipPriceButton) {
+        shipPriceButtonMap.put(statusTag, shipPriceButton);
     }
 }

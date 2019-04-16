@@ -86,7 +86,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void reset() {
         SCORE = 0;
         MONEY = 0;
-        WEAPON_POWER = spm.getWeaponPower();
+        WEAPON_POWER = spm.getWeaponPower(String.valueOf(spm.getPlayerImage()));
         level = 1;
 
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);

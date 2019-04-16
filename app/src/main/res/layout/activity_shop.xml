@@ -12,17 +12,34 @@
             android:scaleType="centerCrop"
             android:src="@drawable/menu_background"/>
 
-    <LinearLayout
-            android:id="@+id/rootContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-    </LinearLayout>
     <ImageView
             android:layout_margin="16dp"
             android:id="@+id/back"
             android:src="@drawable/arrow_left_circle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:onClick="onClick"/>
+            android:layout_height="wrap_content"
+            android:onClick="onClick"/>
+
+    <TextView
+            android:text="SHOP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:fontFamily="@font/iceberg_regular"
+            android:textSize="32sp"
+            android:id="@+id/shop"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/back"
+            android:layout_marginTop="-16dp"/>
+
+    <android.support.v4.view.ViewPager
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/pager"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp"
+            android:scrollbars="none"
+            android:overScrollMode="never"/>
 
 </RelativeLayout>

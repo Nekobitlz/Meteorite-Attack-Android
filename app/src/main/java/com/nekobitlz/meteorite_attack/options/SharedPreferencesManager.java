@@ -48,18 +48,31 @@ public class SharedPreferencesManager {
     /*
         Saves player image and weapon power
     */
-    public void savePlayer(int playerImage, int weaponPower) {
+    public void savePlayer(int playerImage) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
 
         e.putInt("player_image", playerImage);
-        e.putInt("weapon_power", weaponPower);
 
         e.apply();
     }
 
     /*
-        Saves shop status ("USED", "BUY", "USE") for shop item tag
+        Saves levels of improved health, score and damage.
+    */
+    public void saveUpgrade(String tag, int health, int xScore, int weaponPower) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.putInt(tag + "_health", health);
+        e.putInt(tag + "_x_score", xScore);
+        e.putInt(tag + "_weapon_power", weaponPower);
+
+        e.apply();
+    }
+
+    /*
+        Saves shop status ("USED", "*PRICE*", "USE") for shop item tag
     */
     public void saveStatus(String tag, String status) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -100,13 +113,25 @@ public class SharedPreferencesManager {
     public int getPlayerImage() {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
-        return sp.getInt("player_image", R.drawable.player_ship_1_red);
+        return sp.getInt("player_image", R.drawable.spaceship_1_game);
     }
 
-    public int getWeaponPower() {
+    public int getHealth(String tag) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
-        return sp.getInt("weapon_power", 1);
+        return sp.getInt(tag + "_health", 1);
+    }
+
+    public int getWeaponPower(String tag) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt(tag + "_weapon_power", 1);
+    }
+
+    public int getXScore(String tag) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt(tag + "_x_score", 1);
     }
 
     public String getStatus(String tag) {
