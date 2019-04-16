@@ -1,28 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shop_list>
     <item
-            name="player_1"
-            image="player_ship_1_red"
+            image="spaceship_1_game"
             price="0"
+            upgrade_price="10"
+            health="1"
+            xscore="1"
             weapon_power="1"/>
     <item
-            name="player_2"
-            image="player_ship_2_red"
-            price="100"
-            weapon_power="3"/>
-    <item
-            name="player_3"
-            image="player_ship_3_red"
-            price="300"
+            image="spaceship_2_game"
+            price="150"
+            upgrade_price="20"
+            health="5"
+            xscore="5"
             weapon_power="5"/>
     <item
-            name="player_4"
-            image="enemy_black_1"
-            price="500"
-            weapon_power="7"/>
-    <item
-            name="player_5"
-            image="enemy_black_3"
-            price="700"
+            image="spaceship_3_game"
+            price="300"
+            upgrade_price="30"
+            health="10"
+            xscore="10"
             weapon_power="10"/>
+    <item
+            image="spaceship_4_game"
+            price="500"
+            upgrade_price="40"
+            health="15"
+            xscore="15"
+            weapon_power="15"/>
+    <item
+            image="spaceship_5_game"
+            price="700"
+            upgrade_price="50"
+            health="20"
+            xscore="20"
+            weapon_power="20"/>
+    <item
+            image="spaceship_6_game"
+            price="900"
+            upgrade_price="60"
+            health="25"
+            xscore="25"
+            weapon_power="25"/>
+    <item
+            image="spaceship_7_game"
+            price="1100"
+            upgrade_price="70"
+            health="30"
+            xscore="30"
+            weapon_power="30"/>
+    <item
+            image="spaceship_8_game"
+            price="1300"
+            upgrade_price="80"
+            health="35"
+            xscore="35"
+            weapon_power="35"/>
+    <item
+            image="spaceship_9_game"
+            price="1500"
+            upgrade_price="90"
+            health="40"
+            xscore="40"
+            weapon_power="40"/>
+    <item
+            image="spaceship_10_game"
+            price="2000"
+            upgrade_price="100"
+            health="45"
+            xscore="45"
+            weapon_power="45"/>
 </shop_list>
