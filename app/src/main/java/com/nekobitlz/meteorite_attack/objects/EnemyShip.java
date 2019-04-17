@@ -16,7 +16,7 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 /*
     Enemy flying ship
 */
-public class Enemy {
+public class EnemyShip {
 
     private Bitmap bitmap;
 
@@ -31,16 +31,16 @@ public class Enemy {
     private SoundPlayer soundPlayer;
     private Direction currentDirection;
 
-    private int enemies[]; //list of enemies sprites
+    private int enemyShips[]; //list of enemy ships sprites
     private int health;
     private int speed;
     private int level;
     private int value; //"value" coins are awarded for killing
 
     /*
-        Enemy initialization
+        Enemy ship initialization
     */
-    public Enemy(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
+    public EnemyShip(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
         this.soundPlayer = soundPlayer;
@@ -48,11 +48,11 @@ public class Enemy {
 
         health = getRandomHealth(level);
         value = health;
-        enemies = new int[] { R.drawable.enemy_black_1, R.drawable.enemy_black_2, R.drawable.enemy_black_3 };
+        enemyShips = new int[] { R.drawable.enemy_black_1, R.drawable.enemy_black_2, R.drawable.enemy_black_3 };
 
-        //Set random image of enemy
+        //Set random image of enemy ship
         Random random = new Random();
-        bitmap = BitmapFactory.decodeResource(context.getResources(), enemies[random.nextInt(3)]);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), enemyShips[random.nextInt(3)]);
         bitmap = Bitmap.createScaledBitmap(
                 bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
 
@@ -64,7 +64,7 @@ public class Enemy {
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();
 
-        //If enemy reaches the end of the screen, then changes direction
+        //If enemy ship reaches the end of the screen, then changes direction
         if (x < maxX)
             currentDirection = Direction.Right;
         else
@@ -74,7 +74,7 @@ public class Enemy {
     }
 
     /*
-        Gets a random amount of health for an enemy in a given range
+        Gets a random amount of health for an enemy ship in a given range
     */
     private int getRandomHealth(int level) {
         Random random = new Random();
@@ -84,7 +84,7 @@ public class Enemy {
     }
 
     /*
-        Updates enemy state
+        Updates enemy ship state
     */
     public void update() {
         y += 7 * speed;
@@ -106,14 +106,14 @@ public class Enemy {
     }
 
     /*
-        Captures a hit on enemy and if the hit is decisive, it kills the enemy
+        Captures a hit on enemy ship and if the hit is decisive, it kills the enemy ship
     */
     public void hit() {
         health -= WEAPON_POWER;
 
         if (health <= 0) {
             SCORE += level * 20;
-            ENEMY_DESTROYED++;
+            ENEMY_SHIP_DESTROYED++;
             MONEY += value;
             destroy();
         } else {
@@ -122,7 +122,7 @@ public class Enemy {
     }
 
     /*
-        Destroys enemy
+        Destroys enemy ship
     */
     public void destroy() {
         y = screenSizeY + 1;

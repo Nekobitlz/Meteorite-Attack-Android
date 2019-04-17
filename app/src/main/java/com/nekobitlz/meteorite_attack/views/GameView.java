@@ -28,7 +28,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     public static int SCORE = 0;
     public static int METEOR_DESTROYED = 0;
-    public static int ENEMY_DESTROYED = 0;
+    public static int ENEMY_SHIP_DESTROYED = 0;
     public static int MONEY = 0;
     public static int WEAPON_POWER;
     public static int X_SCORE = 1;
@@ -43,7 +43,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private ArrayList<Meteorite> meteors;
     private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<EnemyShip> enemyShips;
     private AnimatedBackground background;
     private Drawer drawer;
 
@@ -96,7 +96,7 @@ public class GameView extends SurfaceView implements Runnable {
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
         meteors = new ArrayList<>();
         borderDestroyerMeteors = new ArrayList<>();
-        enemies = new ArrayList<>();
+        enemyShips = new ArrayList<>();
         background = new AnimatedBackground(getContext(), screenSizeX, screenSizeY);
 
         //create star background
@@ -111,7 +111,7 @@ public class GameView extends SurfaceView implements Runnable {
     */
     private void initDrawer() {
         drawer.setBackground(background);
-        drawer.setEnemies(enemies);
+        drawer.setEnemyShips(enemyShips);
         drawer.setMeteors(meteors);
         drawer.setPlayer(player);
         drawer.setBorderDestroyers(borderDestroyerMeteors);
@@ -154,11 +154,11 @@ public class GameView extends SurfaceView implements Runnable {
             meteors.add(new Meteorite(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
-        objectsUpdate(Objects.Enemy);
-        deleteObjects(Objects.Enemy);
+        objectsUpdate(Objects.EnemyShip);
+        deleteObjects(Objects.EnemyShip);
 
         if (fps % 2000 == 0) {
-            enemies.add(new Enemy(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+            enemyShips.add(new EnemyShip(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
         objectsUpdate(Objects.BorderDestroyer);
@@ -185,15 +185,15 @@ public class GameView extends SurfaceView implements Runnable {
         boolean deleting = true;
 
         switch (objectName) {
-            case Enemy: {
+            case EnemyShip: {
                 while (deleting) {
-                    if (enemies.size() != 0) {
-                        if (enemies.get(0).getY() > screenSizeY) {
-                            enemies.remove(0);
+                    if (enemyShips.size() != 0) {
+                        if (enemyShips.get(0).getY() > screenSizeY) {
+                            enemyShips.remove(0);
                         }
                     }
 
-                    if (enemies.size() == 0 || enemies.get(0).getY() <= screenSizeY) {
+                    if (enemyShips.size() == 0 || enemyShips.get(0).getY() <= screenSizeY) {
                         deleting = false;
                     }
                 }
@@ -258,17 +258,17 @@ public class GameView extends SurfaceView implements Runnable {
             }
             break;
 
-            case Enemy: {
-                for (Enemy e : enemies) {
+            case EnemyShip: {
+                for (EnemyShip e : enemyShips) {
                     e.update();
 
-                    //If Enemy collides with spaceship -> the game ends
+                    //If EnemyShip collides with spaceship -> the game ends
                     if (Rect.intersects(e.getCollision(), player.getCollision())) {
                         e.destroy();
                         setGameOver();
                     }
 
-                    //If Enemy collides with laser -> gets damage
+                    //If EnemyShip collides with laser -> gets damage
                     for (Laser l : player.getLasers()) {
                         if (Rect.intersects(e.getCollision(), l.getCollision())) {
                             e.hit();
@@ -313,7 +313,7 @@ public class GameView extends SurfaceView implements Runnable {
         //Saves new high score
         if (SCORE > spm.getHighScore()) {
             currentStatus = GameStatus.NewHighScore;
-            spm.saveHighScore(SCORE, METEOR_DESTROYED, ENEMY_DESTROYED);
+            spm.saveHighScore(SCORE, METEOR_DESTROYED, ENEMY_SHIP_DESTROYED);
         }
     }
 

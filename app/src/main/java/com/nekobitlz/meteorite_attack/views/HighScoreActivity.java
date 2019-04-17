@@ -39,7 +39,7 @@ public class HighScoreActivity extends AppCompatActivity implements View.OnClick
         back = findViewById(R.id.back);
         score = findViewById(R.id.score);
         meteor = findViewById(R.id.meteor);
-        enemy = findViewById(R.id.enemy);
+        enemy = findViewById(R.id.enemyShip);
         nullHighScore = findViewById(R.id.null_high_score);
         highScoreContainer = findViewById(R.id.high_score_container);
 

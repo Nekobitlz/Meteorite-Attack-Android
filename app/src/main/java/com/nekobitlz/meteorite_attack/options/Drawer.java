@@ -27,7 +27,7 @@ public class Drawer {
     private SurfaceHolder surfaceHolder;
 
     private ArrayList<Meteorite> meteors;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<EnemyShip> enemyShips;
     private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
     private AnimatedBackground background;
 
@@ -68,7 +68,7 @@ public class Drawer {
                 drawHealth(m, m.getX(), m.getY(), paint);
             }
 
-            for (Enemy e : enemies) {
+            for (EnemyShip e : enemyShips) {
                 canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
                 drawHealth(e, e.getX(), e.getY(), paint);
             }
@@ -105,19 +105,19 @@ public class Drawer {
     }
 
     /*
-        Draws enemies health
+        Draws enemyShips health
     */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
+    private void drawHealth(EnemyShip enemyShip, int x, int y, Paint paint) {
         //Shift health drawing point, it is necessary so that
         // regardless of amount of health is always in the middle
-        int shift = String.valueOf(enemy.getHealth()).length();
-        Bitmap enemyBitmap = enemy.getBitmap();
+        int shift = String.valueOf(enemyShip.getHealth()).length();
+        Bitmap enemyShipBitmap = enemyShip.getBitmap();
 
         setHealthPaintSettings();
 
-        canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - shift * 10,
-                y + enemyBitmap.getHeight() / 2, paint);
+        canvas.drawText("" + enemyShip.getHealth(), x + enemyShipBitmap.getWidth() / 2 - shift * 10,
+                y + enemyShipBitmap.getHeight() / 2, paint);
     }
 
     /*
@@ -193,7 +193,7 @@ public class Drawer {
             enemyDestroyed.setColor(Color.WHITE);
 
             canvas.drawText(
-                    "Enemy Destroyed : " + spm.getEnemyDestroyed(),
+                    "EnemyShip Destroyed : " + spm.getEnemyDestroyed(),
                     screenSizeX / 2, (screenSizeY / 2) + 180, enemyDestroyed);
 
             Paint meteorDestroyed = new Paint();
@@ -217,8 +217,8 @@ public class Drawer {
         this.meteors = meteors;
     }
 
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
+    public void setEnemyShips(ArrayList<EnemyShip> enemyShips) {
+        this.enemyShips = enemyShips;
     }
 
     public void setBackground(AnimatedBackground background) {

@@ -104,7 +104,7 @@
                         android:layout_marginEnd="8dp"/>
                 <TextView
                         android:textStyle="bold"
-                        android:id="@+id/enemy"
+                        android:id="@+id/enemyShip"
                         android:text="x100"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
