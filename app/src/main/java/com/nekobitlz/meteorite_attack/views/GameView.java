@@ -34,6 +34,7 @@ public class GameView extends SurfaceView implements Runnable {
     public static int ENEMY_DESTROYED = 0;
     public static int MONEY = 0;
     public static int WEAPON_POWER;
+    public static int X_SCORE = 1;
 
     private Thread gameThread;
     private volatile GameStatus currentStatus = GameStatus.Paused;
@@ -51,6 +52,7 @@ public class GameView extends SurfaceView implements Runnable {
     private int screenSizeX;
     private int screenSizeY;
     private int level;
+    private int distance;
     private int fps = 0;
 
     private boolean isDragged = false;
@@ -84,10 +86,14 @@ public class GameView extends SurfaceView implements Runnable {
         Resets all settings for new game
     */
     private void reset() {
+        String tag = String.valueOf(spm.getPlayerImage());
+
         SCORE = 0;
         MONEY = 0;
-        WEAPON_POWER = spm.getWeaponPower(String.valueOf(spm.getPlayerImage()));
-        level = 1;
+        WEAPON_POWER = spm.getWeaponPower(tag);
+        X_SCORE = spm.getXScore(tag);
+        level = WEAPON_POWER;
+        distance = 0;
 
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
         meteors = new ArrayList<>();
@@ -127,11 +133,12 @@ public class GameView extends SurfaceView implements Runnable {
         Updates game state
     */
     public void update() {
-        SCORE++;
+        SCORE += X_SCORE;
+        distance += WEAPON_POWER;
 
-        //level up every 1000 points
-        if (SCORE > level * 1000) {
-            level++;
+        //level up every 1000 meters
+        if (distance > level * 1000) {
+            level += WEAPON_POWER;
         }
 
         player.update();
