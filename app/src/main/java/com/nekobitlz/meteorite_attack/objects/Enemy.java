@@ -77,25 +77,10 @@ public class Enemy {
         Gets a random amount of health for an enemy in a given range
     */
     private int getRandomHealth(int level) {
-        int minRange = getRange(level - 1) + 1;
-        int maxRange = getRange(level);
-        int diff = maxRange - minRange;
-
         Random random = new Random();
-        health = minRange + random.nextInt(diff);
+        health = level + random.nextInt(WEAPON_POWER);
 
         return health;
-    }
-
-    /*
-        Gets range of random
-    */
-    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    private int getRange(int level) {
-        if (level % 10 == 0)
-            return level * 10;
-
-        return level % 10 * 5;
     }
 
     /*
