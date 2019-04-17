@@ -13,10 +13,7 @@ import android.view.SurfaceView;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.enums.Objects;
 
-import com.nekobitlz.meteorite_attack.objects.Enemy;
-import com.nekobitlz.meteorite_attack.objects.Laser;
-import com.nekobitlz.meteorite_attack.objects.Meteorite;
-import com.nekobitlz.meteorite_attack.objects.Player;
+import com.nekobitlz.meteorite_attack.objects.*;
 import com.nekobitlz.meteorite_attack.options.AnimatedBackground;
 import com.nekobitlz.meteorite_attack.options.Drawer;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
@@ -45,6 +42,7 @@ public class GameView extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
 
     private ArrayList<Meteorite> meteors;
+    private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
     private ArrayList<Enemy> enemies;
     private AnimatedBackground background;
     private Drawer drawer;
@@ -97,6 +95,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
         meteors = new ArrayList<>();
+        borderDestroyerMeteors = new ArrayList<>();
         enemies = new ArrayList<>();
         background = new AnimatedBackground(getContext(), screenSizeX, screenSizeY);
 
@@ -115,6 +114,7 @@ public class GameView extends SurfaceView implements Runnable {
         drawer.setEnemies(enemies);
         drawer.setMeteors(meteors);
         drawer.setPlayer(player);
+        drawer.setBorderDestroyers(borderDestroyerMeteors);
     }
 
     /*
@@ -159,6 +159,14 @@ public class GameView extends SurfaceView implements Runnable {
 
         if (fps % 2000 == 0) {
             enemies.add(new Enemy(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+        }
+
+        objectsUpdate(Objects.BorderDestroyer);
+        deleteObjects(Objects.BorderDestroyer);
+
+        if (distance % 2000 == 0) {
+            borderDestroyerMeteors.add(
+                    new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
         //Update star background
@@ -206,6 +214,21 @@ public class GameView extends SurfaceView implements Runnable {
                 }
             }
             break;
+
+            case BorderDestroyer: {
+                while (deleting) {
+                    if (borderDestroyerMeteors.size() != 0) {
+                        if (borderDestroyerMeteors.get(0).getY() > screenSizeY) {
+                            borderDestroyerMeteors.remove(0);
+                        }
+                    }
+
+                    if (borderDestroyerMeteors.size() == 0 || borderDestroyerMeteors.get(0).getY() <= screenSizeY) {
+                        deleting = false;
+                    }
+                }
+            }
+            break;
         }
     }
 
@@ -218,13 +241,13 @@ public class GameView extends SurfaceView implements Runnable {
                 for (Meteorite m : meteors) {
                     m.update();
 
-                    //Meteorite collides with spaceship and the game ends
+                    //If Meteorite collides with spaceship -> the game ends
                     if (Rect.intersects(m.getCollision(), player.getCollision())) {
                         m.destroy();
                         setGameOver();
                     }
 
-                    //Meteorite collides with laser and gets damage
+                    //If Meteorite collides with laser -> gets damage
                     for (Laser l : player.getLasers()) {
                         if (Rect.intersects(m.getCollision(), l.getCollision())) {
                             m.hit();
@@ -239,16 +262,37 @@ public class GameView extends SurfaceView implements Runnable {
                 for (Enemy e : enemies) {
                     e.update();
 
-                    //Enemy collides with spaceship and the game ends
+                    //If Enemy collides with spaceship -> the game ends
                     if (Rect.intersects(e.getCollision(), player.getCollision())) {
                         e.destroy();
                         setGameOver();
                     }
 
-                    //Enemy collides with laser and gets damage
+                    //If Enemy collides with laser -> gets damage
                     for (Laser l : player.getLasers()) {
                         if (Rect.intersects(e.getCollision(), l.getCollision())) {
                             e.hit();
+                            l.destroy();
+                        }
+                    }
+                }
+            }
+            break;
+
+            case BorderDestroyer: {
+                for (BorderDestroyerMeteor bdm : borderDestroyerMeteors) {
+                    bdm.update();
+
+                    //If "Border destroyer" collides with spaceship or he flew off the screen -> the game ends
+                    if (Rect.intersects(bdm.getCollision(), player.getCollision()) || bdm.getY() > screenSizeY) {
+                        bdm.destroy();
+                        setGameOver();
+                    }
+
+                    //If "Border destroyer" collides with laser -> gets damage
+                    for (Laser l : player.getLasers()) {
+                        if (Rect.intersects(bdm.getCollision(), l.getCollision())) {
+                            bdm.hit();
                             l.destroy();
                         }
                     }

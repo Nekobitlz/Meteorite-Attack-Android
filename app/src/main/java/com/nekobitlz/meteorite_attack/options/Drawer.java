@@ -28,6 +28,7 @@ public class Drawer {
 
     private ArrayList<Meteorite> meteors;
     private ArrayList<Enemy> enemies;
+    private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
     private AnimatedBackground background;
 
     /*
@@ -72,6 +73,11 @@ public class Drawer {
                 drawHealth(e, e.getX(), e.getY(), paint);
             }
 
+            for (BorderDestroyerMeteor bdm : borderDestroyerMeteors) {
+                canvas.drawBitmap(bdm.getBitmap(), bdm.getX(), bdm.getY(), paint);
+                drawHealth(bdm, bdm.getX(), bdm.getY(), paint);
+            }
+
             drawScore();
 
             if (currentGameStatus == GameStatus.GameOver || currentGameStatus == GameStatus.NewHighScore) {
@@ -112,6 +118,22 @@ public class Drawer {
 
         canvas.drawText("" + enemy.getHealth(), x + enemyBitmap.getWidth() / 2 - shift * 10,
                 y + enemyBitmap.getHeight() / 2, paint);
+    }
+
+    /*
+        Draws "border destroyer" meteors health
+    */
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void drawHealth(BorderDestroyerMeteor bdm, int x, int y, Paint paint) {
+        //Shift health drawing point, it is necessary so that
+        // regardless of amount of health is always in the middle
+        int shift = String.valueOf(bdm.getHealth()).length();
+        Bitmap meteorBitmap = bdm.getBitmap();
+
+        setHealthPaintSettings();
+
+        canvas.drawText("" + bdm.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
+                y + meteorBitmap.getHeight() / 2, paint);
     }
 
     /*
@@ -201,5 +223,9 @@ public class Drawer {
 
     public void setBackground(AnimatedBackground background) {
         this.background = background;
+    }
+
+    public void setBorderDestroyers(ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors) {
+        this.borderDestroyerMeteors = borderDestroyerMeteors;
     }
 }
