@@ -44,6 +44,7 @@ public class GameView extends SurfaceView implements Runnable {
     private ArrayList<Meteorite> meteors;
     private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
     private ArrayList<EnemyShip> enemyShips;
+    private ArrayList<ExploderMeteor> exploderMeteors;
     private AnimatedBackground background;
     private Drawer drawer;
 
@@ -96,6 +97,7 @@ public class GameView extends SurfaceView implements Runnable {
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
         meteors = new ArrayList<>();
         borderDestroyerMeteors = new ArrayList<>();
+        exploderMeteors = new ArrayList<>();
         enemyShips = new ArrayList<>();
         background = new AnimatedBackground(getContext(), screenSizeX, screenSizeY);
 
@@ -115,6 +117,7 @@ public class GameView extends SurfaceView implements Runnable {
         drawer.setMeteors(meteors);
         drawer.setPlayer(player);
         drawer.setBorderDestroyers(borderDestroyerMeteors);
+        drawer.setExploders(exploderMeteors);
     }
 
     /*
@@ -164,9 +167,17 @@ public class GameView extends SurfaceView implements Runnable {
         objectsUpdate(Objects.BorderDestroyer);
         deleteObjects(Objects.BorderDestroyer);
 
-        if (distance % 2000 == 0) {
+        if (distance % 750 == 0) {
             borderDestroyerMeteors.add(
                     new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+        }
+
+        objectsUpdate(Objects.Exploder);
+        deleteObjects(Objects.Exploder);
+
+        if (distance % 400 == 0) {
+            exploderMeteors.add(
+                    new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
         //Update star background
@@ -229,6 +240,21 @@ public class GameView extends SurfaceView implements Runnable {
                 }
             }
             break;
+
+            case Exploder: {
+                while (deleting) {
+                    if (exploderMeteors.size() != 0) {
+                        if (exploderMeteors.get(0).getY() > screenSizeY) {
+                            exploderMeteors.remove(0);
+                        }
+                    }
+
+                    if (exploderMeteors.size() == 0 || exploderMeteors.get(0).getY() <= screenSizeY) {
+                        deleting = false;
+                    }
+                }
+            }
+            break;
         }
     }
 
@@ -284,7 +310,8 @@ public class GameView extends SurfaceView implements Runnable {
                     bdm.update();
 
                     //If "Border destroyer" collides with spaceship or he flew off the screen -> the game ends
-                    if (Rect.intersects(bdm.getCollision(), player.getCollision()) || bdm.getY() > screenSizeY) {
+                    if (Rect.intersects(bdm.getCollision(), player.getCollision())
+                            || (bdm.getY() > screenSizeY && !bdm.isDestroyed())) {
                         bdm.destroy();
                         setGameOver();
                     }
@@ -293,6 +320,27 @@ public class GameView extends SurfaceView implements Runnable {
                     for (Laser l : player.getLasers()) {
                         if (Rect.intersects(bdm.getCollision(), l.getCollision())) {
                             bdm.hit();
+                            l.destroy();
+                        }
+                    }
+                }
+            }
+            break;
+
+            case Exploder: {
+                for (ExploderMeteor exploder : exploderMeteors) {
+                    exploder.update();
+
+                    //If "Exploder" collides with spaceship
+                    if (Rect.intersects(exploder.getCollision(), player.getCollision())) {
+                        exploder.destroy();
+                        setGameOver();
+                    }
+
+                    //If "Exploder" collides with laser -> gets damage
+                    for (Laser l : player.getLasers()) {
+                        if (Rect.intersects(exploder.getCollision(), l.getCollision()) && !exploder.isDestroyed()) {
+                            exploder.hit();
                             l.destroy();
                         }
                     }
