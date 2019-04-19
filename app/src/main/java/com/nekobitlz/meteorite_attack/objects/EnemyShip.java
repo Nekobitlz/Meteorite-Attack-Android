@@ -78,7 +78,7 @@ public class EnemyShip {
     */
     private int getRandomHealth(int level) {
         Random random = new Random();
-        health = level + random.nextInt(WEAPON_POWER);
+        health = level + random.nextInt(WEAPON_POWER * 2);
 
         return health;
     }
