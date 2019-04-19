@@ -18,14 +18,13 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 */
 public class EnemyShip {
 
+    private Context context;
     private Bitmap bitmap;
 
     private int x;
     private int y;
     private int screenSizeX;
-    private int screenSizeY;
     private int maxX;
-    private int maxY;
 
     private Rect collision;
     private SoundPlayer soundPlayer;
@@ -36,16 +35,18 @@ public class EnemyShip {
     private int speed;
     private int level;
     private int value; //"value" coins are awarded for killing
+    private boolean isDestroyed;
 
     /*
         Enemy ship initialization
     */
     public EnemyShip(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
+        this.context = context;
         this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
         this.soundPlayer = soundPlayer;
         this.level = level;
 
+        isDestroyed = false;
         health = getRandomHealth(level);
         value = health;
         enemyShips = new int[] { R.drawable.enemy_black_1, R.drawable.enemy_black_2, R.drawable.enemy_black_3 };
@@ -59,7 +60,6 @@ public class EnemyShip {
         speed = random.nextInt(3) + 1;
 
         maxX = screenSizeX - bitmap.getWidth();
-        maxY = screenSizeY - bitmap.getHeight();
 
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();
@@ -78,7 +78,7 @@ public class EnemyShip {
     */
     private int getRandomHealth(int level) {
         Random random = new Random();
-        health = level + random.nextInt(WEAPON_POWER * 2);
+        health = level + random.nextInt(WEAPON_POWER * 2 + 1);
 
         return health;
     }
@@ -89,20 +89,23 @@ public class EnemyShip {
     public void update() {
         y += 7 * speed;
 
-        if (x <= 0)
-            currentDirection = Direction.Right;
-        else if (x >= screenSizeX - bitmap.getWidth())
-            currentDirection = Direction.Left;
+        if (!isDestroyed) {
+            if (x <= 0)
+                currentDirection = Direction.Right;
+            else if (x >= screenSizeX - bitmap.getWidth())
+                currentDirection = Direction.Left;
 
-        if (currentDirection == Direction.Right)
-            x += 7 * speed;
-        else
-            x -= 7 * speed;
+            if (currentDirection == Direction.Right)
+                x += 7 * speed;
+            else
+                x -= 7 * speed;
 
-        collision.left = x;
-        collision.top = y;
-        collision.right = x + bitmap.getWidth();
-        collision.bottom = y + bitmap.getHeight();
+
+            collision.left = x;
+            collision.top = y;
+            collision.right = x + bitmap.getWidth();
+            collision.bottom = y + bitmap.getHeight();
+        }
     }
 
     /*
@@ -123,9 +126,19 @@ public class EnemyShip {
 
     /*
         Destroys enemy ship
+
+        Removes collision rect and sets explosion
     */
     public void destroy() {
-        y = screenSizeY + 1;
+        isDestroyed = true;
+        currentDirection = Direction.Stopped;
+        speed = 1;
+
+        collision.set(0, 0, 0, 0);
+        Bitmap explodeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion);
+        bitmap = Bitmap.createScaledBitmap(
+                explodeBitmap, bitmap.getWidth(), bitmap.getHeight(), false);
+
         soundPlayer.playCrash();
     }
 

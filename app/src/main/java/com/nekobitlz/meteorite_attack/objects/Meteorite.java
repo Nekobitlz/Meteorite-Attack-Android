@@ -17,21 +17,18 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 public class Meteorite {
 
     private Bitmap bitmap;
+    private Context context;
 
     private int x;
     private int y;
     private int maxX;
-    private int minX;
-    private int maxY;
-    private int minY;
-    private int screenSizeX;
-    private int screenSizeY;
 
     private int meteors[];
     private int speed;
     private int health;
     private int level;
     private int value; //"value" coins are awarded for killing
+    private boolean isDestroyed;
 
     private Rect collision;
     private SoundPlayer soundPlayer;
@@ -40,10 +37,10 @@ public class Meteorite {
         Meteorite initialization
     */
     public Meteorite(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
-        this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
+        this.context = context;
         this.soundPlayer = soundPlayer;
         this.level = level;
+        isDestroyed = false;
 
         health = getRandomHealth(level);
         value = health;
@@ -59,9 +56,6 @@ public class Meteorite {
         speed = random.nextInt(3) + 1;
 
         maxX = screenSizeX - bitmap.getWidth();
-        maxY = screenSizeY - bitmap.getHeight();
-        minX = 0;
-        minY = 0;
 
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();
@@ -74,7 +68,7 @@ public class Meteorite {
     */
     private int getRandomHealth(int level) {
         Random random = new Random();
-        health = level + random.nextInt(WEAPON_POWER * 2);
+        health = level + random.nextInt(WEAPON_POWER * 2 + 1);
 
         return health;
     }
@@ -85,10 +79,12 @@ public class Meteorite {
     public void update() {
         y += speed * 7;
 
-        collision.left = x;
-        collision.top = y;
-        collision.right = x + bitmap.getWidth();
-        collision.bottom = y + bitmap.getHeight();
+        if (!isDestroyed) {
+            collision.left = x;
+            collision.top = y;
+            collision.right = x + bitmap.getWidth();
+            collision.bottom = y + bitmap.getHeight();
+        }
     }
 
     /*
@@ -109,9 +105,18 @@ public class Meteorite {
 
     /*
         Destroys meteorite
+
+        Removes collision rect and sets explosion
     */
     public void destroy() {
-        y = screenSizeY + 1;
+        isDestroyed = true;
+        speed = 1;
+
+        collision.set(0, 0, 0, 0);
+        Bitmap explodeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion);
+        bitmap = Bitmap.createScaledBitmap(
+                explodeBitmap, bitmap.getWidth(), bitmap.getHeight(), false);
+
         soundPlayer.playCrash();
     }
 
