@@ -7,8 +7,7 @@
         android:layout_height="wrap_content">
     <ImageView
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_shop"
+            android:layout_height="25dp"
             android:id="@+id/icon_xscore"
             android:background="@color/defaultBackgroundColor"
             android:layout_marginEnd="8dp"
@@ -16,7 +15,7 @@
             app:layout_constraintEnd_toEndOf="@+id/upgrade_xscore"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/upgrade_xscore"
-            app:layout_constraintTop_toBottomOf="@+id/upgrade_xscore"/>
+            app:layout_constraintTop_toBottomOf="@+id/upgrade_xscore" app:srcCompat="@drawable/icon_xscore"/>
     <TextView
             android:text="LEVEL"
             android:layout_width="80dp"
@@ -35,8 +34,8 @@
             app:layout_constraintHorizontal_bias="0.0"/>
     <ImageView
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_shop"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/icon_bullet"
             android:id="@+id/icon_bullet"
             android:background="@color/defaultBackgroundColor"
             android:layout_marginEnd="8dp"
@@ -189,8 +188,8 @@
             app:layout_constraintEnd_toEndOf="@+id/ship_image"/>
     <ImageView
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_shop"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/icon_health"
             android:id="@+id/icon_health"
             android:background="@color/defaultBackgroundColor"
             app:layout_constraintEnd_toEndOf="@+id/upgrade_health"
