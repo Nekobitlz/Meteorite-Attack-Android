@@ -10,8 +10,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.nekobitlz.meteorite_attack.enums.EnemyType;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
-import com.nekobitlz.meteorite_attack.enums.Objects;
 
 import com.nekobitlz.meteorite_attack.objects.*;
 import com.nekobitlz.meteorite_attack.options.AnimatedBackground;
@@ -41,10 +41,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
 
-    private ArrayList<Meteorite> meteors;
-    private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
-    private ArrayList<EnemyShip> enemyShips;
-    private ArrayList<ExploderMeteor> exploderMeteors;
+    private ArrayList<Enemy> enemies;
     private AnimatedBackground background;
     private Drawer drawer;
 
@@ -95,10 +92,7 @@ public class GameView extends SurfaceView implements Runnable {
         distance = 0;
 
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
-        meteors = new ArrayList<>();
-        borderDestroyerMeteors = new ArrayList<>();
-        exploderMeteors = new ArrayList<>();
-        enemyShips = new ArrayList<>();
+        enemies = new ArrayList<>();
         background = new AnimatedBackground(getContext(), screenSizeX, screenSizeY);
 
         //create star background
@@ -113,11 +107,8 @@ public class GameView extends SurfaceView implements Runnable {
     */
     private void initDrawer() {
         drawer.setBackground(background);
-        drawer.setEnemyShips(enemyShips);
-        drawer.setMeteors(meteors);
+        drawer.setEnemies(enemies);
         drawer.setPlayer(player);
-        drawer.setBorderDestroyers(borderDestroyerMeteors);
-        drawer.setExploders(exploderMeteors);
     }
 
     /*
@@ -150,33 +141,24 @@ public class GameView extends SurfaceView implements Runnable {
             player.fire();
         }
 
-        objectsUpdate(Objects.Meteorite);
-        deleteObjects(Objects.Meteorite);
+        enemiesUpdate(enemies);
+        deleteEnemies(enemies);
 
         if (fps % 1000 == 0) {
-            meteors.add(new Meteorite(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+            enemies.add(new Meteorite(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
-
-        objectsUpdate(Objects.EnemyShip);
-        deleteObjects(Objects.EnemyShip);
 
         if (fps % 2000 == 0) {
-            enemyShips.add(new EnemyShip(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+            enemies.add(new EnemyShip(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
-        objectsUpdate(Objects.BorderDestroyer);
-        deleteObjects(Objects.BorderDestroyer);
-
         if (distance % 750 == 0) {
-            borderDestroyerMeteors.add(
+            enemies.add(
                     new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
-        objectsUpdate(Objects.Exploder);
-        deleteObjects(Objects.Exploder);
-
         if (distance % 400 == 0) {
-            exploderMeteors.add(
+            enemies.add(
                     new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
@@ -190,163 +172,46 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /*
-        Deletes objects from game field
+        Deletes enemies from game field
     */
-    private void deleteObjects(Objects objectName) {
+    private void deleteEnemies(ArrayList<Enemy> enemies) {
         boolean deleting = true;
 
-        switch (objectName) {
-            case EnemyShip: {
-                while (deleting) {
-                    if (enemyShips.size() != 0) {
-                        if (enemyShips.get(0).getY() > screenSizeY) {
-                            enemyShips.remove(0);
-                        }
-                    }
-
-                    if (enemyShips.size() == 0 || enemyShips.get(0).getY() <= screenSizeY) {
-                        deleting = false;
-                    }
+        while (deleting) {
+            if (enemies.size() != 0) {
+                if (enemies.get(0).getY() > screenSizeY) {
+                    enemies.remove(0);
                 }
             }
-            break;
 
-            case Meteorite: {
-                while (deleting) {
-                    if (meteors.size() != 0) {
-                        if (meteors.get(0).getY() > screenSizeY) {
-                            meteors.remove(0);
-                        }
-                    }
-
-                    if (meteors.size() == 0 || meteors.get(0).getY() <= screenSizeY) {
-                        deleting = false;
-                    }
-                }
+            if (enemies.size() == 0 || enemies.get(0).getY() <= screenSizeY) {
+                deleting = false;
             }
-            break;
-
-            case BorderDestroyer: {
-                while (deleting) {
-                    if (borderDestroyerMeteors.size() != 0) {
-                        if (borderDestroyerMeteors.get(0).getY() > screenSizeY) {
-                            borderDestroyerMeteors.remove(0);
-                        }
-                    }
-
-                    if (borderDestroyerMeteors.size() == 0 || borderDestroyerMeteors.get(0).getY() <= screenSizeY) {
-                        deleting = false;
-                    }
-                }
-            }
-            break;
-
-            case Exploder: {
-                while (deleting) {
-                    if (exploderMeteors.size() != 0) {
-                        if (exploderMeteors.get(0).getY() > screenSizeY) {
-                            exploderMeteors.remove(0);
-                        }
-                    }
-
-                    if (exploderMeteors.size() == 0 || exploderMeteors.get(0).getY() <= screenSizeY) {
-                        deleting = false;
-                    }
-                }
-            }
-            break;
         }
     }
 
     /*
-        Updates objects state
+        Updates enemies state
     */
-    private void objectsUpdate(Objects objectName) { //TODO(): Optimize method
-        switch (objectName) {
-            case Meteorite: {
-                for (Meteorite m : meteors) {
-                    m.update();
+    private void enemiesUpdate(ArrayList<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            enemy.update();
 
-                    //If Meteorite collides with spaceship -> the game ends
-                    if (Rect.intersects(m.getCollision(), player.getCollision())) {
-                        m.destroy();
-                        setGameOver();
-                    }
+            //If enemy collides with spaceship -> the game ends
+            //If enemy is BorderDestroyer and he went beyond the bottom line -> the game ends
+            if (Rect.intersects(enemy.getCollision(), player.getCollision())
+                    || (enemy.getEnemyType() == EnemyType.BorderDestroyer && enemy.getY() > screenSizeY)) {
+                enemy.destroy();
+                setGameOver();
+            }
 
-                    //If Meteorite collides with laser -> gets damage
-                    for (Laser l : player.getLasers()) {
-                        if (Rect.intersects(m.getCollision(), l.getCollision())) {
-                            m.hit();
-                            l.destroy();
-                        }
-                    }
+            //If enemy collides with laser -> gets damage
+            for (Laser l : player.getLasers()) {
+                if (Rect.intersects(enemy.getCollision(), l.getCollision())  && !enemy.isDestroyed()) {
+                    enemy.hit();
+                    l.destroy();
                 }
             }
-            break;
-
-            case EnemyShip: {
-                for (EnemyShip e : enemyShips) {
-                    e.update();
-
-                    //If EnemyShip collides with spaceship -> the game ends
-                    if (Rect.intersects(e.getCollision(), player.getCollision())) {
-                        e.destroy();
-                        setGameOver();
-                    }
-
-                    //If EnemyShip collides with laser -> gets damage
-                    for (Laser l : player.getLasers()) {
-                        if (Rect.intersects(e.getCollision(), l.getCollision())) {
-                            e.hit();
-                            l.destroy();
-                        }
-                    }
-                }
-            }
-            break;
-
-            case BorderDestroyer: {
-                for (BorderDestroyerMeteor bdm : borderDestroyerMeteors) {
-                    bdm.update();
-
-                    //If "Border destroyer" collides with spaceship or he flew off the screen -> the game ends
-                    if (Rect.intersects(bdm.getCollision(), player.getCollision())
-                            || (bdm.getY() > screenSizeY && !bdm.isDestroyed())) {
-                        bdm.destroy();
-                        setGameOver();
-                    }
-
-                    //If "Border destroyer" collides with laser -> gets damage
-                    for (Laser l : player.getLasers()) {
-                        if (Rect.intersects(bdm.getCollision(), l.getCollision())) {
-                            bdm.hit();
-                            l.destroy();
-                        }
-                    }
-                }
-            }
-            break;
-
-            case Exploder: {
-                for (ExploderMeteor exploder : exploderMeteors) {
-                    exploder.update();
-
-                    //If "Exploder" collides with spaceship
-                    if (Rect.intersects(exploder.getCollision(), player.getCollision())) {
-                        exploder.destroy();
-                        setGameOver();
-                    }
-
-                    //If "Exploder" collides with laser -> gets damage
-                    for (Laser l : player.getLasers()) {
-                        if (Rect.intersects(exploder.getCollision(), l.getCollision()) && !exploder.isDestroyed()) {
-                            exploder.hit();
-                            l.destroy();
-                        }
-                    }
-                }
-            }
-            break;
         }
     }
 

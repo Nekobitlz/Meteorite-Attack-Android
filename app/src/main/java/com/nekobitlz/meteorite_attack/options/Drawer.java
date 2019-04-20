@@ -26,10 +26,7 @@ public class Drawer {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
 
-    private ArrayList<Meteorite> meteors;
-    private ArrayList<EnemyShip> enemyShips;
-    private ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors;
-    private ArrayList<ExploderMeteor> exploderMeteors;
+    private ArrayList<Enemy> enemies;
     private AnimatedBackground background;
 
     /*
@@ -61,24 +58,9 @@ public class Drawer {
                 canvas.drawBitmap(l.getBitmap(), l.getX(), l.getY(), paint);
             }
 
-            for (Meteorite m : meteors) {
+            for (Enemy m : enemies) {
                 canvas.drawBitmap(m.getBitmap(), m.getX(), m.getY(), paint);
                 drawHealth(m, m.getX(), m.getY(), paint);
-            }
-
-            for (EnemyShip e : enemyShips) {
-                canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
-                drawHealth(e, e.getX(), e.getY(), paint);
-            }
-
-            for (BorderDestroyerMeteor bdm : borderDestroyerMeteors) {
-                canvas.drawBitmap(bdm.getBitmap(), bdm.getX(), bdm.getY(), paint);
-                drawHealth(bdm, bdm.getX(), bdm.getY(), paint);
-            }
-
-            for (ExploderMeteor exploder: exploderMeteors) {
-                canvas.drawBitmap(exploder.getBitmap(), exploder.getX(), exploder.getY(), paint);
-                drawHealth(exploder, exploder.getX(), exploder.getY(), paint);
             }
 
             //Draw player
@@ -95,72 +77,19 @@ public class Drawer {
     }
 
     /*
-        Draws exploders health
-    */
-    private void drawHealth(ExploderMeteor exploder, int x, int y, Paint paint) {
-        if (exploder.getHealth() > 0) {
-            //Shift health drawing point, it is necessary so that
-            // regardless of amount of health is always in the middle
-            int shift = String.valueOf(exploder.getHealth()).length();
-            Bitmap exploderBitmap = exploder.getBitmap();
-
-            setHealthPaintSettings();
-
-            canvas.drawText("" + exploder.getHealth(), x + exploderBitmap.getWidth() / 2 - shift * 10,
-                    y + exploderBitmap.getHeight() / 2, paint);
-        }
-    }
-
-    /*
-        Draws meteors health
+        Draws enemies health
     */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    private void drawHealth(Meteorite meteor, int x, int y, Paint paint) {
-        if (meteor.getHealth() > 0) {
+    private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
+        if (enemy.getHealth() > 0) {
             //Shift health drawing point, it is necessary so that
             // regardless of amount of health is always in the middle
-            int shift = String.valueOf(meteor.getHealth()).length();
-            Bitmap meteorBitmap = meteor.getBitmap();
+            int shift = String.valueOf(enemy.getHealth()).length();
+            Bitmap meteorBitmap = enemy.getBitmap();
 
             setHealthPaintSettings();
 
-            canvas.drawText("" + meteor.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
-                    y + meteorBitmap.getHeight() / 2, paint);
-        }
-    }
-
-    /*
-        Draws enemy ships health
-    */
-    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    private void drawHealth(EnemyShip enemyShip, int x, int y, Paint paint) {
-        if (enemyShip.getHealth() > 0) {
-            //Shift health drawing point, it is necessary so that
-            // regardless of amount of health is always in the middle
-            int shift = String.valueOf(enemyShip.getHealth()).length();
-            Bitmap enemyShipBitmap = enemyShip.getBitmap();
-
-            setHealthPaintSettings();
-
-            canvas.drawText("" + enemyShip.getHealth(), x + enemyShipBitmap.getWidth() / 2 - shift * 10,
-                    y + enemyShipBitmap.getHeight() / 2, paint);
-        }
-    }
-
-    /*
-        Draws "border destroyer" meteors health
-    */
-    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    private void drawHealth(BorderDestroyerMeteor bdm, int x, int y, Paint paint) {
-        if (bdm.getHealth() > 0) {
-            //Shift health drawing point, it is necessary so that
-            // regardless of amount of health is always in the middle
-            int shift = String.valueOf(bdm.getHealth()).length();
-            Bitmap meteorBitmap = bdm.getBitmap();
-
-            setHealthPaintSettings();
-
-            canvas.drawText("" + bdm.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
+            canvas.drawText("" + enemy.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
                     y + meteorBitmap.getHeight() / 2, paint);
         }
     }
@@ -242,23 +171,11 @@ public class Drawer {
         this.player = player;
     }
 
-    public void setMeteors(ArrayList<Meteorite> meteors) {
-        this.meteors = meteors;
-    }
-
-    public void setEnemyShips(ArrayList<EnemyShip> enemyShips) {
-        this.enemyShips = enemyShips;
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
     }
 
     public void setBackground(AnimatedBackground background) {
         this.background = background;
-    }
-
-    public void setBorderDestroyers(ArrayList<BorderDestroyerMeteor> borderDestroyerMeteors) {
-        this.borderDestroyerMeteors = borderDestroyerMeteors;
-    }
-
-    public void setExploders(ArrayList<ExploderMeteor> exploderMeteors) {
-        this.exploderMeteors = exploderMeteors;
     }
 }
