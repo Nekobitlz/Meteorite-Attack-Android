@@ -14,9 +14,10 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 /*
     Hostile flying "border destroyer" meteorite
 */
-public class BorderDestroyerMeteor {
+public class BorderDestroyerMeteor extends Enemy {
 
     private Bitmap bitmap;
+    private Rect collision;
 
     private int x;
     private int y;
@@ -24,18 +25,11 @@ public class BorderDestroyerMeteor {
 
     private int speed;
     private int health;
-    private int level;
     private int value; //"value" coins are awarded for killing
     private boolean isDestroyed;
 
-    private Rect collision;
-    private SoundPlayer soundPlayer;
-    private Context context;
-
     public BorderDestroyerMeteor(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
-        this.context = context;
-        this.soundPlayer = soundPlayer;
-        this.level = level;
+        super(context, screenSizeX, screenSizeY, soundPlayer, level);
 
         isDestroyed = false;
         health = getRandomHealth(level);
@@ -71,6 +65,7 @@ public class BorderDestroyerMeteor {
     /*
         Updates "border destroyer" meteorite state
     */
+    @Override
     public void update() {
         y += speed * 7;
 
@@ -86,6 +81,7 @@ public class BorderDestroyerMeteor {
         Captures a hit on "border destroyer" meteorite
         and if the hit is decisive, it kills the "border destroyer" meteorite
     */
+    @Override
     public void hit() {
         health -= WEAPON_POWER;
 
@@ -104,6 +100,7 @@ public class BorderDestroyerMeteor {
 
         Removes collision rect and sets explosion
     */
+    @Override
     public void destroy() {
         isDestroyed = true;
         speed = 1;

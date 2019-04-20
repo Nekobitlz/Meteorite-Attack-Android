@@ -14,10 +14,10 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 /*
     Hostile flying meteorite
 */
-public class Meteorite {
+public class Meteorite extends Enemy {
 
     private Bitmap bitmap;
-    private Context context;
+    private Rect collision;
 
     private int x;
     private int y;
@@ -26,20 +26,15 @@ public class Meteorite {
     private int meteors[];
     private int speed;
     private int health;
-    private int level;
     private int value; //"value" coins are awarded for killing
     private boolean isDestroyed;
-
-    private Rect collision;
-    private SoundPlayer soundPlayer;
 
     /*
         Meteorite initialization
     */
     public Meteorite(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
-        this.context = context;
-        this.soundPlayer = soundPlayer;
-        this.level = level;
+        super(context, screenSizeX, screenSizeY, soundPlayer, level);
+
         isDestroyed = false;
 
         health = getRandomHealth(level);
@@ -76,6 +71,7 @@ public class Meteorite {
     /*
         Updates meteorite state
     */
+    @Override
     public void update() {
         y += speed * 7;
 
@@ -90,6 +86,7 @@ public class Meteorite {
     /*
         Captures a hit on meteorite and if the hit is decisive, it kills the meteorite
     */
+    @Override
     public void hit() {
         health -= WEAPON_POWER;
 
@@ -108,6 +105,7 @@ public class Meteorite {
 
         Removes collision rect and sets explosion
     */
+    @Override
     public void destroy() {
         isDestroyed = true;
         speed = 1;

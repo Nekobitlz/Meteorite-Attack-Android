@@ -14,10 +14,10 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 /*
     Hostile exploder meteorite
 */
-public class ExploderMeteor {
+public class ExploderMeteor extends Enemy {
 
     private Bitmap bitmap;
-    private Context context;
+    private Rect collision;
 
     private int x;
     private int y;
@@ -25,20 +25,14 @@ public class ExploderMeteor {
 
     private int speed;
     private int health;
-    private int level;
     private int value; //"value" coins are awarded for killing
     private boolean isDestroyed;
-
-    private Rect collision;
-    private SoundPlayer soundPlayer;
 
     /*
         Exploder initialization
     */
     public ExploderMeteor(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
-        this.context = context;
-        this.soundPlayer = soundPlayer;
-        this.level = level;
+        super(context, screenSizeX, screenSizeY, soundPlayer, level);
 
         isDestroyed = false;
         health = getRandomHealth(level);
@@ -74,6 +68,7 @@ public class ExploderMeteor {
     /*
         Updates exploder state
     */
+    @Override
     public void update() {
         y += speed * 7;
 
@@ -86,6 +81,7 @@ public class ExploderMeteor {
     /*
         Captures a hit on exploder and if the hit is decisive, it kills the exploder
     */
+    @Override
     public void hit() {
         health -= WEAPON_POWER;
 
@@ -105,6 +101,7 @@ public class ExploderMeteor {
         If meteor destroys first time
                     -> his bitmap (crater) becomes equals to size of meteorite multiplied by 2
     */
+    @Override
     public void destroy() {
         speed = 1;
 

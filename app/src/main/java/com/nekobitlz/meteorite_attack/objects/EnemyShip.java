@@ -16,24 +16,20 @@ import static com.nekobitlz.meteorite_attack.views.GameView.*;
 /*
     Enemy flying ship
 */
-public class EnemyShip {
+public class EnemyShip extends Enemy {
 
-    private Context context;
     private Bitmap bitmap;
 
     private int x;
     private int y;
-    private int screenSizeX;
     private int maxX;
 
     private Rect collision;
-    private SoundPlayer soundPlayer;
     private Direction currentDirection;
 
     private int enemyShips[]; //list of enemy ships sprites
     private int health;
     private int speed;
-    private int level;
     private int value; //"value" coins are awarded for killing
     private boolean isDestroyed;
 
@@ -41,10 +37,7 @@ public class EnemyShip {
         Enemy ship initialization
     */
     public EnemyShip(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
-        this.context = context;
-        this.screenSizeX = screenSizeX;
-        this.soundPlayer = soundPlayer;
-        this.level = level;
+        super(context, screenSizeX, screenSizeY, soundPlayer, level);
 
         isDestroyed = false;
         health = getRandomHealth(level);
@@ -86,6 +79,7 @@ public class EnemyShip {
     /*
         Updates enemy ship state
     */
+    @Override
     public void update() {
         y += 7 * speed;
 
@@ -111,6 +105,7 @@ public class EnemyShip {
     /*
         Captures a hit on enemy ship and if the hit is decisive, it kills the enemy ship
     */
+    @Override
     public void hit() {
         health -= WEAPON_POWER;
 
@@ -129,6 +124,7 @@ public class EnemyShip {
 
         Removes collision rect and sets explosion
     */
+    @Override
     public void destroy() {
         isDestroyed = true;
         currentDirection = Direction.Stopped;
