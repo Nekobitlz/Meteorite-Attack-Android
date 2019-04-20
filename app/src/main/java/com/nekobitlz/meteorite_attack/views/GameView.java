@@ -154,12 +154,12 @@ public class GameView extends SurfaceView implements Runnable {
             enemies.add(new EnemyShip(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
-        if (distance % 750 == 0) {
+        if (distance % (WEAPON_POWER * 700) == 0) {
             enemies.add(
                     new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
-        if (distance % 400 == 0) {
+        if (distance % (WEAPON_POWER * 300) == 0) {
             enemies.add(
                     new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
