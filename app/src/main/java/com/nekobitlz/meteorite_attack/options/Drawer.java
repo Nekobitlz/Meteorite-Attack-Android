@@ -82,7 +82,7 @@ public class Drawer {
     */
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
-        if (enemy.getHealth() > 0) {
+        if (!enemy.isDestroyed()) {
             //Shift health drawing point, it is necessary so that
             // regardless of amount of health is always in the middle
             int shift = String.valueOf(enemy.getHealth()).length();
