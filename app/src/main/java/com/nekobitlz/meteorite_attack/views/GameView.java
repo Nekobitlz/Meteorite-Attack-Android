@@ -215,8 +215,13 @@ public class GameView extends SurfaceView implements Runnable {
                     enemy.destroy();
                     setGameOver();
                 } else {
-                    player.setHealth(playerHealth);
-                    enemy.destroy();
+                    //If a player enters the crater, he takes damage in 1 health unit
+                    if (enemy.isDestroyed() && enemy.getEnemyType() == EnemyType.Exploder) {
+                        player.setHealth(player.getHealth() - 1);
+                    } else {
+                        player.setHealth(playerHealth);
+                        enemy.destroy();
+                    }
                 }
             }
 
