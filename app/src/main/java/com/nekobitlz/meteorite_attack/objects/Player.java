@@ -24,6 +24,7 @@ public class Player {
     private int margin = 16; //indent from edge
     private Rect collision;
     private SharedPreferencesManager spm;
+    private int health;
 
     private ArrayList<Laser> lasers;
     private Context context;
@@ -45,6 +46,7 @@ public class Player {
 
         x = screenSizeX / 2 - bitmap.getWidth() / 2;
         y = screenSizeY - bitmap.getHeight() - margin;
+        health = spm.getHealth(String.valueOf(spm.getPlayerImage()));
 
         lasers = new ArrayList<>();
 
@@ -95,7 +97,7 @@ public class Player {
     }
 
     /*
-        GETTERS
+        GETTERS & SETTERS
     */
     public Rect getCollision() {
         return collision;
@@ -115,6 +117,14 @@ public class Player {
 
     public float getY() {
         return y;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public void setX(float x) {

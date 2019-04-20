@@ -199,16 +199,28 @@ public class GameView extends SurfaceView implements Runnable {
         for (Enemy enemy : enemies) {
             enemy.update();
 
-            //If enemy collides with spaceship -> the game ends
-            //If enemy is BorderDestroyer and he went beyond the bottom line -> the game ends
+            /*
+                If player collides with enemy and health of enemy is greater than health of player
+                                              or enemy is BorderDestroyer -> game ends,
+                otherwise player receives damage equal to enemy health
+            */
             if (Rect.intersects(enemy.getCollision(), player.getCollision())
                     || (enemy.getEnemyType() == EnemyType.BorderDestroyer
                     && enemy.getY() > screenSizeY && !enemy.isDestroyed())) {
-                enemy.destroy();
-                setGameOver();
+                int playerHealth = player.getHealth() - enemy.getHealth();
+
+                if (enemy.getHealth() >= player.getHealth()
+                        || (enemy.getEnemyType() == EnemyType.BorderDestroyer && enemy.getY() > screenSizeY)) {
+                    player.setHealth(playerHealth);
+                    enemy.destroy();
+                    setGameOver();
+                } else {
+                    player.setHealth(playerHealth);
+                    enemy.destroy();
+                }
             }
 
-            //If enemy collides with laser -> gets damage
+            //If enemy collides with laser -> enemy gets damage
             for (Laser l : player.getLasers()) {
                 if (Rect.intersects(enemy.getCollision(), l.getCollision())  && !enemy.isDestroyed()) {
                     enemy.hit();

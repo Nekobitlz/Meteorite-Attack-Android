@@ -66,6 +66,7 @@ public class Drawer {
 
             //Draw player
             canvas.drawBitmap(player.getBitmap(), player.getX(), player.getY(), paint);
+            drawHealth(player, player.getX(), player.getY(), paint);
 
             drawScore();
 
@@ -92,6 +93,24 @@ public class Drawer {
 
             canvas.drawText("" + enemy.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
                     y + meteorBitmap.getHeight() / 2, paint);
+        }
+    }
+
+    /*
+       Draws player health
+   */
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void drawHealth(Player player, float x, float y, Paint paint) {
+        if (player.getHealth() > 0) {
+            //Shift health drawing point, it is necessary so that
+            // regardless of amount of health is always in the middle
+            int shift = String.valueOf(player.getHealth()).length();
+            Bitmap playerBitmap = player.getBitmap();
+
+            setHealthPaintSettings();
+
+            canvas.drawText("" + player.getHealth(), x + playerBitmap.getWidth() / 2 - shift * 10,
+                    y + playerBitmap.getHeight() / 2, paint);
         }
     }
 
