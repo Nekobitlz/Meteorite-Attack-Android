@@ -202,7 +202,8 @@ public class GameView extends SurfaceView implements Runnable {
             //If enemy collides with spaceship -> the game ends
             //If enemy is BorderDestroyer and he went beyond the bottom line -> the game ends
             if (Rect.intersects(enemy.getCollision(), player.getCollision())
-                    || (enemy.getEnemyType() == EnemyType.BorderDestroyer && enemy.getY() > screenSizeY)) {
+                    || (enemy.getEnemyType() == EnemyType.BorderDestroyer
+                    && enemy.getY() > screenSizeY && !enemy.isDestroyed())) {
                 enemy.destroy();
                 setGameOver();
             }
