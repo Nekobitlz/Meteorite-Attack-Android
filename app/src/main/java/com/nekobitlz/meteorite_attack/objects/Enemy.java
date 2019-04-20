@@ -1,6 +1,9 @@
 package com.nekobitlz.meteorite_attack.objects;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
+import com.nekobitlz.meteorite_attack.enums.EnemyType;
 import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 public abstract class Enemy {
@@ -19,7 +22,18 @@ public abstract class Enemy {
         this.level = level;
     }
 
-    abstract void update();
-    abstract void hit();
-    abstract void destroy();
+    public abstract void update();
+    public abstract void hit();
+    public abstract void destroy();
+
+    /*
+        GETTERS
+    */
+    public abstract int getX();
+    public abstract Rect getCollision();
+    public abstract int getY();
+    public abstract int getHealth();
+    public abstract Bitmap getBitmap();
+    public abstract boolean isDestroyed();
+    public abstract EnemyType getEnemyType();
 }

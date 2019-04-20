@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import com.nekobitlz.meteorite_attack.R;
+import com.nekobitlz.meteorite_attack.enums.EnemyType;
 import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 import java.util.Random;
@@ -138,5 +139,9 @@ public class BorderDestroyerMeteor extends Enemy {
 
     public boolean isDestroyed() {
         return isDestroyed;
+    }
+
+    public EnemyType getEnemyType() {
+        return EnemyType.BorderDestroyer;
     }
 }
