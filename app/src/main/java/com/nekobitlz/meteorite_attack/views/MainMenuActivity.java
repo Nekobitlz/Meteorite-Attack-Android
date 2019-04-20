@@ -19,6 +19,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private Button exit;
     private ImageButton shop;
     private ImageButton highScore;
+    private ImageButton settings;
 
     private TextView money;
     private SharedPreferencesManager spm;
@@ -40,11 +41,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         exit = findViewById(R.id.exit);
         money = findViewById(R.id.money);
         shop = findViewById(R.id.shop);
+        settings = findViewById(R.id.settings);
 
         play.setOnClickListener(this);
         shop.setOnClickListener(this);
         highScore.setOnClickListener(this);
         exit.setOnClickListener(this);
+        settings.setOnClickListener(this);
 
         spm = new SharedPreferencesManager(this);
         loadMoney();
@@ -76,6 +79,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.high_score: {
                 startActivity(new Intent(this, HighScoreActivity.class));
+            }
+            break;
+
+            case R.id.settings: {
+                startActivity(new Intent(this, SettingsActivity.class));
             }
             break;
 

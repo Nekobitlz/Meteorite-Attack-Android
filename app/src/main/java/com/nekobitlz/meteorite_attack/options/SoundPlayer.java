@@ -26,6 +26,10 @@ public class SoundPlayer implements Runnable {
     private boolean isExplodePlaying;
     private boolean isCrashPlaying;
 
+    private float volume;
+    private boolean isEnabled;
+    private SharedPreferencesManager spm;
+
     /*
         Sounds initialization
     */
@@ -49,6 +53,10 @@ public class SoundPlayer implements Runnable {
         explodeId = soundPool.load(context, R.raw.rock_explode_1, 1);
         laserId = soundPool.load(context, R.raw.laser_1, 1);
         crashId = soundPool.load(context, R.raw.rock_explode_2, 1);
+
+        spm = new SharedPreferencesManager(context);
+        volume = spm.getVolume() / 100f;
+        isEnabled = spm.getSoundStatus();
     }
 
     /*
@@ -56,20 +64,22 @@ public class SoundPlayer implements Runnable {
     */
     @Override
     public void run() {
-        while (currentStatus == GameStatus.Playing) {
-            if (isLaserPlaying) {
-                soundPool.play(laserId, 1, 1, 1, 0, 1);
-                isLaserPlaying = false;
-            }
+        if (isEnabled) {
+            while (currentStatus == GameStatus.Playing) {
+                if (isLaserPlaying) {
+                    soundPool.play(laserId, volume, volume, 1, 0, 1);
+                    isLaserPlaying = false;
+                }
 
-            if (isExplodePlaying) {
-                soundPool.play(explodeId, 1, 1, 1, 0, 1);
-                isExplodePlaying = false;
-            }
+                if (isExplodePlaying) {
+                    soundPool.play(explodeId, volume, volume, 1, 0, 1);
+                    isExplodePlaying = false;
+                }
 
-            if (isCrashPlaying) {
-                soundPool.play(crashId, 0.7f, 0.7f, 1, 0, 1);
-                isCrashPlaying = false;
+                if (isCrashPlaying) {
+                    soundPool.play(crashId, volume, volume, 1, 0, 1);
+                    isCrashPlaying = false;
+                }
             }
         }
     }

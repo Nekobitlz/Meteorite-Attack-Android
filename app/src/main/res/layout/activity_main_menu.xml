@@ -70,15 +70,28 @@
     <ImageButton
             android:layout_width="55dp"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/icon_settings"
+            android:id="@+id/settings"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"/>
+    <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
             app:srcCompat="@drawable/icon_highscore"
             android:id="@+id/high_score"
             android:layout_weight="1"
             android:background="@drawable/custom_button_background"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/settings"
+            app:layout_constraintBottom_toBottomOf="@+id/settings"/>
     <Button
             android:id="@+id/exit"
             app:fontFamily="@font/iceberg_regular"

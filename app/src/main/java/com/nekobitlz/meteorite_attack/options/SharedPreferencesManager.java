@@ -84,6 +84,19 @@ public class SharedPreferencesManager {
     }
 
     /*
+        Saves sound state
+    */
+    public void saveSound(boolean isEnabled, int volume) {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+
+        e.putInt("volume", volume);
+        e.putBoolean("sound_status", isEnabled);
+
+        e.apply();
+    }
+
+    /*
         GETTERS
     */
     public int getHighScore() {
@@ -138,6 +151,18 @@ public class SharedPreferencesManager {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
         return sp.getString(tag, "NONE");
+    }
+
+    public boolean getSoundStatus() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getBoolean("sound_status", true);
+    }
+
+    public int getVolume() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("volume", 50);
     }
 
     /*
