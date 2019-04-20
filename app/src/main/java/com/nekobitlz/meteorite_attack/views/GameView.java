@@ -253,7 +253,9 @@ public class GameView extends SurfaceView implements Runnable {
         Pauses the game
     */
     public void pause() {
-        currentStatus = GameStatus.Paused;
+        if (currentStatus != GameStatus.GameOver && currentStatus != GameStatus.NewHighScore) {
+            currentStatus = GameStatus.Paused;
+        }
 
         try {
             gameThread.join();
@@ -267,7 +269,9 @@ public class GameView extends SurfaceView implements Runnable {
         Resumes the game
     */
     public void resume() {
-        currentStatus = GameStatus.Playing;
+        if (currentStatus != GameStatus.GameOver && currentStatus != GameStatus.NewHighScore) {
+            currentStatus = GameStatus.Playing;
+        }
         soundPlayer.resume();
 
         gameThread = new Thread(this);
