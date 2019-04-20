@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.objects;
+package com.nekobitlz.meteorite_attack.objects.enemies;
 
 import android.content.Context;
 import android.graphics.Bitmap;

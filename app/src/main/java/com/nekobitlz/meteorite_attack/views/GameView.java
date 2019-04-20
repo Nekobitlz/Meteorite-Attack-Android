@@ -14,6 +14,8 @@ import com.nekobitlz.meteorite_attack.enums.EnemyType;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 
 import com.nekobitlz.meteorite_attack.objects.*;
+import com.nekobitlz.meteorite_attack.objects.enemies.Enemy;
+import com.nekobitlz.meteorite_attack.objects.enemies.*;
 import com.nekobitlz.meteorite_attack.options.AnimatedBackground;
 import com.nekobitlz.meteorite_attack.options.Drawer;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;

@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.objects;
+package com.nekobitlz.meteorite_attack.objects.enemies;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,9 +13,9 @@ import java.util.Random;
 import static com.nekobitlz.meteorite_attack.views.GameView.*;
 
 /*
-    Hostile flying "border destroyer" meteorite
+    Hostile exploder meteorite
 */
-public class BorderDestroyerMeteor extends Enemy {
+public class ExploderMeteor extends Enemy {
 
     private Bitmap bitmap;
     private Rect collision;
@@ -29,21 +29,24 @@ public class BorderDestroyerMeteor extends Enemy {
     private int value; //"value" coins are awarded for killing
     private boolean isDestroyed;
 
-    public BorderDestroyerMeteor(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
+    /*
+        Exploder initialization
+    */
+    public ExploderMeteor(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
         super(context, screenSizeX, screenSizeY, soundPlayer, level);
 
         isDestroyed = false;
         health = getRandomHealth(level);
         value = health;
 
-        //Set random "border destroyer" meteor image
+        //Set random meteor image
         Random random = new Random();
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteor_brown_big_1);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.meteor_grey_big_3);
         bitmap = Bitmap.createScaledBitmap(
                 bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
 
         //Set random speed
-        speed = 2;
+        speed = random.nextInt(3) + 1;
 
         maxX = screenSizeX - bitmap.getWidth();
 
@@ -54,42 +57,39 @@ public class BorderDestroyerMeteor extends Enemy {
     }
 
     /*
-       Gets a random amount of health for an "border destroyer" in a given range
+       Gets a random amount of health for an exploder in a given range
     */
     private int getRandomHealth(int level) {
         Random random = new Random();
-        health = level + random.nextInt(WEAPON_POWER);
+        health = level + random.nextInt(WEAPON_POWER * 2);
 
         return health;
     }
 
     /*
-        Updates "border destroyer" meteorite state
+        Updates exploder state
     */
     @Override
     public void update() {
         y += speed * 7;
 
-        if (!isDestroyed) {
-            collision.left = x;
-            collision.top = y;
-            collision.right = x + bitmap.getWidth();
-            collision.bottom = y + bitmap.getHeight();
-        }
+        collision.left = x;
+        collision.top = y;
+        collision.right = x + bitmap.getWidth();
+        collision.bottom = y + bitmap.getHeight();
     }
 
     /*
-        Captures a hit on "border destroyer" meteorite
-        and if the hit is decisive, it kills the "border destroyer" meteorite
+        Captures a hit on exploder and if the hit is decisive, it kills the exploder
     */
     @Override
     public void hit() {
         health -= WEAPON_POWER;
 
         if (health <= 0) {
-            SCORE += level * 15;
+            SCORE += level * 10;
             METEOR_DESTROYED++;
-            MONEY += value * 1.5;
+            MONEY += value;
             destroy();
         } else {
             soundPlayer.playExplode();
@@ -97,20 +97,22 @@ public class BorderDestroyerMeteor extends Enemy {
     }
 
     /*
-        Destroys "border destroyer" meteorite
+        Destroys exploder and create explosion
 
-        Removes collision rect and sets explosion
+        If meteor destroys first time
+                    -> his bitmap (crater) becomes equals to size of meteorite multiplied by 2
     */
     @Override
     public void destroy() {
-        isDestroyed = true;
         speed = 1;
 
-        collision.set(0, 0, 0, 0);
-        Bitmap explodeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion);
-        bitmap = Bitmap.createScaledBitmap(
-                explodeBitmap, bitmap.getWidth(), bitmap.getHeight(), false);
+        if (!isDestroyed) {
+            Bitmap explodeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion_crater);
+            bitmap = Bitmap.createScaledBitmap(
+                    explodeBitmap, bitmap.getWidth() * 2, bitmap.getHeight() * 2, false);
+        }
 
+        isDestroyed = true;
         soundPlayer.playCrash();
     }
 
@@ -142,6 +144,6 @@ public class BorderDestroyerMeteor extends Enemy {
     }
 
     public EnemyType getEnemyType() {
-        return EnemyType.BorderDestroyer;
+        return EnemyType.Exploder;
     }
 }

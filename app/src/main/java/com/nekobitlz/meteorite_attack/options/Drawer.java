@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.objects.*;
+import com.nekobitlz.meteorite_attack.objects.enemies.Enemy;
 
 import java.util.ArrayList;
 
