@@ -8,13 +8,13 @@ import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 public abstract class Enemy {
 
-    Context context;
-    int screenSizeX;
-    int screenSizeY;
-    SoundPlayer soundPlayer;
-    int level;
+    public Context context;
+    public int screenSizeX;
+    public int screenSizeY;
+    public SoundPlayer soundPlayer;
+    public int level;
 
-    Enemy(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
+    public Enemy(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
         this.context = context;
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
