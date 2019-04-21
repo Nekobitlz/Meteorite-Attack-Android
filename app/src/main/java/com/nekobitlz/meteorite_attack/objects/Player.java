@@ -91,8 +91,16 @@ public class Player {
     /*
         Add lasers on the playing field
     */
-    public void fire() {
-        lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
+    public void fire(boolean tripleShotMode) {
+        if (tripleShotMode) {
+            lasers.add(new Laser(context, screenSizeX, screenSizeY,
+                    (int) (x + bitmap.getWidth() / 2), (int) (y + bitmap.getHeight() / 2), bitmap));
+            lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
+            lasers.add(new Laser(context, screenSizeX, screenSizeY,
+                    (int) (x - bitmap.getWidth() / 2), (int) (y - bitmap.getHeight() / 2), bitmap));
+        } else {
+            lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
+        }
         soundPlayer.playLaser();
     }
 

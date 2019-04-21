@@ -7,10 +7,12 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.objects.*;
+import com.nekobitlz.meteorite_attack.objects.Bonus;
 import com.nekobitlz.meteorite_attack.objects.enemies.Enemy;
 
 import java.util.ArrayList;
 
+import static com.nekobitlz.meteorite_attack.views.GameView.BONUS_DURATION;
 import static com.nekobitlz.meteorite_attack.views.GameView.MONEY;
 import static com.nekobitlz.meteorite_attack.views.GameView.SCORE;
 
@@ -28,6 +30,7 @@ public class Drawer {
     private SurfaceHolder surfaceHolder;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Bonus> bonuses;
     private AnimatedBackground background;
 
     /*
@@ -55,13 +58,17 @@ public class Drawer {
                 canvas.drawBitmap(s.getBitmap(), s.getX(), s.getY(), paint);
             }
 
+            for (Enemy m : enemies) {
+                canvas.drawBitmap(m.getBitmap(), m.getX(), m.getY(), paint);
+                drawHealth(m, m.getX(), m.getY(), paint);
+            }
+
             for (Laser l : player.getLasers()) {
                 canvas.drawBitmap(l.getBitmap(), l.getX(), l.getY(), paint);
             }
 
-            for (Enemy m : enemies) {
-                canvas.drawBitmap(m.getBitmap(), m.getX(), m.getY(), paint);
-                drawHealth(m, m.getX(), m.getY(), paint);
+            for (Bonus b: bonuses) {
+                canvas.drawBitmap(b.getBitmap(), b.getX(), b.getY(), paint);
             }
 
             //Draw player
@@ -69,6 +76,7 @@ public class Drawer {
             drawHealth(player, player.getX(), player.getY(), paint);
 
             drawScore();
+            drawBonusDuration();
 
             if (currentGameStatus == GameStatus.GameOver || currentGameStatus == GameStatus.NewHighScore) {
                 drawGameOver(currentGameStatus);
@@ -185,6 +193,25 @@ public class Drawer {
     }
 
     /*
+        Draws bonus duration
+
+        If bonus is on -> it draws duration
+        otherwise -> removes it from the screen
+    */
+    @SuppressWarnings("deprecation")
+    private void drawBonusDuration() {
+        Paint bonusDuration = new Paint();
+        bonusDuration.setTextSize(30);
+        bonusDuration.setColor(Color.WHITE);
+
+        if (BONUS_DURATION > 0) {
+            canvas.drawText("BONUS DURATION : " + (500 - BONUS_DURATION), 100, 90, bonusDuration);
+        } else {
+            bonusDuration.reset();
+        }
+    }
+
+    /*
         SETTERS
     */
     public void setPlayer(Player player) {
@@ -197,5 +224,9 @@ public class Drawer {
 
     public void setBackground(AnimatedBackground background) {
         this.background = background;
+    }
+
+    public void setBonuses(ArrayList<Bonus> bonuses) {
+        this.bonuses = bonuses;
     }
 }

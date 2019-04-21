@@ -10,10 +10,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.nekobitlz.meteorite_attack.enums.BonusType;
 import com.nekobitlz.meteorite_attack.enums.EnemyType;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 
 import com.nekobitlz.meteorite_attack.objects.*;
+import com.nekobitlz.meteorite_attack.objects.Bonus;
 import com.nekobitlz.meteorite_attack.objects.enemies.Enemy;
 import com.nekobitlz.meteorite_attack.objects.enemies.*;
 import com.nekobitlz.meteorite_attack.options.AnimatedBackground;
@@ -22,6 +24,7 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.SoundPlayer;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /*
     MAIN GAME ENGINE
@@ -34,6 +37,7 @@ public class GameView extends SurfaceView implements Runnable {
     public static int MONEY = 0;
     public static int WEAPON_POWER;
     public static int X_SCORE = 1;
+    public static int BONUS_DURATION = 0;
 
     private Thread gameThread;
     private volatile GameStatus currentStatus = GameStatus.Paused;
@@ -44,6 +48,7 @@ public class GameView extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Bonus> bonuses;
     private AnimatedBackground background;
     private Drawer drawer;
 
@@ -52,6 +57,10 @@ public class GameView extends SurfaceView implements Runnable {
     private int level;
     private int distance;
     private int fps = 0;
+
+    private int shotSpeed;
+    private boolean tripleShotMode;
+    private boolean isBonusEnabled;
 
     private boolean isDragged = false;
     private float dragX = 0;
@@ -90,11 +99,17 @@ public class GameView extends SurfaceView implements Runnable {
         MONEY = 0;
         WEAPON_POWER = spm.getWeaponPower(tag);
         X_SCORE = spm.getXScore(tag);
+        BONUS_DURATION = 0;
         level = WEAPON_POWER;
         distance = 0;
 
+        shotSpeed = 200;
+        tripleShotMode = false;
+        isBonusEnabled = false;
+
         player = new Player(getContext(), screenSizeX, screenSizeY, soundPlayer);
         enemies = new ArrayList<>();
+        bonuses = new ArrayList<>();
         background = new AnimatedBackground(getContext(), screenSizeX, screenSizeY);
 
         //create star background
@@ -111,6 +126,7 @@ public class GameView extends SurfaceView implements Runnable {
         drawer.setBackground(background);
         drawer.setEnemies(enemies);
         drawer.setPlayer(player);
+        drawer.setBonuses(bonuses);
     }
 
     /*
@@ -139,8 +155,8 @@ public class GameView extends SurfaceView implements Runnable {
 
         player.update();
 
-        if (fps % 200 == 0) {
-            player.fire();
+        if (fps % shotSpeed == 0) {
+            player.fire(tripleShotMode);
         }
 
         enemiesUpdate(enemies);
@@ -162,6 +178,27 @@ public class GameView extends SurfaceView implements Runnable {
         if (distance % (WEAPON_POWER * 300) == 0) {
             enemies.add(
                     new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+        }
+
+        //Bonuses update
+        bonusUpdate(bonuses);
+
+        if (distance % (WEAPON_POWER * 350) == 0) {
+            //Random bonus pick
+            int pick = new Random().nextInt(BonusType.values().length);
+            BonusType bonusType = BonusType.values()[pick];
+
+            bonuses.add(new Bonus(getContext(), screenSizeX, screenSizeY, soundPlayer, bonusType));
+        }
+
+        //Limited bonus time
+        if (isBonusEnabled) {
+            if (BONUS_DURATION < 500) {
+                BONUS_DURATION++;
+            } else {
+                isBonusEnabled = false;
+                resetBonuses();
+            }
         }
 
         //Update star background
@@ -236,6 +273,71 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /*
+        Updates bonuses state
+    */
+    private void bonusUpdate(ArrayList<Bonus> bonuses) {
+        for (Bonus bonus: bonuses) {
+            bonus.update();
+
+            if (Rect.intersects(bonus.getCollision(), player.getCollision())) {
+                bonus.pickUp();
+                resetBonuses();
+
+                switch (bonus.getBonusType()) {
+                    //Increases health 2 times
+                    case Health: {
+                        player.setHealth(player.getHealth() * 2);
+                    }
+                    break;
+
+                    //Increases shooting speed 2 times
+                    case Speed_up: {
+                        shotSpeed /= 2;
+                        isBonusEnabled = true;
+                    }
+                    break;
+
+                    //Increases the number of lasers 3 times
+                    case Triple_shot: {
+                        tripleShotMode = true;
+                        isBonusEnabled = true;
+                    }
+                    break;
+
+                    //Decreases shooting speed 2 times
+                    case Slow_up: {
+                        shotSpeed *= 2;
+                        isBonusEnabled = true;
+                    }
+                    break;
+
+                    //If a player’s health is greater than 1 -> his health decreases to 1
+                    //If less -> he kills him.
+                    case Destroyer: {
+                        if (player.getHealth() > 1) {
+                            player.setHealth(1);
+                        } else {
+                            player.setHealth(0);
+                            setGameOver();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    /*
+        Resets status of all bonuses
+    */
+    private void resetBonuses() {
+        BONUS_DURATION = 0;
+        shotSpeed = 200;
+        tripleShotMode = false;
+        isBonusEnabled = false;
+    }
+
+    /*
         Sets game over state
     */
     private void setGameOver() {
@@ -289,6 +391,7 @@ public class GameView extends SurfaceView implements Runnable {
         if (currentStatus != GameStatus.GameOver && currentStatus != GameStatus.NewHighScore) {
             currentStatus = GameStatus.Playing;
         }
+
         soundPlayer.resume();
 
         gameThread = new Thread(this);
