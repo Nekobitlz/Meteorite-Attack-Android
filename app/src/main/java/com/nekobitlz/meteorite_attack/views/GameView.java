@@ -83,7 +83,7 @@ public class GameView extends SurfaceView implements Runnable {
         paint = new Paint();
         surfaceHolder = getHolder();
 
-        drawer = new Drawer(screenSizeX, screenSizeY, canvas, paint, surfaceHolder, spm);
+        drawer = new Drawer(context, screenSizeX, screenSizeY, canvas, paint, surfaceHolder, spm);
         initDrawer();
 
         reset();

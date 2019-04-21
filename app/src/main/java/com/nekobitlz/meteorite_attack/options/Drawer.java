@@ -1,10 +1,9 @@
 package com.nekobitlz.meteorite_attack.options;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.content.Context;
+import android.graphics.*;
 import android.view.SurfaceHolder;
+import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.objects.*;
 import com.nekobitlz.meteorite_attack.objects.Bonus;
@@ -28,6 +27,7 @@ public class Drawer {
     private SharedPreferencesManager spm;
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
+    private Bitmap coinBitmap;
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Bonus> bonuses;
@@ -36,7 +36,7 @@ public class Drawer {
     /*
         Drawer initialization
     */
-    public Drawer(int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
+    public Drawer(Context context, int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
                   SurfaceHolder surfaceHolder, SharedPreferencesManager spm) {
         this.surfaceHolder = surfaceHolder;
         this.screenSizeX = screenSizeX;
@@ -44,6 +44,10 @@ public class Drawer {
         this.paint = paint;
         this.spm = spm;
         this.canvas = canvas;
+
+        coinBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_money);
+        coinBitmap = Bitmap.createScaledBitmap(
+                coinBitmap, coinBitmap.getWidth() / 10, coinBitmap.getHeight() / 10, false);
     }
 
     /*
@@ -156,11 +160,13 @@ public class Drawer {
         canvas.drawText("GAME OVER", screenSizeX / 2, screenSizeY / 2, gameOver);
 
         Paint money = new Paint();
-        money.setTextSize(50);
-        money.setTextAlign(Paint.Align.CENTER);
+        money.setTextSize(55);
+        money.setTextAlign(Paint.Align.LEFT);
         money.setColor(Color.WHITE);
 
-        canvas.drawText("Money : " + MONEY, screenSizeX / 2, (screenSizeY / 2) + 60, money);
+        canvas.drawBitmap(coinBitmap, screenSizeX / 2 - coinBitmap.getWidth(),
+                                    (screenSizeY / 2) + 60 - coinBitmap.getHeight() * 4 / 5, money);
+        canvas.drawText("" + MONEY, screenSizeX / 2 + coinBitmap.getWidth() / 5, (screenSizeY / 2) + 65, money);
 
         //Draw high score
         Paint highScore = new Paint();
