@@ -6,12 +6,12 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class SharedPreferencesManagerTest {
     private Context appContext = InstrumentationRegistry.getContext();
     private SharedPreferencesManager spm = new SharedPreferencesManager(appContext);
-    private String tag = String.valueOf(R.drawable.player_ship_1_red);
+    private String tag = String.valueOf(R.drawable.spaceship_1_game);
 
     @After
     public void removePreferences() {
@@ -51,15 +51,12 @@ public class SharedPreferencesManagerTest {
     @Test
     public void savePlayer() {
         //check default
-        assertEquals(R.drawable.player_ship_1_red, spm.getPlayerImage());
-        assertEquals(1, spm.getWeaponPower());
+        assertEquals(R.drawable.spaceship_1_game, spm.getPlayerImage());
 
-        int image = R.drawable.player_ship_2_red;
-        int weaponPower = 5;
-        spm.savePlayer(image, weaponPower);
+        int image = R.drawable.spaceship_2_game;
+        spm.savePlayer(image);
 
         assertEquals(image, spm.getPlayerImage());
-        assertEquals(weaponPower, spm.getWeaponPower());
     }
 
     @Test
@@ -71,5 +68,35 @@ public class SharedPreferencesManagerTest {
         spm.saveStatus(tag, status);
 
         assertEquals(status, spm.getStatus(tag));
+    }
+
+    @Test
+    public void saveUpgrade() {
+        //check default
+        assertEquals(1, spm.getWeaponPower(tag));
+        assertEquals(1, spm.getHealth(tag));
+        assertEquals(1, spm.getXScore(tag));
+
+        int health = 4;
+        int weaponPower = 3;
+        int xScore = 5;
+
+        spm.saveUpgrade(tag, health, weaponPower, xScore);
+
+        assertEquals(health, spm.getHealth(tag));
+        assertEquals(weaponPower, spm.getWeaponPower(tag));
+        assertEquals(xScore, spm.getXScore(tag));
+    }
+
+    @Test
+    public void saveSound() {
+        //check default
+        assertTrue(spm.getSoundStatus());
+        assertEquals(1, spm.getVolume());
+
+        spm.saveSound(false, 50);
+
+        assertFalse(spm.getSoundStatus());
+        assertEquals(50, spm.getVolume());
     }
 }
