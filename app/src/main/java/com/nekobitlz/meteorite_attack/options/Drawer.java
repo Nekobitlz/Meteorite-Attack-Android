@@ -2,21 +2,22 @@ package com.nekobitlz.meteorite_attack.options;
 
 import android.content.Context;
 import android.graphics.*;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.SurfaceHolder;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
-import com.nekobitlz.meteorite_attack.objects.*;
 import com.nekobitlz.meteorite_attack.objects.Bonus;
+import com.nekobitlz.meteorite_attack.objects.Laser;
+import com.nekobitlz.meteorite_attack.objects.Player;
+import com.nekobitlz.meteorite_attack.objects.Star;
 import com.nekobitlz.meteorite_attack.objects.enemies.Enemy;
 
 import java.util.ArrayList;
 
-import static com.nekobitlz.meteorite_attack.views.GameView.BONUS_DURATION;
-import static com.nekobitlz.meteorite_attack.views.GameView.MONEY;
-import static com.nekobitlz.meteorite_attack.views.GameView.SCORE;
+import static com.nekobitlz.meteorite_attack.views.GameView.*;
 
 /*
-     Draws all the drawings
+     Draws all objects and game states
 */
 public class Drawer {
     private int screenSizeX;
@@ -33,6 +34,8 @@ public class Drawer {
     private ArrayList<Bonus> bonuses;
     private AnimatedBackground background;
 
+    private Typeface typeface;
+
     /*
         Drawer initialization
     */
@@ -44,6 +47,9 @@ public class Drawer {
         this.paint = paint;
         this.spm = spm;
         this.canvas = canvas;
+
+        typeface = ResourcesCompat.getFont(context, R.font.iceberg_regular);
+        paint.setTypeface(typeface);
 
         coinBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_money);
         coinBitmap = Bitmap.createScaledBitmap(
@@ -143,6 +149,7 @@ public class Drawer {
         Paint score = new Paint();
         score.setTextSize(30);
         score.setColor(Color.WHITE);
+        score.setTypeface(typeface);
 
         canvas.drawText("Score : " + SCORE, 100, 50, score);
     }
@@ -156,6 +163,7 @@ public class Drawer {
         gameOver.setTextSize(100);
         gameOver.setTextAlign(Paint.Align.CENTER);
         gameOver.setColor(Color.WHITE);
+        gameOver.setTypeface(typeface);
 
         canvas.drawText("GAME OVER", screenSizeX / 2, screenSizeY / 2, gameOver);
 
@@ -163,7 +171,9 @@ public class Drawer {
         money.setTextSize(55);
         money.setTextAlign(Paint.Align.LEFT);
         money.setColor(Color.WHITE);
+        money.setTypeface(typeface);
 
+        // *coin* money
         canvas.drawBitmap(coinBitmap, screenSizeX / 2 - coinBitmap.getWidth(),
                                     (screenSizeY / 2) + 60 - coinBitmap.getHeight() * 4 / 5, money);
         canvas.drawText("" + MONEY, screenSizeX / 2 + coinBitmap.getWidth() / 5, (screenSizeY / 2) + 65, money);
@@ -173,6 +183,7 @@ public class Drawer {
         highScore.setTextSize(50);
         highScore.setTextAlign(Paint.Align.CENTER);
         highScore.setColor(Color.WHITE);
+        highScore.setTypeface(typeface);
 
         //Draw new high score and stat
         if (currentGameStatus == GameStatus.NewHighScore) {
@@ -183,6 +194,7 @@ public class Drawer {
             enemyDestroyed.setTextSize(50);
             enemyDestroyed.setTextAlign(Paint.Align.CENTER);
             enemyDestroyed.setColor(Color.WHITE);
+            enemyDestroyed.setTypeface(typeface);
 
             canvas.drawText(
                     "EnemyShip Destroyed : " + spm.getEnemyDestroyed(),
@@ -192,6 +204,7 @@ public class Drawer {
             meteorDestroyed.setTextSize(50);
             meteorDestroyed.setTextAlign(Paint.Align.CENTER);
             meteorDestroyed.setColor(Color.WHITE);
+            meteorDestroyed.setTypeface(typeface);
 
             canvas.drawText("Meteor Destroyed : " + spm.getMeteorDestroyed(),
                     screenSizeX / 2, (screenSizeY / 2) + 240, meteorDestroyed);
@@ -209,6 +222,7 @@ public class Drawer {
         Paint bonusDuration = new Paint();
         bonusDuration.setTextSize(30);
         bonusDuration.setColor(Color.WHITE);
+        bonusDuration.setTypeface(typeface);
 
         if (BONUS_DURATION > 0) {
             canvas.drawText("BONUS DURATION : " + (500 - BONUS_DURATION), 100, 90, bonusDuration);
