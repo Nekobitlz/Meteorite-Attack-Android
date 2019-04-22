@@ -58,10 +58,12 @@ public class GameView extends SurfaceView implements Runnable {
     private int distance;
     private int fps = 0;
 
+    // Upgrade settings
     private int shotSpeed;
     private boolean tripleShotMode;
     private boolean isBonusEnabled;
 
+    // Drag & drop
     private boolean isDragged = false;
     private float dragX = 0;
     private float dragY = 0;
