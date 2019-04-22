@@ -27,31 +27,33 @@
             android:layout_marginBottom="8dp"/>
 
     <ImageView
-            android:layout_width="39dp"
-            android:layout_height="32dp"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
             app:srcCompat="@drawable/icon_money"
             android:id="@+id/icon_coin"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/shop"
+            app:layout_constraintTop_toTopOf="@+id/shop"/>
     <TextView
             android:textStyle="bold"
             android:id="@+id/money"
-            android:text="100"
+            android:text="25"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:layout_height="35dp"
+            android:textSize="25sp"
             tools:textColor="@android:color/white"
             android:visibility="visible"
             app:fontFamily="@font/iceberg_regular"
             android:textColor="@android:color/white"
             app:layout_constraintStart_toEndOf="@+id/icon_coin"
-            app:layout_constraintTop_toTopOf="@+id/icon_coin"
-            app:layout_constraintBottom_toBottomOf="@+id/icon_coin"
             android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_coin"
+            app:layout_constraintTop_toTopOf="@+id/icon_coin"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="2dp"/>
 
     <ImageButton
             android:layout_width="55dp"
@@ -63,10 +65,10 @@
             app:layout_constraintEnd_toStartOf="@+id/high_score"
             app:layout_constraintBottom_toBottomOf="@+id/high_score"
             app:layout_constraintTop_toTopOf="@+id/high_score"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"/>
     <ImageButton
             android:layout_width="55dp"
             android:layout_height="wrap_content"
