@@ -35,7 +35,7 @@ public class GameView extends SurfaceView implements Runnable {
     public static int METEOR_DESTROYED = 0;
     public static int ENEMY_SHIP_DESTROYED = 0;
     public static int MONEY = 0;
-    public static int WEAPON_POWER;
+    public static int WEAPON_POWER = 1;
     public static int X_SCORE = 1;
     public static int BONUS_DURATION = 0;
 
@@ -52,6 +52,7 @@ public class GameView extends SurfaceView implements Runnable {
     private AnimatedBackground background;
     private Drawer drawer;
 
+    private String tag;
     private int screenSizeX;
     private int screenSizeY;
     private int level;
@@ -95,7 +96,7 @@ public class GameView extends SurfaceView implements Runnable {
         Resets all settings for new game
     */
     private void reset() {
-        String tag = String.valueOf(spm.getPlayerImage());
+        tag = String.valueOf(spm.getPlayerImage());
 
         SCORE = 0;
         MONEY = 0;
@@ -174,12 +175,14 @@ public class GameView extends SurfaceView implements Runnable {
 
         if (distance % (WEAPON_POWER * 700) == 0) {
             enemies.add(
-                    new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+                    new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level)
+            );
         }
 
         if (distance % (WEAPON_POWER * 300) == 0) {
             enemies.add(
-                    new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
+                    new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level)
+            );
         }
 
         //Bonuses update
@@ -310,18 +313,21 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                     break;
 
-                    //Decreases shooting speed 2 times
+                    //Decreases shooting speed 2 times and
                     case Slow_up: {
                         shotSpeed *= 2;
+                        WEAPON_POWER += WEAPON_POWER / 10 + 5;
                         isBonusEnabled = true;
                     }
                     break;
 
                     //If a player’s health is greater than 1 -> his health decreases to 1
+                    //                                      and weapon power multiplied by 2 times
                     //If less -> he kills him.
                     case Destroyer: {
                         if (player.getHealth() > 1) {
                             player.setHealth(1);
+                            WEAPON_POWER *= 2;
                         } else {
                             player.setHealth(0);
                             setGameOver();
@@ -341,6 +347,7 @@ public class GameView extends SurfaceView implements Runnable {
         shotSpeed = 200;
         tripleShotMode = false;
         isBonusEnabled = false;
+        WEAPON_POWER = spm.getWeaponPower(tag);
     }
 
     /*
