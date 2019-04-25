@@ -257,6 +257,10 @@ public class GameView extends SurfaceView implements Runnable {
                     //If a player enters the crater, he takes damage in 1 health unit
                     if (enemy.isDestroyed() && enemy.getEnemyType() == EnemyType.Exploder) {
                         player.setHealth(player.getHealth() - 1);
+
+                        if (player.getHealth() == 0) {
+                            setGameOver();
+                        }
                     } else {
                         player.setHealth(playerHealth);
                         enemy.destroy();
