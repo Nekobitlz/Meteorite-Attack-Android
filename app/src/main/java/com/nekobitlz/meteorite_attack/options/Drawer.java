@@ -5,6 +5,7 @@ import android.graphics.*;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.SurfaceHolder;
 import com.nekobitlz.meteorite_attack.R;
+import com.nekobitlz.meteorite_attack.enums.EnemyType;
 import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.objects.Bonus;
 import com.nekobitlz.meteorite_attack.objects.Laser;
@@ -25,6 +26,7 @@ public class Drawer {
 
     private Player player;
     private Paint paint;
+    private Paint alphaPaint;
     private SharedPreferencesManager spm;
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
@@ -51,6 +53,10 @@ public class Drawer {
         typeface = ResourcesCompat.getFont(context, R.font.iceberg_regular);
         paint.setTypeface(typeface);
 
+        alphaPaint = new Paint();
+        // Filter for smooth reduction of alpha
+        alphaPaint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL));
+
         coinBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_money);
         coinBitmap = Bitmap.createScaledBitmap(
                 coinBitmap, coinBitmap.getWidth() / 10, coinBitmap.getHeight() / 10, false);
@@ -68,13 +74,25 @@ public class Drawer {
                 canvas.drawBitmap(s.getBitmap(), s.getX(), s.getY(), paint);
             }
 
-            for (Bonus b: bonuses) {
+            for (Bonus b : bonuses) {
                 canvas.drawBitmap(b.getBitmap(), b.getX(), b.getY(), paint);
             }
 
             for (Enemy e : enemies) {
-                canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
-                drawHealth(e, e.getX(), e.getY(), paint);
+                if (e.isDestroyed() && e.getAlpha() > 0 && e.getEnemyType() != EnemyType.Exploder) {
+                    // Smooth disappearance of an explosion
+                    int alpha = e.getAlpha() - 15;
+
+                    e.setAlpha(alpha);
+                    alphaPaint.setAlpha(alpha);
+
+                    canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), alphaPaint);
+                } else {
+                    if (!e.isDestroyed() || e.getEnemyType() == EnemyType.Exploder) {
+                        canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
+                        drawHealth(e, e.getX(), e.getY(), paint);
+                    }
+                }
             }
 
             for (Laser l : player.getLasers()) {

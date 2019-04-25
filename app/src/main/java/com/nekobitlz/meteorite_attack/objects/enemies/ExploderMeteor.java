@@ -28,6 +28,7 @@ public class ExploderMeteor extends Enemy {
     private int health;
     private int value; //"value" coins are awarded for killing
     private boolean isDestroyed;
+    private int alpha;
 
     /*
         Exploder initialization
@@ -145,5 +146,13 @@ public class ExploderMeteor extends Enemy {
 
     public EnemyType getEnemyType() {
         return EnemyType.Exploder;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
 }

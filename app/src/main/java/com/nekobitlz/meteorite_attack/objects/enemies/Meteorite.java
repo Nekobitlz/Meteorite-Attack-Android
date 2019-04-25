@@ -38,7 +38,6 @@ public class Meteorite extends Enemy {
         super(context, screenSizeX, screenSizeY, soundPlayer, level);
 
         isDestroyed = false;
-
         health = getRandomHealth(level);
         value = health;
         meteors = new int[] { R.drawable.meteor_1, R.drawable.meteor_2, R.drawable.meteor_3, R.drawable.meteor_4 };
@@ -151,5 +150,13 @@ public class Meteorite extends Enemy {
 
     public EnemyType getEnemyType() {
         return EnemyType.Meteorite;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
 }

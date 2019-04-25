@@ -144,4 +144,12 @@ public class BorderDestroyerMeteor extends Enemy {
     public EnemyType getEnemyType() {
         return EnemyType.BorderDestroyer;
     }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
+    }
 }

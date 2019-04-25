@@ -13,6 +13,7 @@ public abstract class Enemy {
     public int screenSizeY;
     public SoundPlayer soundPlayer;
     public int level;
+    public int alpha;
 
     public Enemy(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, int level) {
         this.context = context;
@@ -20,6 +21,7 @@ public abstract class Enemy {
         this.screenSizeY = screenSizeY;
         this.soundPlayer = soundPlayer;
         this.level = level;
+        alpha = 255;
     }
 
     public abstract void update();
@@ -36,4 +38,6 @@ public abstract class Enemy {
     public abstract Bitmap getBitmap();
     public abstract boolean isDestroyed();
     public abstract EnemyType getEnemyType();
+    public abstract int getAlpha();
+    public abstract void setAlpha(int alpha);
 }
