@@ -104,13 +104,17 @@ public class Drawer {
         if (!enemy.isDestroyed()) {
             //Shift health drawing point, it is necessary so that
             // regardless of amount of health is always in the middle
-            int shift = String.valueOf(enemy.getHealth()).length();
-            Bitmap meteorBitmap = enemy.getBitmap();
+            Bitmap enemyBitmap = enemy.getBitmap();
+            int textSize = enemyBitmap.getWidth() * 2 / 5;
+            int shift = String.valueOf(enemy.getHealth()).length() - enemyBitmap.getWidth() / 100;
 
-            setHealthPaintSettings();
+            paint.setTextSize(textSize);
+            paint.setColor(Color.WHITE);
+            paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+            paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
 
-            canvas.drawText("" + enemy.getHealth(), x + meteorBitmap.getWidth() / 2 - shift * 10,
-                    y + meteorBitmap.getHeight() / 2, paint);
+            canvas.drawText("" + enemy.getHealth(), x + textSize - shift,
+                    y + textSize + enemyBitmap.getHeight() / 5, paint);
         }
     }
 
@@ -125,21 +129,14 @@ public class Drawer {
             int shift = String.valueOf(player.getHealth()).length();
             Bitmap playerBitmap = player.getBitmap();
 
-            setHealthPaintSettings();
+            paint.setTextSize(40);
+            paint.setColor(Color.WHITE);
+            paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+            paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
 
             canvas.drawText("" + player.getHealth(), x + playerBitmap.getWidth() / 2 - shift * 10,
                     y + playerBitmap.getHeight() / 2, paint);
         }
-    }
-
-    /*
-        Sets settings for drawHealth()
-    */
-    private void setHealthPaintSettings() {
-        paint.setTextSize(40);
-        paint.setColor(Color.WHITE);
-        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
-        paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
     }
 
     /*
