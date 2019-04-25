@@ -68,6 +68,10 @@ public class Drawer {
                 canvas.drawBitmap(s.getBitmap(), s.getX(), s.getY(), paint);
             }
 
+            for (Bonus b: bonuses) {
+                canvas.drawBitmap(b.getBitmap(), b.getX(), b.getY(), paint);
+            }
+
             for (Enemy e : enemies) {
                 canvas.drawBitmap(e.getBitmap(), e.getX(), e.getY(), paint);
                 drawHealth(e, e.getX(), e.getY(), paint);
@@ -75,10 +79,6 @@ public class Drawer {
 
             for (Laser l : player.getLasers()) {
                 canvas.drawBitmap(l.getBitmap(), l.getX(), l.getY(), paint);
-            }
-
-            for (Bonus b: bonuses) {
-                canvas.drawBitmap(b.getBitmap(), b.getX(), b.getY(), paint);
             }
 
             //Draw player
