@@ -97,7 +97,7 @@
     <Button
             android:id="@+id/exit"
             app:fontFamily="@font/iceberg_regular"
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button_background"
             android:text="@string/button_exit"
@@ -109,7 +109,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@+id/play"
             app:layout_constraintEnd_toEndOf="@+id/play"
             app:layout_constraintTop_toBottomOf="@+id/play"/>
