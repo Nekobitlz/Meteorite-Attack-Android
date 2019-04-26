@@ -108,6 +108,9 @@ public class ExploderMeteor extends Enemy {
         speed = 1;
 
         if (!isDestroyed) {
+            x -= bitmap.getWidth() / 2;
+            y -= bitmap.getHeight() / 2;
+
             Bitmap explodeBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion_crater);
             bitmap = Bitmap.createScaledBitmap(
                     explodeBitmap, bitmap.getWidth() * 2, bitmap.getHeight() * 2, false);
