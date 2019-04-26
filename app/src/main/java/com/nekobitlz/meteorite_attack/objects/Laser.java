@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import com.nekobitlz.meteorite_attack.R;
+import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 
 /*
     Bullet that the player shoots
@@ -12,13 +13,13 @@ import com.nekobitlz.meteorite_attack.R;
 public class Laser {
 
     private Bitmap bitmap;
+    private SharedPreferencesManager spm;
+    private Rect collision;
 
     private int x;
     private int y;
     private int screenSizeX;
     private int screenSizeY;
-
-    private Rect collision;
 
     /*
         Laser initialization
@@ -27,9 +28,10 @@ public class Laser {
                  int playerY, Bitmap playerBitmap) {
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
+        spm = new SharedPreferencesManager(context);
 
         //Set laser image
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.laser_2);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), spm.getLaserImage());
         bitmap = Bitmap.createScaledBitmap(
                 bitmap, bitmap.getWidth() * 3 / 5, bitmap.getHeight() * 3 / 5, false);
 

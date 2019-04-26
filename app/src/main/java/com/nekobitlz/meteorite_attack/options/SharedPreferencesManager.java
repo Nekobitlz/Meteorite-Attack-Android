@@ -48,11 +48,13 @@ public class SharedPreferencesManager {
     /*
         Saves player image and weapon power
     */
-    public void savePlayer(int playerImage) {
+    public void savePlayer(int playerImage, int laserImage, int level) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
 
         e.putInt("player_image", playerImage);
+        e.putInt("laser_image", laserImage);
+        e.putInt("level", level);
 
         e.apply();
     }
@@ -127,6 +129,18 @@ public class SharedPreferencesManager {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
         return sp.getInt("player_image", R.drawable.spaceship_1_game);
+    }
+
+    public int getLaserImage() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("laser_image", R.drawable.laser_blue_1);
+    }
+
+    public int getLevel() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("level", 1);
     }
 
     public int getHealth(String tag) {

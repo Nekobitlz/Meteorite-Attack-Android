@@ -161,7 +161,7 @@ public class Shop {
             }
         }
 
-        spm.savePlayer(shopItem.getImage());
+        spm.savePlayer(shopItem.getImage(), shopItem.getLaser(), shopItem.getLevel());
         spm.saveStatus(statusTag, used);
         shipPriceButton.setText(used);
     }

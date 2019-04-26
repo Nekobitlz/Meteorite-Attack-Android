@@ -103,7 +103,7 @@ public class GameView extends SurfaceView implements Runnable {
         WEAPON_POWER = spm.getWeaponPower(tag);
         X_SCORE = spm.getXScore(tag);
         BONUS_DURATION = 0;
-        level = WEAPON_POWER;
+        level = spm.getLevel();
         distance = 0;
 
         shotSpeed = 200;
@@ -149,11 +149,11 @@ public class GameView extends SurfaceView implements Runnable {
     */
     public void update() {
         SCORE += X_SCORE;
-        distance += WEAPON_POWER;
+        distance += level;
 
         //level up every 1000 meters
         if (distance > level * 1000) {
-            level += WEAPON_POWER;
+            level += 1;
         }
 
         player.update();

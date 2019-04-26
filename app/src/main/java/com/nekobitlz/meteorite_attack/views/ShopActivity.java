@@ -35,6 +35,8 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     private String xScore;
     private String upgradePrice;
     private String weaponPower;
+    private String laser;
+    private String level;
 
     private int PAGE_COUNT;
 
@@ -81,7 +83,10 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         if (android.text.TextUtils.equals(spm.getStatus(firstItemTag), "NONE")) {
             spm.saveStatus(firstItemTag, "USED");
-            spm.savePlayer(shopItemList.get(0).getImage());
+            spm.savePlayer(shopItemList.get(0).getImage(),
+                            shopItemList.get(0).getLaser(),
+                                 shopItemList.get(0).getLevel()
+            );
         }
 
         for (ShopActivity.ShopItem item : shopItemList) {
@@ -108,13 +113,17 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
                     // Gets xml attributes
                     health = parser.getAttributeValue(0);
                     image = parser.getAttributeValue(1);
-                    shipPrice = parser.getAttributeValue(2);
-                    upgradePrice = parser.getAttributeValue(3);
-                    weaponPower = parser.getAttributeValue(4);
-                    xScore = parser.getAttributeValue(5);
+                    laser = parser.getAttributeValue(2);
+                    level = parser.getAttributeValue(3);
+                    shipPrice = parser.getAttributeValue(4);
+                    upgradePrice = parser.getAttributeValue(5);
+                    weaponPower = parser.getAttributeValue(6);
+                    xScore = parser.getAttributeValue(7);
 
                     shopItemList.add(
-                            new ShopActivity.ShopItem(image, shipPrice, upgradePrice, health, weaponPower, xScore));
+                            new ShopActivity.ShopItem(
+                                    image, shipPrice, laser, level, upgradePrice, health, weaponPower, xScore)
+                    );
                 }
 
                 parser.next();
@@ -162,11 +171,15 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         private String health;
         private String weaponPower;
         private String xScore;
+        private String level;
+        private String laser;
 
-        public ShopItem(String image, String shipPrice, String upgradePrice,
-                        String health, String weaponPower, String xScore) {
+        public ShopItem(String image, String shipPrice, String laser, String level,
+                        String upgradePrice, String health, String weaponPower, String xScore) {
             this.image = image;
             this.shipPrice = shipPrice;
+            this.laser = laser;
+            this.level = level;
             this.upgradePrice = upgradePrice;
             this.health = health;
             this.weaponPower = weaponPower;
@@ -200,6 +213,14 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         public String getWeaponPower() {
             return weaponPower;
+        }
+
+        public int getLevel() {
+            return Integer.parseInt(level);
+        }
+
+        public int getLaser() {
+            return getResources().getIdentifier(laser, "drawable", getPackageName());
         }
     }
 

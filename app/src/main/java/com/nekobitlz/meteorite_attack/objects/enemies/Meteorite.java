@@ -66,7 +66,7 @@ public class Meteorite extends Enemy {
     */
     private int getRandomHealth(int level) {
         Random random = new Random();
-        health = level + random.nextInt(WEAPON_POWER * 2 + 1);
+        health = level + random.nextInt(level * 2);
 
         return health;
     }
