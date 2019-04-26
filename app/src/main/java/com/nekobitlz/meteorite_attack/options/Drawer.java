@@ -126,13 +126,17 @@ public class Drawer {
             int textSize = enemyBitmap.getWidth() * 2 / 5;
             int textLength = String.valueOf(enemy.getHealth()).length();
 
+            // Border has a slightly different height, need to shift inscription to center
+            int shiftY = enemy.getEnemyType() == EnemyType.BorderDestroyer ? 10 : 5;
+            int healthY = y + textSize + enemyBitmap.getHeight() / shiftY;
+            int healthX = (x + enemyBitmap.getWidth() / 2) - (textSize * textLength) / 4;
+
             paint.setTextSize(textSize);
             paint.setColor(Color.WHITE);
             paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
             paint.setShadowLayer(0.1f, -2, 2, Color.BLACK);
 
-            canvas.drawText("" + enemy.getHealth(), (x + enemyBitmap.getWidth() / 2) - (textSize * textLength) / 4,
-                    y + textSize + enemyBitmap.getHeight() / 5, paint);
+            canvas.drawText("" + enemy.getHealth(), healthX, healthY, paint);
         }
     }
 
