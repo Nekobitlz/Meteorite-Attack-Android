@@ -197,7 +197,7 @@ public class GameView extends SurfaceView implements Runnable {
         //Bonuses update
         bonusUpdate(bonuses);
 
-        if (distance % (WEAPON_POWER * 350) == 0) {
+        if (distance % (level * 350) == 0) {
             //Random bonus pick
             int pick = new Random().nextInt(BonusType.values().length);
             BonusType bonusType = BonusType.values()[pick];
