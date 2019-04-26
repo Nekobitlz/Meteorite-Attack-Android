@@ -60,6 +60,7 @@ public class GameView extends SurfaceView implements Runnable {
     private int level;
     private int distance;
     private int fps = 0;
+    private int meteorFreq;
 
     // Upgrade settings
     private int shotSpeed;
@@ -112,6 +113,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         level = spm.getLevel();
         distance = 0;
+        meteorFreq = 500;
 
         shotSpeed = 200;
         tripleShotMode = false;
@@ -160,7 +162,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         //level up every 1000 meters
         if (distance > level * 1000) {
-            level += 1;
+            level++;
         }
 
         player.update();
@@ -172,7 +174,7 @@ public class GameView extends SurfaceView implements Runnable {
         enemiesUpdate(enemies);
         deleteEnemies(enemies);
 
-        if (fps % 1000 == 0) {
+        if (fps % meteorFreq == 0) {
             enemies.add(new Meteorite(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
@@ -180,13 +182,13 @@ public class GameView extends SurfaceView implements Runnable {
             enemies.add(new EnemyShip(getContext(), screenSizeX, screenSizeY, soundPlayer, level));
         }
 
-        if (distance % (WEAPON_POWER * 700) == 0) {
+        if (distance % (level * 700) == 0) {
             enemies.add(
                     new BorderDestroyerMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level)
             );
         }
 
-        if (distance % (WEAPON_POWER * 300) == 0) {
+        if (distance % (level * 300) == 0) {
             enemies.add(
                     new ExploderMeteor(getContext(), screenSizeX, screenSizeY, soundPlayer, level)
             );
@@ -370,8 +372,7 @@ public class GameView extends SurfaceView implements Runnable {
             currentStatus = GameStatus.NewHighScore;
             spm.saveHighScore(
                     SCORE, METEOR_DESTROYED, ENEMY_SHIP_DESTROYED,
-                    BORDER_DESTROYER_DESTROYED,
-                    EXPLODER_DESTROYED
+                    BORDER_DESTROYER_DESTROYED, EXPLODER_DESTROYED
             );
         }
     }
