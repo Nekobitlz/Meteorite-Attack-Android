@@ -89,7 +89,7 @@ public class ExploderMeteor extends Enemy {
 
         if (health <= 0) {
             SCORE += level * 10;
-            METEOR_DESTROYED++;
+            EXPLODER_DESTROYED++;
             MONEY += value;
             destroy();
         } else {

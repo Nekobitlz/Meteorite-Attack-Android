@@ -88,7 +88,7 @@ public class BorderDestroyerMeteor extends Enemy {
 
         if (health <= 0) {
             SCORE += level * 15;
-            METEOR_DESTROYED++;
+            BORDER_DESTROYER_DESTROYED++;
             MONEY += value * 1.5;
             destroy();
         } else {

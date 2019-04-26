@@ -1,6 +1,7 @@
 package com.nekobitlz.meteorite_attack.views;
 
 import android.annotation.SuppressLint;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,10 +21,12 @@ public class HighScoreActivity extends AppCompatActivity implements View.OnClick
 
     private TextView score;
     private TextView meteor;
-    private TextView enemy;
+    private TextView enemyShip;
+    private TextView borderDestroyer;
+    private TextView exploder;
     private TextView nullHighScore;
 
-    private LinearLayout highScoreContainer;
+    private ConstraintLayout highScoreContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,11 @@ public class HighScoreActivity extends AppCompatActivity implements View.OnClick
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         back = findViewById(R.id.back);
-        score = findViewById(R.id.score);
-        meteor = findViewById(R.id.meteor);
-        enemy = findViewById(R.id.enemyShip);
+        score = findViewById(R.id.score_count);
+        meteor = findViewById(R.id.meteor_count);
+        enemyShip = findViewById(R.id.enemy_count);
+        borderDestroyer = findViewById(R.id.border_count);
+        exploder = findViewById(R.id.exploder_count);
         nullHighScore = findViewById(R.id.null_high_score);
         highScoreContainer = findViewById(R.id.high_score_container);
 
@@ -60,7 +65,9 @@ public class HighScoreActivity extends AppCompatActivity implements View.OnClick
 
             score.setText(spm.getHighScore() + "");
             meteor.setText(spm.getMeteorDestroyed() + "");
-            enemy.setText(spm.getEnemyDestroyed() + "");
+            enemyShip.setText(spm.getEnemyDestroyed() + "");
+            borderDestroyer.setText(spm.getBorderDestroyed() + "");
+            exploder.setText(spm.getExploderDestroyed() + "");
         } else {
             nullHighScore.setVisibility(TextView.VISIBLE);
             highScoreContainer.setVisibility(LinearLayout.GONE);

@@ -216,14 +216,14 @@ public class Drawer {
                     "EnemyShip Destroyed : " + spm.getEnemyDestroyed(),
                     screenSizeX / 2, (screenSizeY / 2) + 180, enemyDestroyed);
 
-            Paint meteorDestroyed = new Paint();
-            meteorDestroyed.setTextSize(50);
-            meteorDestroyed.setTextAlign(Paint.Align.CENTER);
-            meteorDestroyed.setColor(Color.WHITE);
-            meteorDestroyed.setTypeface(typeface);
-
             canvas.drawText("Meteor Destroyed : " + spm.getMeteorDestroyed(),
-                    screenSizeX / 2, (screenSizeY / 2) + 240, meteorDestroyed);
+                    screenSizeX / 2, (screenSizeY / 2) + 240, enemyDestroyed);
+
+            canvas.drawText("Border Destroyer Destroyed : " + spm.getBorderDestroyed(),
+                    screenSizeX / 2, (screenSizeY / 2) + 300, enemyDestroyed);
+
+            canvas.drawText("Exploder Destroyed : " + spm.getExploderDestroyed(),
+                    screenSizeX / 2, (screenSizeY / 2) + 360, enemyDestroyed);
         }
     }
 

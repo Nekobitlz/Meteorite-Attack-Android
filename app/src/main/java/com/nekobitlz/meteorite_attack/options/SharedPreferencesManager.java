@@ -34,19 +34,22 @@ public class SharedPreferencesManager {
     /*
         Saves high score and count of meteors and enemy that were destroyed
      */
-    public void saveHighScore(int score, int meteorDestroyed, int enemyDestroyed) {
+    public void saveHighScore(int score, int meteorDestroyed, int enemyDestroyed,
+                              int borderDestroyed, int exploderDestroyed) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
 
         e.putInt("high_score", score);
         e.putInt("meteorite", meteorDestroyed);
         e.putInt("enemy", enemyDestroyed);
+        e.putInt("border", borderDestroyed);
+        e.putInt("exploder", exploderDestroyed);
 
         e.apply();
     }
 
     /*
-        Saves player image and weapon power
+        Saves player image, laser image and difficulty level
     */
     public void savePlayer(int playerImage, int laserImage, int level) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -117,6 +120,18 @@ public class SharedPreferencesManager {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
         return sp.getInt("enemy", 0);
+    }
+
+    public int getBorderDestroyed() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("border", 0);
+    }
+
+    public int getExploderDestroyed() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("exploder", 0);
     }
 
     public int getMoney() {

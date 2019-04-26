@@ -34,6 +34,8 @@ public class GameView extends SurfaceView implements Runnable {
     public static int SCORE = 0;
     public static int METEOR_DESTROYED = 0;
     public static int ENEMY_SHIP_DESTROYED = 0;
+    public static int EXPLODER_DESTROYED = 0;
+    public static int BORDER_DESTROYER_DESTROYED = 0;
     public static int MONEY = 0;
     public static int WEAPON_POWER = 1;
     public static int X_SCORE = 1;
@@ -103,6 +105,11 @@ public class GameView extends SurfaceView implements Runnable {
         WEAPON_POWER = spm.getWeaponPower(tag);
         X_SCORE = spm.getXScore(tag);
         BONUS_DURATION = 0;
+        METEOR_DESTROYED = 0;
+        ENEMY_SHIP_DESTROYED = 0;
+        BORDER_DESTROYER_DESTROYED = 0;
+        EXPLODER_DESTROYED = 0;
+
         level = spm.getLevel();
         distance = 0;
 
@@ -361,7 +368,11 @@ public class GameView extends SurfaceView implements Runnable {
         //Saves new high score
         if (SCORE > spm.getHighScore()) {
             currentStatus = GameStatus.NewHighScore;
-            spm.saveHighScore(SCORE, METEOR_DESTROYED, ENEMY_SHIP_DESTROYED);
+            spm.saveHighScore(
+                    SCORE, METEOR_DESTROYED, ENEMY_SHIP_DESTROYED,
+                    BORDER_DESTROYER_DESTROYED,
+                    EXPLODER_DESTROYED
+            );
         }
     }
 
