@@ -1,7 +1,11 @@
 package com.nekobitlz.meteorite_attack.views;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +13,9 @@ import android.view.WindowManager;
 import android.widget.*;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 /*
     Activity with main menu
@@ -24,6 +31,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private TextView money;
     private SharedPreferencesManager spm;
     private long backPressed;
+    private boolean isStopped;
+    public static BackgroundSound backgroundSound;
+    private boolean toOtherActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         spm = new SharedPreferencesManager(this);
         loadMoney();
+
+        backgroundSound = new BackgroundSound(getApplicationContext());
+        backgroundSound.execute();
+        isStopped = false;
     }
 
     /*
@@ -69,25 +83,31 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.play: {
                 startActivity(new Intent(this, MainActivity.class));
+                toOtherActivity = true;
             }
             break;
 
             case R.id.shop: {
                 startActivity(new Intent(this, ShopActivity.class));
+                toOtherActivity = true;
             }
             break;
 
             case R.id.high_score: {
                 startActivity(new Intent(this, HighScoreActivity.class));
+                toOtherActivity = true;
             }
             break;
 
             case R.id.settings: {
                 startActivity(new Intent(this, SettingsActivity.class));
+                toOtherActivity = true;
             }
             break;
 
             case R.id.exit: {
+                backgroundSound.releaseMP();
+
                 finish();
             }
             break;
@@ -97,8 +117,31 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-
         loadMoney();
+
+        if (toOtherActivity) {
+            toOtherActivity = false;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (isStopped) {
+            backgroundSound.player.start();
+            isStopped = false;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (!toOtherActivity) {
+            isStopped = true;
+            backgroundSound.player.pause();
+        }
     }
 
     /*
@@ -112,5 +155,71 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
 
         backPressed = System.currentTimeMillis();
+    }
+
+    /*
+        AsyncTask for background music
+    */
+    public static class BackgroundSound extends AsyncTask<Void, Void, Void> {
+
+        private WeakReference<Context> weakContext;
+        private SharedPreferencesManager spm;
+        private MediaPlayer player;
+        private float volume;
+        private boolean isEnabled;
+        private boolean isPlayerPlaying;
+
+        public BackgroundSound(Context context) {
+            weakContext = new WeakReference<>(context);
+            spm = new SharedPreferencesManager(weakContext.get());
+            volume = spm.getEffectsVolume() / 100f;
+            isEnabled = spm.getSoundStatus();
+            isPlayerPlaying = true;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            player = MediaPlayer.create(weakContext.get(), R.raw.main_music);
+            player.setLooping(true);
+            player.start();
+
+            while (!isCancelled()) {
+                if (isEnabled) {
+                    if (isPlayerPlaying) {
+                        player.setVolume(volume, volume);
+                    } else {
+                        player.start();
+                        isPlayerPlaying = true;
+                    }
+                } else {
+                    player.pause();
+                    isPlayerPlaying = false;
+                }
+            }
+
+            releaseMP();
+
+            return null;
+        }
+
+        public void setVolume(int volume) {
+            this.volume = volume / 100f;
+        }
+
+        public void setEnabled(boolean enabled) {
+            isEnabled = enabled;
+        }
+
+        public void releaseMP() {
+            if (player != null) {
+                try {
+                    player.stop();
+                    player.release();
+                    player = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

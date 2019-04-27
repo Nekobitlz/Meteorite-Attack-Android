@@ -55,7 +55,7 @@ public class SoundPlayer implements Runnable {
         crashId = soundPool.load(context, R.raw.rock_explode_2, 1);
 
         spm = new SharedPreferencesManager(context);
-        volume = spm.getVolume() / 100f;
+        volume = spm.getEffectsVolume() / 100f;
         isEnabled = spm.getSoundStatus();
     }
 

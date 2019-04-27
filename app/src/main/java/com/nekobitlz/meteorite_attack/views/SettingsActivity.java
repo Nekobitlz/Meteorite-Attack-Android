@@ -17,10 +17,12 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CheckBox soundStatus;
-    private SeekBar soundVolume;
+    private SeekBar effectsVolume;
+    private SeekBar musicVolume;
     private ImageView back;
 
     private SharedPreferencesManager spm;
+    private MainMenuActivity.BackgroundSound backgroundSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +36,42 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         soundStatus = findViewById(R.id.sound_checkbox);
-        soundVolume = findViewById(R.id.sound_seekbar);
+        effectsVolume = findViewById(R.id.effects_seekbar);
+        musicVolume = findViewById(R.id.music_seekbar);
         back = findViewById(R.id.back);
 
         spm = new SharedPreferencesManager(this);
+        backgroundSound = MainMenuActivity.backgroundSound;
 
-        soundVolume.setProgress(spm.getVolume());
+        effectsVolume.setProgress(spm.getEffectsVolume());
+        musicVolume.setProgress(spm.getMusicVolume());
         soundStatus.setChecked(spm.getSoundStatus());
 
         back.setOnClickListener(this);
-        soundVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        effectsVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //Progress == volume level
-                spm.saveSound(spm.getSoundStatus(), progress);
+                spm.saveSound(spm.getSoundStatus(), progress, spm.getMusicVolume());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                /* NOTHING */
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                /* NOTHING */
+            }
+        });
+
+        musicVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //Progress == volume level
+                spm.saveSound(spm.getSoundStatus(), spm.getEffectsVolume(), progress);
+                backgroundSound.setVolume(progress);
             }
 
             @Override
@@ -67,9 +91,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    spm.saveSound(true, spm.getVolume());
+                    spm.saveSound(true, spm.getEffectsVolume(), spm.getMusicVolume());
+                    backgroundSound.setEnabled(true);
                 } else {
-                    spm.saveSound(false, spm.getVolume());
+                    spm.saveSound(false, spm.getEffectsVolume(), spm.getMusicVolume());
+                    backgroundSound.setEnabled(false);
                 }
             }
         });

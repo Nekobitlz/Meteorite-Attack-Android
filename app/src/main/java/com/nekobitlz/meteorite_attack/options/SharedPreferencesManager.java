@@ -91,12 +91,13 @@ public class SharedPreferencesManager {
     /*
         Saves sound state
     */
-    public void saveSound(boolean isEnabled, int volume) {
+    public void saveSound(boolean isEnabled, int effectsVolume, int musicVolume) {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sp.edit();
 
-        e.putInt("volume", volume);
+        e.putInt("effects_volume", effectsVolume);
         e.putBoolean("sound_status", isEnabled);
+        e.putInt("music_volume", musicVolume);
 
         e.apply();
     }
@@ -188,10 +189,16 @@ public class SharedPreferencesManager {
         return sp.getBoolean("sound_status", true);
     }
 
-    public int getVolume() {
+    public int getEffectsVolume() {
         SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
-        return sp.getInt("volume", 50);
+        return sp.getInt("effects_volume", 50);
+    }
+
+    public int getMusicVolume() {
+        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+
+        return sp.getInt("music_volume", 50);
     }
 
     /*
