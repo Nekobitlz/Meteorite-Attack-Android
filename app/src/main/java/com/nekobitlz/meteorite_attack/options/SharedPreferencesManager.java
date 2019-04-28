@@ -200,46 +200,4 @@ public class SharedPreferencesManager {
 
         return sp.getInt("music_volume", 50);
     }
-
-    /*
-        REMOVERS
-        (need for tests)
-    */
-    public void removeMoney() {
-        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor e = sp.edit();
-
-        e.remove("money");
-        e.apply();
-    }
-
-    public void removeHighScore() {
-        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor e = sp.edit();
-
-        e.remove("high score");
-        e.remove("enemy");
-        e.remove("meteorite");
-
-        e.apply();
-    }
-
-    public void removePlayer() {
-        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor e = sp.edit();
-
-        e.remove("player_image");
-        e.remove("weapon_power");
-
-        e.apply();
-    }
-
-    public void removeStatus(String tag) {
-        SharedPreferences sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor e = sp.edit();
-
-        e.remove(tag);
-
-        e.apply();
-    }
 }
