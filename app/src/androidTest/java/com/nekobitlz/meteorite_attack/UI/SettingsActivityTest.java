@@ -1,10 +1,12 @@
-package com.nekobitlz.meteorite_attack;
+package com.nekobitlz.meteorite_attack.UI;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
+import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.SettingsActivity;
 
@@ -30,7 +32,7 @@ public class SettingsActivityTest {
 
     @Test
     public void checkBackgroundViews() {
-        onView(withId(R.id.background)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.background)).check(matches(isDisplayed()));
         onView(withId(R.id.settings)).check(matches(isDisplayed()));
     }
 

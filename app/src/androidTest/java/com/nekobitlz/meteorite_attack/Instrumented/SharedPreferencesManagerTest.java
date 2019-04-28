@@ -1,8 +1,9 @@
-package com.nekobitlz.meteorite_attack;
+package com.nekobitlz.meteorite_attack.Instrumented;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;

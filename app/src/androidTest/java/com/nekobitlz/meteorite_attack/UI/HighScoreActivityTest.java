@@ -1,9 +1,11 @@
-package com.nekobitlz.meteorite_attack;
+package com.nekobitlz.meteorite_attack.UI;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 
+import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.HighScoreActivity;
 
@@ -28,7 +30,7 @@ public class HighScoreActivityTest {
 
     @Test
     public void checkBackgroundViews() {
-        onView(withId(R.id.background)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.background)).check(matches(isDisplayed()));
         onView(withId(R.id.high_score)).check(matches(isDisplayed()));
     }
 

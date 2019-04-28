@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack;
+package com.nekobitlz.meteorite_attack.UI;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -7,6 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.*;
 
@@ -41,7 +42,7 @@ public class MainMenuActivityTest {
 
     @Test
     public void checkBackgroundViews() {
-        onView(withId(R.id.game_logo)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.game_logo)).check(matches(isDisplayed()));
         onView(withId(R.id.background)).check(matches(isDisplayed()));
     }
 
