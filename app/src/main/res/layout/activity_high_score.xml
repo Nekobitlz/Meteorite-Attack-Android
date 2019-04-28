@@ -13,7 +13,8 @@
             android:src="@drawable/menu_background"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:id="@+id/background"/>
 
     <ImageView
             android:layout_margin="16dp"
@@ -36,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 app:fontFamily="@font/iceberg_regular"
-                android:textSize="32sp"/>
+                android:textSize="32sp"
+                android:id="@+id/high_score"/>
         <TextView
                 android:id="@+id/null_high_score"
                 android:layout_marginTop="16dp"
