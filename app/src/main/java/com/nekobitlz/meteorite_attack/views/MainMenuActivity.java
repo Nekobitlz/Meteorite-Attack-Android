@@ -172,7 +172,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         public BackgroundSound(Context context) {
             weakContext = new WeakReference<>(context);
             spm = new SharedPreferencesManager(weakContext.get());
-            volume = spm.getEffectsVolume() / 100f;
+            volume = spm.getMusicVolume() / 100f;
             isEnabled = spm.getSoundStatus();
             isPlayerPlaying = true;
         }
