@@ -2,12 +2,14 @@ package com.nekobitlz.meteorite_attack;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
-import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+@RunWith(AndroidJUnit4.class)
 public class SharedPreferencesManagerTest {
     private Context appContext = InstrumentationRegistry.getContext();
     private SharedPreferencesManager spm = new SharedPreferencesManager(appContext);
