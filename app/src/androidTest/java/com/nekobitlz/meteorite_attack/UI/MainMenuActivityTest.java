@@ -11,6 +11,7 @@ import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,7 +38,15 @@ public class MainMenuActivityTest {
 
     @Before
     public void initComponents() {
+        //Removes background sound AsyncTask
+        MainMenuActivity.backgroundSound.cancel(true);
+        MainMenuActivity.backgroundSound = null;
         Intents.init();
+    }
+
+    @After
+    public void releaseComponents() {
+        Intents.release();
     }
 
     @Test

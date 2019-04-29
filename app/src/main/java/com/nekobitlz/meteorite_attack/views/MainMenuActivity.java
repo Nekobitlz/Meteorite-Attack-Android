@@ -106,7 +106,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             break;
 
             case R.id.exit: {
-                backgroundSound.releaseMP();
+                if (backgroundSound != null) {
+                    backgroundSound.releaseMP();
+                }
 
                 finish();
             }
@@ -129,8 +131,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         super.onStart();
 
         if (isStopped) {
-            backgroundSound.player.start();
             isStopped = false;
+
+            if (backgroundSound != null) {
+                backgroundSound.player.start();
+            }
         }
     }
 
@@ -140,7 +145,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         if (!toOtherActivity) {
             isStopped = true;
-            backgroundSound.player.pause();
+
+            if (backgroundSound != null) {
+                backgroundSound.player.pause();
+            }
         }
     }
 
