@@ -232,7 +232,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         while (deleting) {
             if (enemies.size() != 0) {
-                if (enemies.get(0).getY() > screenSizeY || enemies.get(0).getAlpha() <= 0) {
+                if (enemies.get(0).getY() > screenSizeY) {
                     enemies.remove(0);
                 }
             }
