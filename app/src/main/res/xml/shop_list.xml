@@ -3,7 +3,7 @@
     <item
             image="spaceship_1_game"
             price="0"
-            upgrade_price="10"
+            upgrade_price="50"
             health="1"
             xscore="1"
             weapon_power="1"
@@ -11,8 +11,8 @@
             level="1"/>
     <item
             image="spaceship_2_game"
-            price="150"
-            upgrade_price="20"
+            price="750"
+            upgrade_price="100"
             health="5"
             xscore="5"
             weapon_power="5"
@@ -20,8 +20,8 @@
             level="5"/>
     <item
             image="spaceship_3_game"
-            price="300"
-            upgrade_price="30"
+            price="1500"
+            upgrade_price="200"
             health="10"
             xscore="10"
             weapon_power="10"
@@ -29,8 +29,8 @@
             level="10"/>
     <item
             image="spaceship_4_game"
-            price="500"
-            upgrade_price="40"
+            price="3000"
+            upgrade_price="400"
             health="15"
             xscore="15"
             weapon_power="15"
@@ -38,8 +38,8 @@
             level="15"/>
     <item
             image="spaceship_5_game"
-            price="700"
-            upgrade_price="50"
+            price="6000"
+            upgrade_price="800"
             health="20"
             xscore="20"
             weapon_power="20"
@@ -47,8 +47,8 @@
             level="20"/>
     <item
             image="spaceship_6_game"
-            price="900"
-            upgrade_price="60"
+            price="12000"
+            upgrade_price="1600"
             health="25"
             xscore="25"
             weapon_power="25"
@@ -56,8 +56,8 @@
             level="25"/>
     <item
             image="spaceship_7_game"
-            price="1100"
-            upgrade_price="70"
+            price="24000"
+            upgrade_price="3200"
             health="30"
             xscore="30"
             weapon_power="30"
@@ -65,8 +65,8 @@
             level="30"/>
     <item
             image="spaceship_8_game"
-            price="1300"
-            upgrade_price="80"
+            price="48000"
+            upgrade_price="6400"
             health="35"
             xscore="35"
             weapon_power="35"
@@ -74,8 +74,8 @@
             level="35"/>
     <item
             image="spaceship_9_game"
-            price="1500"
-            upgrade_price="90"
+            price="96000"
+            upgrade_price="12800"
             health="40"
             xscore="40"
             weapon_power="40"
@@ -83,8 +83,8 @@
             level="40"/>
     <item
             image="spaceship_10_game"
-            price="2000"
-            upgrade_price="100"
+            price="192000"
+            upgrade_price="25600"
             health="45"
             xscore="45"
             weapon_power="45"
