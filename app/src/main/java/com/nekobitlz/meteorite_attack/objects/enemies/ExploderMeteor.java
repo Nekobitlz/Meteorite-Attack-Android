@@ -76,10 +76,17 @@ public class ExploderMeteor extends Enemy {
 
         //Small displacement of the collision so that
         // player doesn't hit the void, because bitmap round
-        collision.left = x + 30;
-        collision.top = y + 30;
-        collision.right = x + bitmap.getWidth() - 30;
-        collision.bottom = y + bitmap.getHeight() - 30;
+        if (isDestroyed) {
+            collision.left = x + 30;
+            collision.top = y + 30;
+            collision.right = x + bitmap.getWidth() - 30;
+            collision.bottom = y + bitmap.getHeight() - 30;
+        } else {
+            collision.left = x;
+            collision.top = y;
+            collision.right = x + bitmap.getWidth();
+            collision.bottom = y + bitmap.getHeight();
+        }
     }
 
     /*
