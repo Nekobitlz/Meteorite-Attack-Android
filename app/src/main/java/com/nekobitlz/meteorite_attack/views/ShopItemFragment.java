@@ -98,6 +98,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "health", priceHealth, levelHealth, maxValue);
+                ((ShopActivity)getActivity()).loadMoney();
             }
         });
 
@@ -107,6 +108,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "weapon power", priceBullet, levelBullet, maxValue);
+                ((ShopActivity)getActivity()).loadMoney();
             }
         });
 
@@ -116,6 +118,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "score multiplier", priceXScore, levelXScore, maxValue);
+                ((ShopActivity)getActivity()).loadMoney();
             }
         });
 
@@ -128,6 +131,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processShip(shopItem, shipPriceButton);
+                ((ShopActivity)getActivity()).loadMoney();
             }
         });
 

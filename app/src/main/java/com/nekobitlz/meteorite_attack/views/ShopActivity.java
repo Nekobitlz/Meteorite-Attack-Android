@@ -1,5 +1,6 @@
 package com.nekobitlz.meteorite_attack.views;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
@@ -25,6 +27,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView back;
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
+    private TextView money;
 
     private ArrayList<ShopActivity.ShopItem> shopItemList;
     private SharedPreferencesManager spm;
@@ -62,6 +65,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
+
+        money = findViewById(R.id.money);
+        loadMoney();
 
         pager = findViewById(R.id.pager);
         pagerAdapter = new ShopPagerAdapter(getSupportFragmentManager());
@@ -144,6 +150,14 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
         }
+    }
+
+    /*
+        Loads your saved money
+    */
+    @SuppressLint("SetTextI18n")
+    public void loadMoney() {
+        money.setText(spm.getMoney() + "");
     }
 
     /*
