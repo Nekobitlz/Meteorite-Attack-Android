@@ -74,6 +74,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     private SoundPlayer soundPlayer;
     private SharedPreferencesManager spm;
+    private long beforeTime;
+    private long sleepTime;
+    private long delay = 30;
 
     /*
         Game engine initialization
@@ -147,6 +150,7 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (currentStatus == GameStatus.Playing) {
+            beforeTime = System.nanoTime();
             update();
             drawer.draw(currentStatus);
             control();
@@ -330,9 +334,10 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                     break;
 
-                    //If a player’s health is greater than 1 -> his health decreases to 1
-                    //                                      and weapon power multiplied by 2 times
-                    //If less -> he kills him.
+                    /*If a player’s health is greater than 1 -> his health decreases to 1
+                                                             and weapon power multiplied by 2 times
+                      If less -> he kills him.
+                    */
                     case Destroyer: {
                         if (player.getHealth() > 1) {
                             player.setHealth(1);
@@ -381,13 +386,22 @@ public class GameView extends SurfaceView implements Runnable {
         Playing field update frequency
     */
     public void control() {
+        /*
+          Time required to sleep to keep game consistent
+          This allows game to render smoothly
+        */
+        sleepTime = delay - ((System.nanoTime() - beforeTime) / 1000000L);
+
         try {
             if (fps == 10000) {
                 fps = 0;
             }
 
-            Thread.sleep(20);
-            fps += 20;
+            if (sleepTime > 0) {
+                Thread.sleep(sleepTime);
+            }
+
+            fps += 10;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
