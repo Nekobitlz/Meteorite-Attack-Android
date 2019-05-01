@@ -167,7 +167,7 @@ public class Drawer {
     */
     private void drawScore() {
         Paint score = new Paint();
-        score.setTextSize(30);
+        score.setTextSize(40);
         score.setColor(Color.WHITE);
         score.setTypeface(typeface);
 
@@ -240,7 +240,7 @@ public class Drawer {
     @SuppressWarnings("deprecation")
     private void drawBonusDuration() {
         Paint bonusDuration = new Paint();
-        bonusDuration.setTextSize(30);
+        bonusDuration.setTextSize(40);
         bonusDuration.setColor(Color.WHITE);
         bonusDuration.setTypeface(typeface);
 
