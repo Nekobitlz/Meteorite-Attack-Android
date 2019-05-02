@@ -74,6 +74,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private SoundPlayer soundPlayer;
     private SharedPreferencesManager spm;
+
     private long beforeTime;
     private long sleepTime;
     private long delay = 30;
@@ -401,7 +402,7 @@ public class GameView extends SurfaceView implements Runnable {
                 Thread.sleep(sleepTime);
             }
 
-            fps += 10;
+            fps += 20;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
