@@ -8,7 +8,7 @@ Small 2D space shooter on Android
 **The game consists of 6 Activity:**
    1. ___Main menu___, on which the buttons for switching to other activity are located
    2. ___The playing field___ on which the whole game process takes place
-   3. ___A shop___ where the user can improve the current ship, or buy a new one
+   3. ___A shop___ where the user can improve the current ship, or buy a new one  
       *Upgrades:* 
          1) Increased health 
          2) Increase bullet power
