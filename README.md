@@ -18,11 +18,11 @@ All upgrades are bought for coins, coins are given for the destruction of meteor
    6. ___Help___, which contains all the information about the rules of the game
 
 **Objects:**
-   *1. Spaceship (Player)*
+   1. *Spaceship (Player)*
       - User controlled
       - Automatically shoots bullets that, when hit by an enemy, cause damage equal to the power of the bullet
       - Health count drawn on sprite
-  *2. Enemies:*
+   2. *Enemies:*
       1) ___Normal meteorite___
          - Has a random size
          - Can move strictly along the Y axis at random speed, or stand still
@@ -43,7 +43,7 @@ All upgrades are bought for coins, coins are given for the destruction of meteor
       4) ___"Exploder"___
          - Characteristics of an ordinary meteorite
          + After the destruction of the leaves the krator, falling into which the player receives damage in 1 health unit
-   *3. Bonuses:*
+    3. *Bonuses:*
       - Generated randomly after destroying enemies
       - Have a limited duration
       1) ___Positive___
