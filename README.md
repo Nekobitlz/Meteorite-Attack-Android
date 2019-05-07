@@ -13,7 +13,7 @@ Small 2D space shooter on Android
          1) Increased health 
          2) Increase bullet power
          3) Increase account multiplier  
-      All upgrades are bought for coins, coins are given for the destruction of meteorites, as well as for the distance traveled.
+   All upgrades are bought for coins, coins are given for the destruction of meteorites, as well as for the distance traveled.
    4. ___Settings___, on which the user can adjust the volume of sounds and music, as well as select the control
    5. ___High Score___, which displays the highest scores, as well as the number of enemies destroyed
    6. ___Help___, which contains all the information about the rules of the game
