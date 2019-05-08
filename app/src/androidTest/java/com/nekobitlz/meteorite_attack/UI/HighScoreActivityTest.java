@@ -54,7 +54,7 @@ public class HighScoreActivityTest {
 
         onView(withId(R.id.score_count)).check(matches(withText(score)));
         onView(withId(R.id.meteor_count)).check(matches(withText(meteorDestroyed)));
-        onView(withId(R.id.enemy_count)).check(matches(withText(enemyDestroyed)));
+        onView(withId(R.id.enemy_ship_count)).check(matches(withText(enemyDestroyed)));
         onView(withId(R.id.border_count)).check(matches(withText(borderDestroyed)));
         onView(withId(R.id.exploder_count)).check(matches(withText(exploderDestroyed)));
     }
