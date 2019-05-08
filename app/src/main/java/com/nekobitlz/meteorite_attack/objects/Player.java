@@ -94,10 +94,10 @@ public class Player {
     public void fire(boolean tripleShotMode) {
         if (tripleShotMode) {
             lasers.add(new Laser(context, screenSizeX, screenSizeY,
-                    (int) (x + bitmap.getWidth() / 2), (int) (y + bitmap.getHeight() / 2), bitmap));
+                    (int) (x + bitmap.getWidth() / 2), (int) y, bitmap));
             lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
             lasers.add(new Laser(context, screenSizeX, screenSizeY,
-                    (int) (x - bitmap.getWidth() / 2), (int) (y - bitmap.getHeight() / 2), bitmap));
+                    (int) (x - bitmap.getWidth() / 2), (int) y, bitmap));
         } else {
             lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
         }
