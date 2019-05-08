@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;
     private long backPressed;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
         gameView.pause();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        gameView.getSoundPlayer().release();
+    }
+
     /*
         Exit to MainMenu by double clicking on the Back button
     */
@@ -63,5 +68,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
 
         backPressed = System.currentTimeMillis();
+    }
+
+    public GameView getSurfaceView() {
+        return gameView;
     }
 }

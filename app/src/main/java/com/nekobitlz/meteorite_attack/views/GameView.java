@@ -6,9 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.app.FragmentManager;
+import android.view.*;
 
 import com.nekobitlz.meteorite_attack.enums.BonusType;
 import com.nekobitlz.meteorite_attack.enums.EnemyType;
@@ -44,6 +43,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread gameThread;
     private volatile GameStatus currentStatus = GameStatus.Paused;
 
+    private Context context;
     private Player player;
     private Paint paint;
     private Canvas canvas;
@@ -78,6 +78,7 @@ public class GameView extends SurfaceView implements Runnable {
     private long beforeTime;
     private long sleepTime;
     private long delay = 30;
+    private GameOverFragment gameOverFragment;
 
     /*
         Game engine initialization
@@ -85,6 +86,7 @@ public class GameView extends SurfaceView implements Runnable {
     public GameView(Context context, int screenSizeX, int screenSizeY) {
         super(context);
 
+        this.context = context;
         this.screenSizeX = screenSizeX;
         this.screenSizeY = screenSizeY;
         spm = new SharedPreferencesManager(context);
@@ -153,7 +155,7 @@ public class GameView extends SurfaceView implements Runnable {
         while (currentStatus == GameStatus.Playing) {
             beforeTime = System.nanoTime();
             update();
-            drawer.draw(currentStatus);
+            drawer.draw();
             control();
         }
     }
@@ -381,6 +383,12 @@ public class GameView extends SurfaceView implements Runnable {
                     BORDER_DESTROYER_DESTROYED, EXPLODER_DESTROYED
             );
         }
+
+        gameOverFragment = new GameOverFragment();
+        gameOverFragment.setCancelable(false);
+
+        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+        gameOverFragment.show(fragmentManager, "gameOverFragment");
     }
 
     /*
@@ -445,12 +453,17 @@ public class GameView extends SurfaceView implements Runnable {
         return currentStatus;
     }
 
+    public SoundPlayer getSoundPlayer() {
+        return soundPlayer;
+    }
+
     /*
          !package-private!
         Sets main menu activity and clears sounds pool
     */
     void setMainMenuActivity() {
-        ((Activity) getContext()).finish();
+        gameOverFragment.dismiss();
+        ((Activity) context).finish();
         soundPlayer.release();
     }
 
@@ -475,13 +488,7 @@ public class GameView extends SurfaceView implements Runnable {
                         dragX = evX - player.getX();
                         dragY = evY - player.getY();
                     }
-                } else {
-                    // When the game is over pressing the screen returns to the main menu
-                    if (currentStatus == GameStatus.GameOver || currentStatus == GameStatus.NewHighScore) {
-                        setMainMenuActivity();
-                    }
                 }
-                break;
             case MotionEvent.ACTION_MOVE:
                 if (isDragged) {
                     // Defines new coordinates for drawing

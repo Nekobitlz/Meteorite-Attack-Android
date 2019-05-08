@@ -65,7 +65,7 @@ public class Drawer {
     /*
         Draws all bitmaps and states
     */
-    public void draw(GameStatus currentGameStatus) {
+    public void draw() {
         if (surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.BLACK);
@@ -105,10 +105,6 @@ public class Drawer {
 
             drawScore();
             drawBonusDuration();
-
-            if (currentGameStatus == GameStatus.GameOver || currentGameStatus == GameStatus.NewHighScore) {
-                drawGameOver(currentGameStatus);
-            }
 
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
@@ -172,63 +168,6 @@ public class Drawer {
         score.setTypeface(typeface);
 
         canvas.drawText("Score : " + SCORE, 100, 50, score);
-    }
-
-    /*
-        Draws GameOver state
-    */
-    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    private void drawGameOver(GameStatus currentGameStatus) {
-        Paint gameOver = new Paint();
-        gameOver.setTextSize(100);
-        gameOver.setTextAlign(Paint.Align.CENTER);
-        gameOver.setColor(Color.WHITE);
-        gameOver.setTypeface(typeface);
-
-        canvas.drawText("GAME OVER", screenSizeX / 2, screenSizeY / 2, gameOver);
-
-        Paint money = new Paint();
-        money.setTextSize(55);
-        money.setTextAlign(Paint.Align.LEFT);
-        money.setColor(Color.WHITE);
-        money.setTypeface(typeface);
-
-        // *coin* money
-        canvas.drawBitmap(coinBitmap, screenSizeX / 2 - coinBitmap.getWidth(),
-                                    (screenSizeY / 2) + 60 - coinBitmap.getHeight() * 4 / 5, money);
-        canvas.drawText("" + MONEY, screenSizeX / 2 + coinBitmap.getWidth() / 5, (screenSizeY / 2) + 65, money);
-
-        //Draw high score
-        Paint highScore = new Paint();
-        highScore.setTextSize(50);
-        highScore.setTextAlign(Paint.Align.CENTER);
-        highScore.setColor(Color.WHITE);
-        highScore.setTypeface(typeface);
-
-        //Draw new high score and stat
-        if (currentGameStatus == GameStatus.NewHighScore) {
-            canvas.drawText("New High Score : " + spm.getHighScore(),
-                    screenSizeX / 2, (screenSizeY / 2) + 120, highScore);
-
-            Paint enemyDestroyed = new Paint();
-            enemyDestroyed.setTextSize(50);
-            enemyDestroyed.setTextAlign(Paint.Align.CENTER);
-            enemyDestroyed.setColor(Color.WHITE);
-            enemyDestroyed.setTypeface(typeface);
-
-            canvas.drawText(
-                    "EnemyShip Destroyed : " + spm.getEnemyDestroyed(),
-                    screenSizeX / 2, (screenSizeY / 2) + 180, enemyDestroyed);
-
-            canvas.drawText("Meteor Destroyed : " + spm.getMeteorDestroyed(),
-                    screenSizeX / 2, (screenSizeY / 2) + 240, enemyDestroyed);
-
-            canvas.drawText("Border Destroyer Destroyed : " + spm.getBorderDestroyed(),
-                    screenSizeX / 2, (screenSizeY / 2) + 300, enemyDestroyed);
-
-            canvas.drawText("Exploder Destroyed : " + spm.getExploderDestroyed(),
-                    screenSizeX / 2, (screenSizeY / 2) + 360, enemyDestroyed);
-        }
     }
 
     /*
