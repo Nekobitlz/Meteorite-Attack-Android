@@ -78,7 +78,7 @@ public class ShopItemFragment extends Fragment {
         xScore = Integer.parseInt(xScore) < maxValue ? xScore : "MAX";
 
         // Setting all the characteristics on the view
-        View view = inflater.inflate(R.layout.shop_fragment, null);
+        View view = inflater.inflate(R.layout.fragment_shop, null);
 
         ImageView shopImage = view.findViewById(R.id.ship_image);
         shopImage.setImageResource(shopItem.getImage());
@@ -98,7 +98,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "health", priceHealth, levelHealth, maxValue);
-                ((ShopActivity)getActivity()).loadMoney();
+                ((ShopActivity) getActivity()).loadMoney();
             }
         });
 
@@ -108,7 +108,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "weapon power", priceBullet, levelBullet, maxValue);
-                ((ShopActivity)getActivity()).loadMoney();
+                ((ShopActivity) getActivity()).loadMoney();
             }
         });
 
@@ -118,7 +118,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "score multiplier", priceXScore, levelXScore, maxValue);
-                ((ShopActivity)getActivity()).loadMoney();
+                ((ShopActivity) getActivity()).loadMoney();
             }
         });
 
@@ -131,7 +131,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processShip(shopItem, shipPriceButton);
-                ((ShopActivity)getActivity()).loadMoney();
+                ((ShopActivity) getActivity()).loadMoney();
             }
         });
 
