@@ -8,7 +8,7 @@ Small 2D space shooter on Android
 **The game consists of 6 Activity:**
    1. ___Main menu___, on which the buttons for switching to other activity are located
    2. ___The playing field___ on which the whole game process takes place
-   3. ___A shop___ where the user can improve the current ship, or buy a new one  
+   3. ___Shop___ where the user can improve the current ship, or buy a new one  
       *Upgrades:* 
          1) Increased health 
          2) Increase bullet power
@@ -48,10 +48,10 @@ Small 2D space shooter on Android
       - Generated randomly after destroying enemies
       - Have a limited duration
       1) ___Positive___
-         - "Shot Accelerator" - increases the frequency of bullets
+         - "Shot speed up" - increases the frequency of bullets
          - "Health" - increases the amount of health
          - "Triple shot" - the ship starts to release 3 bullets for 1 shot
       2) ___Negative___
-         - "Shot Retarder" - reduces the frequency of bullet shots, but increases the damage by 1.5 times
+         - "Shot slow up" - reduces the frequency of bullet shots, but increases the damage by 1.5 times
          - "Destroyer" - reduces the amount of health to 1 unit, if health is already equal to 1, then the game ends
 but increases damage by 2 times
