@@ -1,7 +1,6 @@
-package com.nekobitlz.meteorite_attack.views;
+package com.nekobitlz.meteorite_attack.views.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -15,7 +14,6 @@ import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 /*
     Activity with main menu

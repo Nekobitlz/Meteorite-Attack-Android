@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.views;
+package com.nekobitlz.meteorite_attack.views.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,8 @@ import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.Shop;
-import com.nekobitlz.meteorite_attack.views.ShopActivity.ShopItem;
+import com.nekobitlz.meteorite_attack.views.activities.ShopActivity;
+import com.nekobitlz.meteorite_attack.views.activities.ShopActivity.ShopItem;
 
 import java.util.ArrayList;
 

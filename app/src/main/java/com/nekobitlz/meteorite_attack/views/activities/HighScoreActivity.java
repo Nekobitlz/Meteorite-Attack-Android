@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.views;
+package com.nekobitlz.meteorite_attack.views.activities;
 
 import android.annotation.SuppressLint;
 import android.support.constraint.ConstraintLayout;

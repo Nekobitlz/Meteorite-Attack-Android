@@ -1,13 +1,11 @@
 package com.nekobitlz.meteorite_attack.options;
 
 import android.content.Context;
-import android.util.Pair;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nekobitlz.meteorite_attack.views.ShopActivity;
+import com.nekobitlz.meteorite_attack.views.activities.ShopActivity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.app.PendingIntent.getActivity;

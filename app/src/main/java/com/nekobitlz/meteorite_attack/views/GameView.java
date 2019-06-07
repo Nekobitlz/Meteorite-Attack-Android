@@ -21,6 +21,8 @@ import com.nekobitlz.meteorite_attack.options.AnimatedBackground;
 import com.nekobitlz.meteorite_attack.options.Drawer;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.SoundPlayer;
+import com.nekobitlz.meteorite_attack.views.activities.MainActivity;
+import com.nekobitlz.meteorite_attack.views.fragments.GameOverFragment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -461,7 +463,7 @@ public class GameView extends SurfaceView implements Runnable {
          !package-private!
         Sets main menu activity and clears sounds pool
     */
-    void setMainMenuActivity() {
+    public void setMainMenuActivity() {
         gameOverFragment.dismiss();
         ((Activity) context).finish();
         soundPlayer.release();

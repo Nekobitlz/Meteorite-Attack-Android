@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.views;
+package com.nekobitlz.meteorite_attack.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
+import com.nekobitlz.meteorite_attack.views.GameView;
 
 /*
     Dialog with game over:

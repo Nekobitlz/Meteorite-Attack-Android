@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.views;
+package com.nekobitlz.meteorite_attack.views.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
-import com.nekobitlz.meteorite_attack.options.Shop;
+import com.nekobitlz.meteorite_attack.views.fragments.ShopItemFragment;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;

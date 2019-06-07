@@ -1,4 +1,4 @@
-package com.nekobitlz.meteorite_attack.views;
+package com.nekobitlz.meteorite_attack.views.activities;
 
 import android.graphics.Point;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
+import com.nekobitlz.meteorite_attack.views.GameView;
 
 /*
     Activity with game
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;
     private long backPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
