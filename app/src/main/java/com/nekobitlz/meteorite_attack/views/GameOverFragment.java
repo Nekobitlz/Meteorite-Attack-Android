@@ -1,11 +1,13 @@
 package com.nekobitlz.meteorite_attack.views;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
 
@@ -19,7 +21,6 @@ import com.nekobitlz.meteorite_attack.R;
         Exploder :   count
         Border :     count
 */
-@SuppressWarnings("deprecation")
 public class GameOverFragment extends DialogFragment {
 
     private String score;
@@ -29,8 +30,8 @@ public class GameOverFragment extends DialogFragment {
     private String borderDestroyed;
     private String exploderDestroyed;
 
-    public GameOverFragment() {
-        // Required empty public constructor
+    public static GameOverFragment newInstance() {
+        return new GameOverFragment();
     }
 
     @Override
@@ -44,10 +45,11 @@ public class GameOverFragment extends DialogFragment {
         exploderDestroyed = GameView.EXPLODER_DESTROYED + "";
     }
 
+    @Nullable
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_game_over, null);
+        View view = inflater.inflate(R.layout.fragment_game_over, container, false);
 
         TextView moneyCount = view.findViewById(R.id.money);
         moneyCount.setText(money);
@@ -72,9 +74,6 @@ public class GameOverFragment extends DialogFragment {
             }
         });
 
-        return new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setCancelable(false)
-                .create();
+        return view;
     }
 }

@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.view.*;
 
 import com.nekobitlz.meteorite_attack.enums.BonusType;
@@ -135,7 +135,6 @@ public class GameView extends SurfaceView implements Runnable {
         initDrawer();
 
         currentStatus = GameStatus.Playing;
-        gameOverFragment = new GameOverFragment();
     }
 
     /*
@@ -368,10 +367,6 @@ public class GameView extends SurfaceView implements Runnable {
         WEAPON_POWER = spm.getWeaponPower(tag);
     }
 
-    /*
-        Sets game over state
-    */
-    @SuppressWarnings("deprecation")
     private void setGameOver() {
         currentStatus = GameStatus.GameOver;
         MONEY += SCORE / 100;
@@ -387,7 +382,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         //Show game over fragment
-        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+        gameOverFragment = GameOverFragment.newInstance();
+        FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
+
         gameOverFragment.setCancelable(false);
         gameOverFragment.show(fragmentManager, "gameOverFragment");
     }
