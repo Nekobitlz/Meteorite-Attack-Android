@@ -460,11 +460,13 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /*
-         !package-private!
         Sets main menu activity and clears sounds pool
     */
     public void setMainMenuActivity() {
-        gameOverFragment.dismiss();
+        if (gameOverFragment != null) {
+            gameOverFragment.dismiss();
+        }
+
         ((Activity) context).finish();
         soundPlayer.release();
     }
