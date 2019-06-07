@@ -329,9 +329,10 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                     break;
 
-                    //Decreases shooting speed 2 times and
+                    //Decreases game speed 1.5 times and multiplied weapon power by 1.5 times
                     case Slow_up: {
-                        shotSpeed *= 2;
+                        delay += 15;
+                        BONUS_DURATION = 200;
                         WEAPON_POWER += WEAPON_POWER / 10 + 5;
                         isBonusEnabled = true;
                     }
@@ -361,6 +362,7 @@ public class GameView extends SurfaceView implements Runnable {
     */
     private void resetBonuses() {
         BONUS_DURATION = 0;
+        delay = 30;
         shotSpeed = 200;
         tripleShotMode = false;
         isBonusEnabled = false;
