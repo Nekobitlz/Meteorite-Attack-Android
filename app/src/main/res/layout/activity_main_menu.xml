@@ -26,35 +26,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/play"/>
 
-    <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:id="@+id/icon_coin"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            app:srcCompat="@drawable/icon_money"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/shop"
-            app:layout_constraintTop_toTopOf="@+id/shop"/>
     <TextView
-            android:textStyle="bold"
-            android:id="@+id/money"
-            android:text="25"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:textSize="25sp"
-            android:visibility="visible"
-            android:textColor="@android:color/white"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            tools:textColor="@android:color/white"
-            app:fontFamily="@font/iceberg_regular"
-            app:layout_constraintStart_toEndOf="@+id/icon_coin"
-            app:layout_constraintBottom_toBottomOf="@+id/icon_coin"
-            app:layout_constraintTop_toTopOf="@+id/icon_coin"
-            app:layout_constraintVertical_bias="0.0"/>
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:drawableLeft="@drawable/icon_money"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="25"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:fontFamily="@font/iceberg_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/shop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shop"
+        tools:textColor="@android:color/white" />
 
     <ImageButton
             android:layout_width="55dp"
@@ -76,17 +66,41 @@
             app:layout_constraintStart_toStartOf="@+id/shop"
             app:layout_constraintBottom_toBottomOf="@+id/shop"
             app:layout_constraintEnd_toEndOf="@+id/shop"/>
+
     <ImageButton
-            android:layout_width="55dp"
-            android:layout_height="50dp"
-            android:id="@+id/settings"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button_background"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        android:id="@+id/high_score"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/custom_button_background"
+        app:layout_constraintBottom_toBottomOf="@+id/settings"
+        app:layout_constraintEnd_toStartOf="@+id/settings"
+        app:layout_constraintTop_toTopOf="@+id/settings_image"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/high_score_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/high_score"
+        app:layout_constraintEnd_toEndOf="@+id/high_score"
+        app:layout_constraintStart_toStartOf="@+id/high_score"
+        app:layout_constraintTop_toTopOf="@+id/high_score"
+        app:srcCompat="@drawable/icon_highscore" />
+
+    <ImageButton
+        android:id="@+id/settings"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/custom_button_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -96,27 +110,7 @@
             app:layout_constraintEnd_toEndOf="@+id/settings"
             app:layout_constraintTop_toTopOf="@+id/settings"
             app:layout_constraintBottom_toBottomOf="@+id/settings"/>
-    <ImageButton
-            android:layout_width="55dp"
-            android:layout_height="50dp"
-            android:id="@+id/high_score"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button_background"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings"
-            app:layout_constraintBottom_toBottomOf="@+id/settings"/>
-    <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/high_score_image"
-            app:srcCompat="@drawable/icon_highscore"
-            app:layout_constraintTop_toTopOf="@+id/high_score"
-            app:layout_constraintStart_toStartOf="@+id/high_score"
-            app:layout_constraintEnd_toEndOf="@+id/high_score"
-            app:layout_constraintBottom_toBottomOf="@+id/high_score"/>
+
     <Button
             android:id="@+id/exit"
             app:fontFamily="@font/iceberg_regular"
