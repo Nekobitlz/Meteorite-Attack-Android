@@ -87,6 +87,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.play: {
+                ((MainMenuActivity) getActivity()).setToOtherActivity(true);
                 startActivity(new Intent(getContext(), MainActivity.class));
             }
             break;
@@ -134,5 +135,4 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
             break;
         }
     }
-
 }

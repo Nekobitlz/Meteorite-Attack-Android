@@ -18,9 +18,8 @@ import java.lang.ref.WeakReference;
 public class MainMenuActivity extends AppCompatActivity {
 
     public static BackgroundSound backgroundSound;
-    private long backPressed;
-
     private boolean isStopped;
+    private boolean toOtherActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +63,12 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
-        isStopped = true;
+        if (!toOtherActivity) {
+            isStopped = true;
 
-        if (backgroundSound != null && backgroundSound.getPlayer() != null) {
-            backgroundSound.getPlayer().pause();
+            if (backgroundSound != null && backgroundSound.getPlayer() != null) {
+                backgroundSound.getPlayer().pause();
+            }
         }
     }
 
@@ -75,6 +76,10 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         backgroundSound.releaseMP();
+    }
+
+    public void setToOtherActivity(boolean toOtherActivity) {
+        this.toOtherActivity = toOtherActivity;
     }
 
     /*
