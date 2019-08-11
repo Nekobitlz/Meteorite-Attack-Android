@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
@@ -16,9 +15,6 @@ import com.nekobitlz.meteorite_attack.views.fragments.MainMenuFragment;
 
 import java.lang.ref.WeakReference;
 
-/*
-    Activity with main menu
-*/
 public class MainMenuActivity extends AppCompatActivity {
 
     public static BackgroundSound backgroundSound;
@@ -49,19 +45,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 .commit();
 
         isStopped = false;
-    }
-
-    /*
-        Exit from the application by double clicking on the Back button
-    */
-    @Override
-    public void onBackPressed() {
-        if (backPressed + 2000 > System.currentTimeMillis())
-            super.onBackPressed();
-        else
-            Toast.makeText(this, "Press once again to exit!", Toast.LENGTH_SHORT).show();
-
-        backPressed = System.currentTimeMillis();
     }
 
     @Override
@@ -95,8 +78,8 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     /*
-            AsyncTask for background music
-    */
+             AsyncTask for background music
+        */
     public static class BackgroundSound extends AsyncTask<Void, Void, Void> {
 
         private WeakReference<Context> weakContext;
