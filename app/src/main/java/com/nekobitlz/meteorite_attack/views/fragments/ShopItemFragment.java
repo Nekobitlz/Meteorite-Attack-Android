@@ -1,6 +1,8 @@
 package com.nekobitlz.meteorite_attack.views.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.options.Shop;
-import com.nekobitlz.meteorite_attack.views.activities.ShopActivity;
-import com.nekobitlz.meteorite_attack.views.activities.ShopActivity.ShopItem;
+import com.nekobitlz.meteorite_attack.views.fragments.ShopFragment.ShopItem;
 
 import java.util.ArrayList;
 
@@ -20,10 +22,12 @@ import java.util.ArrayList;
     Fragment that contains the item from the shop
 */
 public class ShopItemFragment extends Fragment {
+
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     static final String SAVE_PAGE_NUMBER = "save_page_number";
 
     private ArrayList<ShopItem> shopItemList;
+    private ShopFragment parentFragment;
     private ShopItem shopItem;
     private int pageNumber;
     private int maxValue;
@@ -52,18 +56,27 @@ public class ShopItemFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         spm = new SharedPreferencesManager(getContext());
         shop = new Shop(getContext());
-        shopItemList = ((ShopActivity) getActivity()).getShopItemList();
         pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        parentFragment = (ShopFragment) getParentFragment();
+        shopItemList = parentFragment.getShopItemList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_shop_item, null);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         shopItem = shopItemList.get(pageNumber);
         currentTag = String.valueOf(shopItem.getImage());
-        maxValue = (pageNumber + 1) * 5;
+        maxValue = (pageNumber + 1) * 5; //formula for calculating the maximum value
 
         /*
             If the level of upgrade is higher than the maximum
@@ -79,8 +92,6 @@ public class ShopItemFragment extends Fragment {
         xScore = Integer.parseInt(xScore) < maxValue ? xScore : "MAX";
 
         // Setting all the characteristics on the view
-        View view = inflater.inflate(R.layout.fragment_shop, null);
-
         ImageView shopImage = view.findViewById(R.id.ship_image);
         shopImage.setImageResource(shopItem.getImage());
 
@@ -99,7 +110,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "health", priceHealth, levelHealth, maxValue);
-                ((ShopActivity) getActivity()).loadMoney();
+                parentFragment.loadMoney();
             }
         });
 
@@ -109,7 +120,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "weapon power", priceBullet, levelBullet, maxValue);
-                ((ShopActivity) getActivity()).loadMoney();
+                parentFragment.loadMoney();
             }
         });
 
@@ -119,7 +130,7 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processUpgrade(shopItem, "score multiplier", priceXScore, levelXScore, maxValue);
-                ((ShopActivity) getActivity()).loadMoney();
+                parentFragment.loadMoney();
             }
         });
 
@@ -132,20 +143,18 @@ public class ShopItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shop.processShip(shopItem, shipPriceButton);
-                ((ShopActivity) getActivity()).loadMoney();
+                parentFragment.loadMoney();
             }
         });
 
         // All buttons are added to one map (needed to set "USE" status for items)
         shop.addPriceButtonToMap(currentTag, shipPriceButton);
-
-        return view;
     }
 
     /*
-        Saves the last open item
+            Saves the last open item
 
-        * NOT WORKING NOW  ¯\_(ツ)_/¯ *
+            * NOT WORKING NOW  ¯\_(ツ)_/¯ *
     */
     @Override
     public void onSaveInstanceState(Bundle outState) {

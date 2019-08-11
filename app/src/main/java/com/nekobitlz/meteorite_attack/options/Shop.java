@@ -4,11 +4,10 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nekobitlz.meteorite_attack.views.activities.ShopActivity;
+
+import com.nekobitlz.meteorite_attack.views.fragments.ShopFragment;
 
 import java.util.HashMap;
-
-import static android.app.PendingIntent.getActivity;
 
 /*
     Class shop implements
@@ -52,7 +51,7 @@ public class Shop {
                     If the level of upgrade is not more than 5 & the user has enough money
                                 -> weapon power increases
     */
-    public void processUpgrade(ShopActivity.ShopItem shopItem, String upgradeName,
+    public void processUpgrade(ShopFragment.ShopItem shopItem, String upgradeName,
                                Button priceButton, TextView levelView, int maxValue) {
         moneyPrice = Integer.parseInt(shopItem.getUpgradePrice());
         upgradeTag = String.valueOf(shopItem.getImage());
@@ -113,7 +112,7 @@ public class Shop {
                 *Price* -> If user has money, money is spent and ship goes to status "Used",
                        if not, then a toast with error comes out
     */
-    public void processShip(ShopActivity.ShopItem shopItem, Button shipPriceButton) {
+    public void processShip(ShopFragment.ShopItem shopItem, Button shipPriceButton) {
         shipPrice = Integer.parseInt(shopItem.getShipPrice());
         statusTag = String.valueOf(shopItem.getImage());
         currentMoney = spm.getMoney();
@@ -148,7 +147,7 @@ public class Shop {
         Saves player status and sets item status to "Used"
         Also sets an already used item to "Use" status
     */
-    private void makeStatusUsed(ShopActivity.ShopItem shopItem, Button shipPriceButton) {
+    private void makeStatusUsed(ShopFragment.ShopItem shopItem, Button shipPriceButton) {
         for (HashMap.Entry<String, Button> entry: shipPriceButtonMap.entrySet()) {
             String tag = entry.getKey();
             final Button button = entry.getValue();

@@ -18,8 +18,6 @@ import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.activities.MainActivity;
 import com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity;
-import com.nekobitlz.meteorite_attack.views.activities.SettingsActivity;
-import com.nekobitlz.meteorite_attack.views.activities.ShopActivity;
 
 import static com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity.backgroundSound;
 
@@ -90,13 +88,17 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.play: {
                 startActivity(new Intent(getContext(), MainActivity.class));
-                ((MainMenuActivity) getActivity()).setToOtherActivity(true);
             }
             break;
 
             case R.id.shop: {
-                startActivity(new Intent(getContext(), ShopActivity.class));
-                ((MainMenuActivity) getActivity()).setToOtherActivity(true);
+                ShopFragment fragment = ShopFragment.newInstance();
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(BACK_STACK)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .add(R.id.content, fragment)
+                        .commit();
             }
             break;
 
@@ -112,8 +114,13 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
             break;
 
             case R.id.settings: {
-                startActivity(new Intent(getContext(), SettingsActivity.class));
-                ((MainMenuActivity) getActivity()).setToOtherActivity(true);
+                SettingsFragment fragment = SettingsFragment.newInstance();
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(BACK_STACK)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .add(R.id.content, fragment)
+                        .commit();
             }
             break;
 

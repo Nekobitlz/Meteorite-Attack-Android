@@ -25,7 +25,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private long backPressed;
 
     private boolean isStopped;
-    private boolean toOtherActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +65,6 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        if (toOtherActivity) {
-            toOtherActivity = false;
-        }
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
 
@@ -91,22 +81,22 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
-        if (!toOtherActivity) {
-            isStopped = true;
+        isStopped = true;
 
-            if (backgroundSound != null && backgroundSound.getPlayer() != null) {
-                backgroundSound.getPlayer().pause();
-            }
+        if (backgroundSound != null && backgroundSound.getPlayer() != null) {
+            backgroundSound.getPlayer().pause();
         }
     }
 
-    public void setToOtherActivity(boolean toOtherActivity) {
-        this.toOtherActivity = toOtherActivity;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        backgroundSound.releaseMP();
     }
 
     /*
             AsyncTask for background music
-        */
+    */
     public static class BackgroundSound extends AsyncTask<Void, Void, Void> {
 
         private WeakReference<Context> weakContext;
@@ -139,6 +129,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         isPlayerPlaying = true;
                     }
                 } else {
+                    //TODO - fix error with pause on Logcat when sound is off
                     player.pause();
                     isPlayerPlaying = false;
                 }
