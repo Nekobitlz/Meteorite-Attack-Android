@@ -22,6 +22,8 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 
+import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
+
 public class ShopFragment extends Fragment implements View.OnClickListener {
 
     private ImageView back;
@@ -154,7 +156,8 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
         Loads your saved money
     */
     public void loadMoney() {
-        money.setText(String.valueOf(spm.getMoney()));
+        String moneyText = String.valueOf(spm.getMoney());
+        money.setText(formatMoney(moneyText));
     }
 
     /*

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.views.GameView;
 
+import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
+
 /*
     Dialog with game over:
 
@@ -38,12 +40,12 @@ public class GameOverFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        score = GameView.SCORE + "";
-        money = GameView.MONEY + "";
-        meteorDestroyed = GameView.METEOR_DESTROYED + "";
-        enemyShipDestroyed = GameView.ENEMY_SHIP_DESTROYED + "";
-        borderDestroyed = GameView.BORDER_DESTROYER_DESTROYED + "";
-        exploderDestroyed = GameView.EXPLODER_DESTROYED + "";
+        score = String.valueOf(GameView.SCORE);
+        money = String.valueOf(GameView.MONEY);
+        meteorDestroyed = String.valueOf(GameView.METEOR_DESTROYED);
+        enemyShipDestroyed = String.valueOf(GameView.ENEMY_SHIP_DESTROYED);
+        borderDestroyed = String.valueOf(GameView.BORDER_DESTROYER_DESTROYED);
+        exploderDestroyed = String.valueOf(GameView.EXPLODER_DESTROYED);
     }
 
     @Nullable
@@ -53,7 +55,7 @@ public class GameOverFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_game_over, container, false);
 
         TextView moneyCount = view.findViewById(R.id.money);
-        moneyCount.setText(money);
+        moneyCount.setText(formatMoney(money));
 
         TextView meteorCount = view.findViewById(R.id.meteor_count);
         meteorCount.setText(meteorDestroyed);

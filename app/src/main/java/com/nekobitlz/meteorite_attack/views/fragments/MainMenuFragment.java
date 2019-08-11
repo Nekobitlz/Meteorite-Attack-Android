@@ -19,6 +19,7 @@ import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.activities.MainActivity;
 import com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity;
 
+import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
 import static com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity.backgroundSound;
 
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
@@ -77,7 +78,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     }
 
     public void loadMoney() {
-        money.setText(String.valueOf(spm.getMoney()));
+        String moneyText = String.valueOf(spm.getMoney());
+        money.setText(formatMoney(moneyText));
     }
 
     /*
