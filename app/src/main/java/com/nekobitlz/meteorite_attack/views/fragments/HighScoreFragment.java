@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class HighScoreFragment extends Fragment {
     private TextView borderDestroyer;
     private TextView exploder;
     private TextView nullHighScore;
+    private ImageView back;
 
     private ConstraintLayout highScoreContainer;
 
@@ -47,6 +49,14 @@ public class HighScoreFragment extends Fragment {
         exploder = view.findViewById(R.id.exploder_count);
         nullHighScore = view.findViewById(R.id.null_high_score);
         highScoreContainer = view.findViewById(R.id.high_score_container);
+        back = view.findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         loadHighScore();
     }
