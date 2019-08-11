@@ -1,36 +1,30 @@
 package com.nekobitlz.meteorite_attack.views.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.Toast;
+
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
+import com.nekobitlz.meteorite_attack.views.fragments.MainMenuFragment;
 
 import java.lang.ref.WeakReference;
 
 /*
     Activity with main menu
 */
-public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainMenuActivity extends AppCompatActivity {
 
-    private Button play;
-    private Button exit;
-    private ImageButton shop;
-    private ImageButton highScore;
-    private ImageButton settings;
-
-    private TextView money;
-    private SharedPreferencesManager spm;
-    private long backPressed;
-    private boolean isStopped;
     public static BackgroundSound backgroundSound;
+    private long backPressed;
+
+    private boolean isStopped;
     private boolean toOtherActivity;
 
     @Override
@@ -44,110 +38,18 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         //Make the display always turn on if the activity is active
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        play = findViewById(R.id.play);
-        highScore = findViewById(R.id.high_score);
-        exit = findViewById(R.id.exit);
-        money = findViewById(R.id.money);
-        shop = findViewById(R.id.shop);
-        settings = findViewById(R.id.settings);
-
-        play.setOnClickListener(this);
-        shop.setOnClickListener(this);
-        highScore.setOnClickListener(this);
-        exit.setOnClickListener(this);
-        settings.setOnClickListener(this);
-
-        spm = new SharedPreferencesManager(this);
-        loadMoney();
-
         backgroundSound = new BackgroundSound(getApplicationContext());
         backgroundSound.execute();
+
+        MainMenuFragment fragment = MainMenuFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(R.id.content, fragment)
+                .commit();
+
         isStopped = false;
-    }
-
-    /*
-        Loads your saved money
-    */
-    @SuppressLint("SetTextI18n")
-    public void loadMoney() {
-        money.setText(spm.getMoney() + "");
-    }
-
-    /*
-        Reads views clicks
-    */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.play: {
-                startActivity(new Intent(this, MainActivity.class));
-                toOtherActivity = true;
-            }
-            break;
-
-            case R.id.shop: {
-                startActivity(new Intent(this, ShopActivity.class));
-                toOtherActivity = true;
-            }
-            break;
-
-            case R.id.high_score: {
-                startActivity(new Intent(this, HighScoreActivity.class));
-                toOtherActivity = true;
-            }
-            break;
-
-            case R.id.settings: {
-                startActivity(new Intent(this, SettingsActivity.class));
-                toOtherActivity = true;
-            }
-            break;
-
-            case R.id.exit: {
-                if (backgroundSound != null) {
-                    backgroundSound.releaseMP();
-                }
-
-                finish();
-            }
-            break;
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadMoney();
-
-        if (toOtherActivity) {
-            toOtherActivity = false;
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (isStopped) {
-            isStopped = false;
-
-            if (backgroundSound != null) {
-                backgroundSound.player.start();
-            }
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (!toOtherActivity) {
-            isStopped = true;
-
-            if (backgroundSound != null) {
-                backgroundSound.player.pause();
-            }
-        }
     }
 
     /*
@@ -158,14 +60,53 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         if (backPressed + 2000 > System.currentTimeMillis())
             super.onBackPressed();
         else
-            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Press once again to exit!", Toast.LENGTH_SHORT).show();
 
         backPressed = System.currentTimeMillis();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (toOtherActivity) {
+            toOtherActivity = false;
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (isStopped) {
+            isStopped = false;
+
+            if (backgroundSound != null) {
+                backgroundSound.getPlayer().start();
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (!toOtherActivity) {
+            isStopped = true;
+
+            if (backgroundSound != null && backgroundSound.getPlayer() != null) {
+                backgroundSound.getPlayer().pause();
+            }
+        }
+    }
+
+    public void setToOtherActivity(boolean toOtherActivity) {
+        this.toOtherActivity = toOtherActivity;
+    }
+
     /*
-        AsyncTask for background music
-    */
+            AsyncTask for background music
+        */
     public static class BackgroundSound extends AsyncTask<Void, Void, Void> {
 
         private WeakReference<Context> weakContext;
@@ -226,6 +167,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     e.printStackTrace();
                 }
             }
+        }
+
+        public MediaPlayer getPlayer() {
+            return player;
         }
     }
 }
