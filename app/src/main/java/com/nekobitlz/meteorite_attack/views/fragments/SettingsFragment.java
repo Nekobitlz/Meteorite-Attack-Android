@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
+import com.nekobitlz.meteorite_attack.services.MusicService;
 import com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity;
 
 public class SettingsFragment extends Fragment {
@@ -24,7 +25,7 @@ public class SettingsFragment extends Fragment {
     private ImageView back;
 
     private SharedPreferencesManager spm;
-    private MainMenuActivity.BackgroundSound backgroundSound;
+    private MusicService musicService;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -47,7 +48,7 @@ public class SettingsFragment extends Fragment {
         back = view.findViewById(R.id.back);
 
         spm = new SharedPreferencesManager(getContext());
-        backgroundSound = MainMenuActivity.backgroundSound;
+        musicService = ((MainMenuActivity) getActivity()).getMusicService();
 
         effectsVolume.setProgress(spm.getEffectsVolume());
         musicVolume.setProgress(spm.getMusicVolume());
@@ -82,8 +83,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //Progress == volume level
+        //        float volume = (float) (1 - (Math.log(100 - progress) / Math.log(100)));
                 spm.saveSound(spm.getSoundStatus(), spm.getEffectsVolume(), progress);
-                backgroundSound.setVolume(progress);
+                musicService.setVolume(progress);
             }
 
             @Override
@@ -104,10 +106,10 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     spm.saveSound(true, spm.getEffectsVolume(), spm.getMusicVolume());
-                    backgroundSound.setEnabled(true);
+                    musicService.setEnabled(true);
                 } else {
                     spm.saveSound(false, spm.getEffectsVolume(), spm.getMusicVolume());
-                    backgroundSound.setEnabled(false);
+                    musicService.setEnabled(false);
                 }
             }
         });
