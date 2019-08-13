@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
 
-public class ShopFragment extends Fragment implements View.OnClickListener {
+public class ShopFragment extends Fragment {
 
     private ImageView back;
     private ViewPager pager;
@@ -165,18 +165,6 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     */
     public ArrayList<ShopItem> getShopItemList() {
         return shopItemList;
-    }
-
-    /*
-        Reads views clicks
-    */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.back:
-                getActivity().getFragmentManager().popBackStack();
-                break;
-        }
     }
 
     /*
