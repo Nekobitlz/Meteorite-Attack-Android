@@ -80,14 +80,14 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if (musicService != null) musicService.resumeMusic();
+        if (musicService != null && musicService.isEnabled() && !toOtherActivity) musicService.resumeMusic();
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        if (musicService != null && !toOtherActivity) musicService.pauseMusic();
+        if (musicService != null && !toOtherActivity && !musicService.isEnabled()) musicService.pauseMusic();
     }
 
     @Override

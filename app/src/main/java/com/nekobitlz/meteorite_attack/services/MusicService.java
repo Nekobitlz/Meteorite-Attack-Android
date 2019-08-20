@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.nekobitlz.meteorite_attack.R;
@@ -24,6 +25,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("M_MusicService", "onCreate");
 
         player = MediaPlayer.create(this, R.raw.main_music);
         player.setOnErrorListener(this);
@@ -50,8 +52,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     public int onStartCommand(Intent intent, int flags, int startId) {
         player.start();
 
-        if (!isEnabled) player.pause();
-
+        Log.d("M_MusicService", "onStartCommand");
         return START_STICKY;
     }
 
@@ -60,6 +61,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             player.pause();
             length = player.getCurrentPosition();
         }
+
+        Log.d("M_MusicService", "pauseMusic");
     }
 
     public void resumeMusic() {
@@ -67,12 +70,16 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             player.seekTo(length);
             player.start();
         }
+
+        Log.d("M_MusicService", "resumeMusic");
     }
 
     public void stopMusic() {
         player.stop();
         player.release();
         player = null;
+
+        Log.d("M_MusicService", "stopMusic");
     }
 
     @Override
@@ -87,17 +94,21 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
                 player = null;
             }
         }
+
+        Log.d("M_MusicService", "onDestroy");
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d("M_MusicService", "onBind");
         return binder;
     }
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int what, int extra) {
         Toast.makeText(this, "Music player failed", Toast.LENGTH_SHORT).show();
+        Log.d("M_MusicService", "onError");
 
         if (player != null) {
             try {
@@ -119,12 +130,16 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     }
 
     public void setEnabled(boolean isEnabled) {
-        if (!isEnabled)
-            pauseMusic();
-        else {
+        if (isEnabled) {
             resumeMusic();
             player.setVolume(volume, volume);
+        } else {
+            pauseMusic();
         }
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
     public class ServiceBinder extends Binder {
