@@ -136,7 +136,6 @@
         android:id="@+id/play"
         app:fontFamily="@font/iceberg_regular"
         android:layout_width="250dp"
-        android:background="@drawable/custom_button_background"
         android:text="@string/button_play"
         android:textColor="@android:color/white"
         android:textSize="40sp"

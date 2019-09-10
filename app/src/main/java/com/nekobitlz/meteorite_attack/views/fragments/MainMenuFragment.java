@@ -18,6 +18,7 @@ import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.activities.MainActivity;
 import com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity;
+import com.nekobitlz.meteorite_attack.views.custom.ClickShrinkEffect;
 
 import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
 
@@ -65,6 +66,12 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         settings.setOnClickListener(this);
 
         fragmentManager = getActivity().getSupportFragmentManager();
+
+        ClickShrinkEffect.applyClickShrink(play);
+        ClickShrinkEffect.applyClickShrink(shop);
+        ClickShrinkEffect.applyClickShrink(highScore);
+        ClickShrinkEffect.applyClickShrink(settings);
+        ClickShrinkEffect.applyClickShrink(exit);
 
         spm = new SharedPreferencesManager(getContext());
         loadMoney();
