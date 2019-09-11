@@ -53,20 +53,12 @@
         android:id="@+id/shop"
         android:layout_weight="1"
         android:background="@drawable/custom_button_background"
+        android:src="@drawable/ic_shopping_cart_white_32dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         app:layout_constraintEnd_toStartOf="@+id/high_score"
         app:layout_constraintBottom_toBottomOf="@+id/high_score"
         app:layout_constraintTop_toTopOf="@+id/high_score"/>
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/shop_image"
-        app:srcCompat="@drawable/icon_shop"
-        app:layout_constraintTop_toTopOf="@+id/shop"
-        app:layout_constraintStart_toStartOf="@+id/shop"
-        app:layout_constraintBottom_toBottomOf="@+id/shop"
-        app:layout_constraintEnd_toEndOf="@+id/shop"/>
 
     <ImageButton
         android:id="@+id/high_score"
@@ -75,21 +67,12 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:layout_weight="1"
+        android:src="@drawable/ic_star_white_32dp"
         android:background="@drawable/custom_button_background"
         app:layout_constraintBottom_toBottomOf="@+id/settings"
         app:layout_constraintEnd_toStartOf="@+id/settings"
-        app:layout_constraintTop_toTopOf="@+id/settings_image"
+        app:layout_constraintTop_toTopOf="@+id/settings"
         app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/high_score_image"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/high_score"
-        app:layout_constraintEnd_toEndOf="@+id/high_score"
-        app:layout_constraintStart_toStartOf="@+id/high_score"
-        app:layout_constraintTop_toTopOf="@+id/high_score"
-        app:srcCompat="@drawable/icon_highscore" />
 
     <ImageButton
         android:id="@+id/settings"
@@ -99,19 +82,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"
+        android:src="@drawable/ic_settings_white_32dp"
         android:background="@drawable/custom_button_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/settings_image"
-        app:srcCompat="@drawable/icon_settings"
-        app:layout_constraintStart_toStartOf="@+id/settings"
-        app:layout_constraintEnd_toEndOf="@+id/settings"
-        app:layout_constraintTop_toTopOf="@+id/settings"
-        app:layout_constraintBottom_toBottomOf="@+id/settings"/>
 
     <Button
         android:id="@+id/exit"
@@ -139,6 +113,7 @@
         android:text="@string/button_play"
         android:textColor="@android:color/white"
         android:textSize="40sp"
+        android:background="@drawable/custom_button_background"
         android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_height="75dp"
