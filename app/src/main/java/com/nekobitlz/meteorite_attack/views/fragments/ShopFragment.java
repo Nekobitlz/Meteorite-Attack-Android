@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
+import com.nekobitlz.meteorite_attack.views.animations.ZoomOutPageTransformer;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -82,6 +83,7 @@ public class ShopFragment extends Fragment {
 
         pager = view.findViewById(R.id.pager);
         pagerAdapter = new ShopPagerAdapter(getChildFragmentManager());
+        pager.setPageTransformer(true, new ZoomOutPageTransformer());
         pager.setAdapter(pagerAdapter);
     }
 
