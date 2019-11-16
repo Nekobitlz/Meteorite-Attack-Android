@@ -1,12 +1,18 @@
 package com.nekobitlz.meteorite_attack.options;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.SurfaceHolder;
+
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.enums.EnemyType;
-import com.nekobitlz.meteorite_attack.enums.GameStatus;
 import com.nekobitlz.meteorite_attack.objects.Bonus;
 import com.nekobitlz.meteorite_attack.objects.Laser;
 import com.nekobitlz.meteorite_attack.objects.Player;
@@ -15,7 +21,8 @@ import com.nekobitlz.meteorite_attack.objects.enemies.Enemy;
 
 import java.util.ArrayList;
 
-import static com.nekobitlz.meteorite_attack.views.GameView.*;
+import static com.nekobitlz.meteorite_attack.views.GameView.BONUS_DURATION;
+import static com.nekobitlz.meteorite_attack.views.GameView.SCORE;
 
 /*
      Draws all objects and game states
@@ -62,6 +69,16 @@ public class Drawer {
                 coinBitmap, coinBitmap.getWidth() / 10, coinBitmap.getHeight() / 10, false);
     }
 
+    public Drawer(Context context, int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
+                 SurfaceHolder surfaceHolder, AnimatedBackground animatedBackground) {
+        this.surfaceHolder = surfaceHolder;
+        this.screenSizeX = screenSizeX;
+        this.screenSizeY = screenSizeY;
+        this.paint = paint;
+        this.canvas = canvas;
+        this.background = animatedBackground;
+    }
+
     /*
         Draws all bitmaps and states
     */
@@ -105,6 +122,19 @@ public class Drawer {
 
             drawScore();
             drawBonusDuration();
+
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    public void drawBackground() {
+        if (surfaceHolder.getSurface().isValid()) {
+            canvas = surfaceHolder.lockCanvas();
+            canvas.drawColor(Color.BLACK);
+
+            for (Star s : background.getStars()) {
+                canvas.drawBitmap(s.getBitmap(), s.getX(), s.getY(), paint);
+            }
 
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
@@ -176,7 +206,6 @@ public class Drawer {
         If bonus is on -> it draws duration
         otherwise -> removes it from the screen
     */
-    @SuppressWarnings("deprecation")
     private void drawBonusDuration() {
         Paint bonusDuration = new Paint();
         bonusDuration.setTextSize(40);

@@ -4,21 +4,25 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.services.MusicService;
+import com.nekobitlz.meteorite_attack.views.StarsView;
 import com.nekobitlz.meteorite_attack.views.fragments.MainMenuFragment;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     private boolean toOtherActivity;
-
+    private StarsView starsView;
     private boolean isBound = false;
     private MusicService musicService;
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -36,7 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+             setContentView(R.layout.activity_main_menu);
 
         //Make the display full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -49,6 +53,15 @@ public class MainMenuActivity extends AppCompatActivity {
 
         MainMenuFragment fragment = MainMenuFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+
+        // create Animated Background
+        FrameLayout content = findViewById(R.id.content);
+        starsView = new StarsView(this, point.x, point.y);
+        content.addView(starsView);
 
         fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -80,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        starsView.resume();
         if (musicService != null && musicService.isEnabled() && !toOtherActivity) musicService.resumeMusic();
     }
 
@@ -87,6 +101,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
 
+        starsView.pause();
         if (musicService != null && !toOtherActivity && !musicService.isEnabled()) musicService.pauseMusic();
     }
 
