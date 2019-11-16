@@ -50,7 +50,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        player.start();
+        if (player != null) player.start();
+        else player = MediaPlayer.create(this, R.raw.main_music);
 
         Log.d("M_MusicService", "onStartCommand");
         return START_STICKY;
