@@ -106,7 +106,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 fragmentManager.beginTransaction()
                         .addToBackStack(BACK_STACK)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(R.id.content, fragment)
+                        .replace(R.id.content, fragment)
                         .commit();
             }
             break;
@@ -117,7 +117,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 fragmentManager.beginTransaction()
                         .addToBackStack(BACK_STACK)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(R.id.content, fragment)
+                        .replace(R.id.content, fragment)
                         .commit();
             }
             break;
@@ -128,7 +128,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 fragmentManager.beginTransaction()
                         .addToBackStack(BACK_STACK)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(R.id.content, fragment)
+                        .replace(R.id.content, fragment)
                         .commit();
             }
             break;
