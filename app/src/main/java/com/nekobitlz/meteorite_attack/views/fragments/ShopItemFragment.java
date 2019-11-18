@@ -35,11 +35,6 @@ public class ShopItemFragment extends Fragment {
     private SharedPreferencesManager spm;
     private Shop shop;
 
-    private String currentTag;
-    private String health;
-    private String weaponPower;
-    private String xScore;
-
     /*
         Creates a new instance of the fragment
     */
@@ -59,9 +54,9 @@ public class ShopItemFragment extends Fragment {
 
         spm = new SharedPreferencesManager(getContext());
         shop = new Shop(getContext());
-        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        pageNumber = getArguments() != null ? getArguments().getInt(ARGUMENT_PAGE_NUMBER) : 0;
         parentFragment = (ShopFragment) getParentFragment();
-        shopItemList = parentFragment.getShopItemList();
+        shopItemList = parentFragment != null ? parentFragment.getShopItemList() : null;
     }
 
     @Override
@@ -75,20 +70,20 @@ public class ShopItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         shopItem = shopItemList.get(pageNumber);
-        currentTag = String.valueOf(shopItem.getImage());
+        String currentTag = String.valueOf(shopItem.getImage());
         maxValue = (pageNumber + 1) * 5; //formula for calculating the maximum value
 
         /*
             If the level of upgrade is higher than the maximum
                 -> more performance can't be improved and "MAX" is displayed
         */
-        health = String.valueOf(spm.getHealth(currentTag));
+        String health = String.valueOf(spm.getHealth(currentTag));
         health = Integer.parseInt(health) < maxValue ? health : "MAX";
 
-        weaponPower = String.valueOf(spm.getWeaponPower(currentTag));
+        String weaponPower = String.valueOf(spm.getWeaponPower(currentTag));
         weaponPower = Integer.parseInt(weaponPower) < maxValue ? weaponPower : "MAX";
 
-        xScore = String.valueOf(spm.getXScore(currentTag));
+        String xScore = String.valueOf(spm.getXScore(currentTag));
         xScore = Integer.parseInt(xScore) < maxValue ? xScore : "MAX";
 
         // Setting all the characteristics on the view
@@ -157,7 +152,7 @@ public class ShopItemFragment extends Fragment {
             * NOT WORKING NOW  ¯\_(ツ)_/¯ *
     */
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(SAVE_PAGE_NUMBER, pageNumber);
     }
