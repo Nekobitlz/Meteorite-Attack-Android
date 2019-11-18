@@ -92,19 +92,19 @@ public class ShopItemFragment extends Fragment {
         xScore = Integer.parseInt(xScore) < maxValue ? xScore : "MAX";
 
         // Setting all the characteristics on the view
-        ImageView shopImage = view.findViewById(R.id.ship_image);
+        ImageView shopImage = view.findViewById(R.id.iv_ship);
         shopImage.setImageResource(shopItem.getImage());
 
-        final TextView levelHealth = view.findViewById(R.id.level_health);
+        final TextView levelHealth = view.findViewById(R.id.tv_health);
         levelHealth.setText(health);
 
-        final TextView levelBullet = view.findViewById(R.id.level_bullet);
+        final TextView levelBullet = view.findViewById(R.id.tv_bullet);
         levelBullet.setText(weaponPower);
 
-        final TextView levelXScore = view.findViewById(R.id.level_xscore);
+        final TextView levelXScore = view.findViewById(R.id.tv_xscore);
         levelXScore.setText(xScore);
 
-        final Button priceHealth = view.findViewById(R.id.price_health);
+        final Button priceHealth = view.findViewById(R.id.btn_price_health);
         priceHealth.setText(health.equals("MAX") ? "" : shopItem.getUpgradePrice());
         priceHealth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +114,7 @@ public class ShopItemFragment extends Fragment {
             }
         });
 
-        final Button priceBullet = view.findViewById(R.id.price_bullet);
+        final Button priceBullet = view.findViewById(R.id.btn_price_bullet);
         priceBullet.setText(weaponPower.equals("MAX") ? "" : shopItem.getUpgradePrice());
         priceBullet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +124,7 @@ public class ShopItemFragment extends Fragment {
             }
         });
 
-        final Button priceXScore = view.findViewById(R.id.price_xscore);
+        final Button priceXScore = view.findViewById(R.id.btn_price_xscore);
         priceXScore.setText(xScore.equals("MAX") ? "" : shopItem.getUpgradePrice());
         priceXScore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class ShopItemFragment extends Fragment {
         String shopStatus = String.valueOf(shopItem.getImage());
         String shipPrice = spm.getStatus(shopStatus);
 
-        final Button shipPriceButton = view.findViewById(R.id.ship_price);
+        final Button shipPriceButton = view.findViewById(R.id.btn_ship_price);
         shipPriceButton.setText(shipPrice);
         shipPriceButton.setOnClickListener(new View.OnClickListener() {
             @Override

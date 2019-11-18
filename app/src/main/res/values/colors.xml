@@ -6,4 +6,6 @@
 
     <color name="defaultBackgroundColor">#FFF</color>
     <color name="defaultTextColor">#000</color>
+    <color name="colorMenuText">#FFF</color>
+    <color name="shopItemUpgradeTextColor">#000</color>
 </resources>

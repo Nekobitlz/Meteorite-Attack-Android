@@ -21,4 +21,6 @@
     <string name="ship_image_content_description">Ship image</string>
     <string name="bullet_image_content_description">Bullet damage</string>
     <string name="score_image_content_description">Score multiplier</string>
+    <string name="fragment_shop_title">SHOP</string>
+    <string name="back_btn_content_description">Return to previous screen</string>
 </resources>
