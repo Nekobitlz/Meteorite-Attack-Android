@@ -23,7 +23,11 @@ public class Shop {
 
     private final String USE = "USE";
     private final String USED = "USED";
-    private final String MAX = "MAX";
+    public static final String MAX = "MAX";
+
+    public static final String HEALTH = "HEALTH";
+    public static final String XSCORE = "XSCORE";
+    public static final String WEAPON_POWER = "WEAPON_POWER";
 
     public Shop(Context context) {
         this.context = context;
@@ -57,11 +61,11 @@ public class Shop {
 
         int level;
         switch (upgradeName) {
-            case "health" : level = spm.getHealth(upgradeTag);
+            case HEALTH : level = spm.getHealth(upgradeTag);
             break;
-            case "score multiplier" : level = spm.getXScore(upgradeTag);
+            case XSCORE : level = spm.getXScore(upgradeTag);
             break;
-            case "weapon power" : level = spm.getWeaponPower(upgradeTag);
+            case WEAPON_POWER : level = spm.getWeaponPower(upgradeTag);
             break;
             default: level = 1; /* NEVER HAPPEN */
         }
@@ -71,11 +75,11 @@ public class Shop {
                 level++;
 
                 switch (upgradeName) {
-                    case "health" : health++;
+                    case HEALTH : health++;
                     break;
-                    case "score multiplier" : xScore++;
+                    case XSCORE : xScore++;
                     break;
-                    case "weapon power" : weaponPower++;
+                    case WEAPON_POWER : weaponPower++;
                     break;
                 }
 
@@ -114,13 +118,13 @@ public class Shop {
         currentMoney = spm.getMoney();
 
         switch (shipPriceButton.getText().toString()) {
-            case "USE" : {
+            case USE : {
                 makeStatusUsed(shopItem, shipPriceButton);
 
                 Toast.makeText(context, "Ship changed", Toast.LENGTH_SHORT).show();
             }
             break;
-            case "USED" : {
+            case USED : {
                 Toast.makeText(context, "You already use this ship", Toast.LENGTH_SHORT).show();
             }
             break;
