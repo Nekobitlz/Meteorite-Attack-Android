@@ -42,26 +42,43 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        soundStatus = view.findViewById(R.id.sound_checkbox);
-        effectsVolume = view.findViewById(R.id.effects_seekbar);
-        musicVolume = view.findViewById(R.id.music_seekbar);
-        back = view.findViewById(R.id.back);
-
         spm = new SharedPreferencesManager(getContext());
-        musicService = ((MainMenuActivity) getActivity()).getMusicService();
+        musicService = getActivity() == null ? null : ((MainMenuActivity) getActivity()).getMusicService();
 
+        initViews(view);
+        initProgress();
+
+        back.setOnClickListener(closeActivity());
+        effectsVolume.setOnSeekBarChangeListener(saveEffectsVolume());
+        musicVolume.setOnSeekBarChangeListener(saveMusicVolume());
+        soundStatus.setOnCheckedChangeListener(handleOnChecked());
+
+    }
+
+    private void initViews(@NonNull View view) {
+        soundStatus = view.findViewById(R.id.cb_sound_status);
+        effectsVolume = view.findViewById(R.id.sb_effects_volume);
+        musicVolume = view.findViewById(R.id.sb_music_volume);
+        back = view.findViewById(R.id.iv_back_btn);
+    }
+
+    private void initProgress() {
         effectsVolume.setProgress(spm.getEffectsVolume());
         musicVolume.setProgress(spm.getMusicVolume());
         soundStatus.setChecked(spm.getSoundStatus());
+    }
 
-        back.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener closeActivity() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+                if (getActivity() != null) getActivity().onBackPressed();
             }
-        });
+        };
+    }
 
-        effectsVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener saveEffectsVolume() {
+        return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //Progress == volume level
@@ -77,13 +94,15 @@ public class SettingsFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 /* NOTHING */
             }
-        });
+        };
+    }
 
-        musicVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener saveMusicVolume() {
+        return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //Progress == volume level
-        //        float volume = (float) (1 - (Math.log(100 - progress) / Math.log(100)));
+                //        float volume = (float) (1 - (Math.log(100 - progress) / Math.log(100)));
                 spm.saveSound(spm.getSoundStatus(), spm.getEffectsVolume(), progress);
                 musicService.setVolume(progress);
             }
@@ -97,11 +116,11 @@ public class SettingsFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 /* NOTHING */
             }
-        });
+        };
+    }
 
-        // *Checked* -> Sound On
-        // *Unchecked* -> Sound off
-        soundStatus.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+    private CheckBox.OnCheckedChangeListener handleOnChecked() {
+        return new CheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -112,7 +131,6 @@ public class SettingsFragment extends Fragment {
                     musicService.setEnabled(false);
                 }
             }
-        });
-
+        };
     }
 }

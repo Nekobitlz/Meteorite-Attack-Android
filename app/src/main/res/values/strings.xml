@@ -23,4 +23,8 @@
     <string name="score_image_content_description">Score multiplier</string>
     <string name="fragment_shop_title">SHOP</string>
     <string name="back_btn_content_description">Return to previous screen</string>
+    <string name="fragment_settings_title">SETTINGS</string>
+    <string name="fragment_settings_sounds_on_off">SOUNDS ON/OFF</string>
+    <string name="fragment_settings_effects_volume">EFFECTS VOLUME</string>
+    <string name="fragment_settings_music_volume">MUSIC VOLUME</string>
 </resources>

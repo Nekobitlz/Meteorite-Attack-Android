@@ -7,109 +7,113 @@
     tools:background="@drawable/menu_background">
 
     <ImageView
-        android:id="@+id/back"
+        android:id="@+id/iv_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="@dimen/spacing_medium_16"
+        android:layout_marginStart="@dimen/spacing_small_8"
+        android:layout_marginLeft="@dimen/spacing_small_8"
+        android:layout_marginTop="@dimen/spacing_small_8"
+        android:contentDescription="@string/back_btn_content_description"
         android:src="@drawable/arrow_left_circle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/settings"
+        android:id="@+id/tv_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/back"
+        android:layout_below="@+id/iv_back_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="SETTINGS"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
+        android:layout_marginStart="@dimen/spacing_small_8"
+        android:layout_marginLeft="@dimen/spacing_small_8"
+        android:layout_marginTop="@dimen/spacing_fragment_title_80"
+        android:layout_marginEnd="@dimen/spacing_small_8"
+        android:layout_marginRight="@dimen/spacing_small_8"
+        android:text="@string/fragment_settings_title"
+        android:textColor="@color/colorMenuText"
+        android:textSize="@dimen/font_fragment_title_32"
         app:fontFamily="@font/iceberg_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/sound_status"
+        android:id="@+id/tv_sound_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/spacing_huge_32"
         android:fontFamily="@font/iceberg_regular"
-        android:text="SOUNDS ON/OFF"
-        android:textColor="@color/defaultBackgroundColor"
-        android:textSize="30sp"
+        android:text="@string/fragment_settings_sounds_on_off"
+        android:textColor="@color/colorMenuText"
+        android:textSize="@dimen/font_fragment_title_32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_settings" />
 
     <TextView
-        android:id="@+id/effects_volume"
+        android:id="@+id/tv_effects_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/spacing_medium_16"
         android:fontFamily="@font/iceberg_regular"
-        android:text="EFFECTS VOLUME"
-        android:textColor="@color/defaultBackgroundColor"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="@+id/sound_status"
-        app:layout_constraintTop_toBottomOf="@+id/sound_status" />
+        android:text="@string/fragment_settings_effects_volume"
+        android:textColor="@color/colorMenuText"
+        android:textSize="@dimen/font_fragment_title_32"
+        app:layout_constraintStart_toStartOf="@+id/tv_sound_status"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sound_status" />
 
     <CheckBox
-        android:id="@+id/sound_checkbox"
+        android:id="@+id/cb_sound_status"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="@dimen/spacing_small_8"
+        android:layout_marginLeft="@dimen/spacing_small_8"
         android:background="@color/defaultBackgroundColor"
         android:buttonTint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/sound_status"
-        app:layout_constraintStart_toEndOf="@+id/sound_status"
-        app:layout_constraintTop_toTopOf="@+id/sound_status" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_sound_status"
+        app:layout_constraintStart_toEndOf="@+id/tv_sound_status"
+        app:layout_constraintTop_toTopOf="@+id/tv_sound_status"
+        tools:targetApi="lollipop" />
 
     <SeekBar
-        android:id="@+id/effects_seekbar"
+        android:id="@+id/sb_effects_volume"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="@dimen/settings_seek_bar_height_32"
+        android:layout_marginTop="@dimen/spacing_small_8"
         android:background="@color/defaultBackgroundColor"
         android:progressTint="@color/defaultTextColor"
         android:thumbTint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="@+id/effects_volume"
-        app:layout_constraintStart_toStartOf="@+id/effects_volume"
-        app:layout_constraintTop_toBottomOf="@+id/effects_volume" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_effects_volume"
+        app:layout_constraintStart_toStartOf="@+id/tv_effects_volume"
+        app:layout_constraintTop_toBottomOf="@+id/tv_effects_volume"
+        tools:targetApi="lollipop" />
 
     <SeekBar
-        android:id="@+id/music_seekbar"
+        android:id="@+id/sb_music_volume"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="@dimen/settings_seek_bar_height_32"
+        android:layout_marginTop="@dimen/spacing_small_8"
         android:background="@color/defaultBackgroundColor"
         android:progressTint="@color/defaultTextColor"
         android:thumbTint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="@+id/music_volume"
-        app:layout_constraintStart_toStartOf="@+id/music_volume"
-        app:layout_constraintTop_toBottomOf="@+id/music_volume" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_music_volume"
+        app:layout_constraintStart_toStartOf="@+id/tv_music_volume"
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_volume"
+        tools:targetApi="lollipop" />
 
     <TextView
-        android:id="@+id/music_volume"
+        android:id="@+id/tv_music_volume"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/spacing_medium_16"
         android:fontFamily="@font/iceberg_regular"
         android:gravity="center"
-        android:text="MUSIC VOLUME"
-        android:textColor="@color/defaultBackgroundColor"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@+id/effects_seekbar"
-        app:layout_constraintStart_toStartOf="@+id/effects_seekbar"
-        app:layout_constraintTop_toBottomOf="@+id/effects_seekbar" />
+        android:text="@string/fragment_settings_music_volume"
+        android:textColor="@color/colorMenuText"
+        android:textSize="@dimen/font_fragment_title_32"
+        app:layout_constraintEnd_toEndOf="@+id/sb_effects_volume"
+        app:layout_constraintStart_toStartOf="@+id/sb_effects_volume"
+        app:layout_constraintTop_toBottomOf="@+id/sb_effects_volume" />
 
 </android.support.constraint.ConstraintLayout>
