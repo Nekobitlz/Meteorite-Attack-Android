@@ -13,6 +13,12 @@
     <string name="money">MONEY:</string>
     <string name="game_over">Game Over</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shop_item_level">LEVEL</string>
+    <string name="shop_item_max_health">Max health</string>
+    <string name="shop_item_bullet_damage">Bullet damage</string>
+    <string name="shop_item_score_multiplier">Score multiplier</string>
+    <string name="health_image_content_description">HEALTH</string>
+    <string name="ship_image_content_description">Ship image</string>
+    <string name="bullet_image_content_description">Bullet damage</string>
+    <string name="score_image_content_description">Score multiplier</string>
 </resources>
