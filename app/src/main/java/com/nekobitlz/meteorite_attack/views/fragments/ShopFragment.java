@@ -27,22 +27,10 @@ import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
 
 public class ShopFragment extends Fragment {
 
-    private ImageView back;
-    private ViewPager pager;
-    private PagerAdapter pagerAdapter;
     private TextView money;
 
     private ArrayList<ShopItem> shopItemList;
     private SharedPreferencesManager spm;
-
-    private String image;
-    private String health;
-    private String shipPrice;
-    private String xScore;
-    private String upgradePrice;
-    private String weaponPower;
-    private String laser;
-    private String level;
 
     private int pageCount;
 
@@ -70,19 +58,19 @@ public class ShopFragment extends Fragment {
 
         pageCount = shopItemList.size();
 
-        back = view.findViewById(R.id.back);
+        ImageView back = view.findViewById(R.id.iv_back_btn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+                if (getActivity() != null) getActivity().onBackPressed();
             }
         });
 
-        money = view.findViewById(R.id.money);
+        money = view.findViewById(R.id.tv_money);
         loadMoney();
 
-        pager = view.findViewById(R.id.pager);
-        pagerAdapter = new ShopPagerAdapter(getChildFragmentManager());
+        ViewPager pager = view.findViewById(R.id.vp_ship_pager);
+        PagerAdapter pagerAdapter = new ShopPagerAdapter(getChildFragmentManager());
         pager.setPageTransformer(true, new ZoomOutPageTransformer());
         pager.setAdapter(pagerAdapter);
     }
@@ -130,14 +118,14 @@ public class ShopFragment extends Fragment {
             while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
                 if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("item")) {
                     // Gets xml attributes
-                    health = parser.getAttributeValue(0);
-                    image = parser.getAttributeValue(1);
-                    laser = parser.getAttributeValue(2);
-                    level = parser.getAttributeValue(3);
-                    shipPrice = parser.getAttributeValue(4);
-                    upgradePrice = parser.getAttributeValue(5);
-                    weaponPower = parser.getAttributeValue(6);
-                    xScore = parser.getAttributeValue(7);
+                    String health = parser.getAttributeValue(0);
+                    String image = parser.getAttributeValue(1);
+                    String laser = parser.getAttributeValue(2);
+                    String level = parser.getAttributeValue(3);
+                    String shipPrice = parser.getAttributeValue(4);
+                    String upgradePrice = parser.getAttributeValue(5);
+                    String weaponPower = parser.getAttributeValue(6);
+                    String xScore = parser.getAttributeValue(7);
 
                     shopItemList.add(
                             new ShopItem(
@@ -182,8 +170,8 @@ public class ShopFragment extends Fragment {
         private String level;
         private String laser;
 
-        public ShopItem(String image, String shipPrice, String laser, String level,
-                        String upgradePrice, String health, String weaponPower, String xScore) {
+        ShopItem(String image, String shipPrice, String laser, String level,
+                 String upgradePrice, String health, String weaponPower, String xScore) {
             this.image = image;
             this.shipPrice = shipPrice;
             this.laser = laser;
@@ -215,11 +203,11 @@ public class ShopFragment extends Fragment {
             return health;
         }
 
-        public String getXScore() {
+        private String getXScore() {
             return xScore;
         }
 
-        public String getWeaponPower() {
+        private String getWeaponPower() {
             return weaponPower;
         }
 
@@ -237,7 +225,7 @@ public class ShopFragment extends Fragment {
     */
     private class ShopPagerAdapter extends FragmentPagerAdapter {
 
-        public ShopPagerAdapter(FragmentManager fm) {
+        private ShopPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

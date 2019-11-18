@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nekobitlz.meteorite_attack.views.fragments.ShopFragment;
+import com.nekobitlz.meteorite_attack.views.fragments.ShopFragment.ShopItem;
 
 import java.util.HashMap;
 
@@ -15,20 +16,14 @@ import java.util.HashMap;
 public class Shop {
     private Context context;
     private String statusTag;
-    private String upgradeTag;
     private SharedPreferencesManager spm;
     private static HashMap<String, Button> shipPriceButtonMap = new HashMap<>();
 
-    private int weaponPower;
     private int currentMoney;
-    private int moneyPrice;
-    private int level;
-    private int xScore;
-    private int health;
-    private int shipPrice;
 
-    private String use = "USE";
-    private String used = "USED";
+    private final String USE = "USE";
+    private final String USED = "USED";
+    private final String MAX = "MAX";
 
     public Shop(Context context) {
         this.context = context;
@@ -51,15 +46,16 @@ public class Shop {
                     If the level of upgrade is not more than 5 & the user has enough money
                                 -> weapon power increases
     */
-    public void processUpgrade(ShopFragment.ShopItem shopItem, String upgradeName,
+    public void processUpgrade(ShopItem shopItem, String upgradeName,
                                Button priceButton, TextView levelView, int maxValue) {
-        moneyPrice = Integer.parseInt(shopItem.getUpgradePrice());
-        upgradeTag = String.valueOf(shopItem.getImage());
-        health = spm.getHealth(upgradeTag);
-        xScore = spm.getXScore(upgradeTag);
-        weaponPower = spm.getWeaponPower(upgradeTag);
+        int moneyPrice = Integer.parseInt(shopItem.getUpgradePrice());
+        String upgradeTag = String.valueOf(shopItem.getImage());
+        int health = spm.getHealth(upgradeTag);
+        int xScore = spm.getXScore(upgradeTag);
+        int weaponPower = spm.getWeaponPower(upgradeTag);
         currentMoney = spm.getMoney();
 
+        int level;
         switch (upgradeName) {
             case "health" : level = spm.getHealth(upgradeTag);
             break;
@@ -89,7 +85,7 @@ public class Shop {
                 if (level < maxValue) {
                     levelView.setText(String.valueOf(level));
                 } else {
-                    levelView.setText("MAX");
+                    levelView.setText(MAX);
                     priceButton.setText("");
                     priceButton.setActivated(false);
                 }
@@ -108,12 +104,12 @@ public class Shop {
 
         If status of item is:
                 Use -> Ship changing
-                Used -> Nothing happens and toast pops up that the ship is already in use
+                Used -> Nothing happens and toast pops up that the ship is already in USE
                 *Price* -> If user has money, money is spent and ship goes to status "Used",
                        if not, then a toast with error comes out
     */
     public void processShip(ShopFragment.ShopItem shopItem, Button shipPriceButton) {
-        shipPrice = Integer.parseInt(shopItem.getShipPrice());
+        int shipPrice = Integer.parseInt(shopItem.getShipPrice());
         statusTag = String.valueOf(shopItem.getImage());
         currentMoney = spm.getMoney();
 
@@ -152,15 +148,15 @@ public class Shop {
             String tag = entry.getKey();
             final Button button = entry.getValue();
 
-            if (button.getText().toString().equals(used)) {
-                spm.saveStatus(tag, use);
-                button.setText(use);
+            if (button.getText().toString().equals(USED)) {
+                spm.saveStatus(tag, USE);
+                button.setText(USE);
             }
         }
 
         spm.savePlayer(shopItem.getImage(), shopItem.getLaser(), shopItem.getLevel());
-        spm.saveStatus(statusTag, used);
-        shipPriceButton.setText(used);
+        spm.saveStatus(statusTag, USED);
+        shipPriceButton.setText(USED);
     }
 
     /*
