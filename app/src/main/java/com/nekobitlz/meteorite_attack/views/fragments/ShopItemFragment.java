@@ -18,6 +18,11 @@ import com.nekobitlz.meteorite_attack.views.fragments.ShopFragment.ShopItem;
 
 import java.util.ArrayList;
 
+import static com.nekobitlz.meteorite_attack.options.Shop.HEALTH;
+import static com.nekobitlz.meteorite_attack.options.Shop.MAX;
+import static com.nekobitlz.meteorite_attack.options.Shop.WEAPON_POWER;
+import static com.nekobitlz.meteorite_attack.options.Shop.XSCORE;
+
 /*
     Fragment that contains the item from the shop
 */
@@ -31,6 +36,15 @@ public class ShopItemFragment extends Fragment {
     private ShopItem shopItem;
     private int pageNumber;
     private int maxValue;
+
+    private ImageView shopImage;
+    private TextView levelHealth;
+    private TextView levelXScore;
+    private TextView levelBullet;
+    private Button priceHealth;
+    private Button priceBullet;
+    private Button priceXScore;
+    private Button shipPriceButton;
 
     private SharedPreferencesManager spm;
     private Shop shop;
@@ -77,73 +91,81 @@ public class ShopItemFragment extends Fragment {
             If the level of upgrade is higher than the maximum
                 -> more performance can't be improved and "MAX" is displayed
         */
-        String health = String.valueOf(spm.getHealth(currentTag));
-        health = Integer.parseInt(health) < maxValue ? health : "MAX";
+        String health = getLevel(spm.getHealth(currentTag));
+        String weaponPower = getLevel(spm.getWeaponPower(currentTag));
+        String xScore = getLevel(spm.getXScore(currentTag));
+        String shipPrice = getShipPrice();
 
-        String weaponPower = String.valueOf(spm.getWeaponPower(currentTag));
-        weaponPower = Integer.parseInt(weaponPower) < maxValue ? weaponPower : "MAX";
+        initViews(view);
+        initLevelText(health, weaponPower, xScore);
+        initButtonsText(health, weaponPower, xScore, shipPrice);
+        initButtonsOnClickListeners();
 
-        String xScore = String.valueOf(spm.getXScore(currentTag));
-        xScore = Integer.parseInt(xScore) < maxValue ? xScore : "MAX";
-
-        // Setting all the characteristics on the view
-        ImageView shopImage = view.findViewById(R.id.iv_ship);
         shopImage.setImageResource(shopItem.getImage());
+        // All buttons are added to one map (needed to set "USE" status for items)
+        shop.addPriceButtonToMap(currentTag, shipPriceButton);
+    }
 
-        final TextView levelHealth = view.findViewById(R.id.tv_health);
-        levelHealth.setText(health);
+    private String getLevel(int level) {
+        String levelText = String.valueOf(level);
+        levelText = level < maxValue ? levelText : MAX;
+        return levelText;
+    }
 
-        final TextView levelBullet = view.findViewById(R.id.tv_bullet);
-        levelBullet.setText(weaponPower);
-
-        final TextView levelXScore = view.findViewById(R.id.tv_xscore);
-        levelXScore.setText(xScore);
-
-        final Button priceHealth = view.findViewById(R.id.btn_price_health);
-        priceHealth.setText(health.equals("MAX") ? "" : shopItem.getUpgradePrice());
-        priceHealth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shop.processUpgrade(shopItem, "health", priceHealth, levelHealth, maxValue);
-                parentFragment.loadMoney();
-            }
-        });
-
-        final Button priceBullet = view.findViewById(R.id.btn_price_bullet);
-        priceBullet.setText(weaponPower.equals("MAX") ? "" : shopItem.getUpgradePrice());
-        priceBullet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shop.processUpgrade(shopItem, "weapon power", priceBullet, levelBullet, maxValue);
-                parentFragment.loadMoney();
-            }
-        });
-
-        final Button priceXScore = view.findViewById(R.id.btn_price_xscore);
-        priceXScore.setText(xScore.equals("MAX") ? "" : shopItem.getUpgradePrice());
-        priceXScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shop.processUpgrade(shopItem, "score multiplier", priceXScore, levelXScore, maxValue);
-                parentFragment.loadMoney();
-            }
-        });
-
+    private String getShipPrice() {
         String shopStatus = String.valueOf(shopItem.getImage());
-        String shipPrice = spm.getStatus(shopStatus);
+        return spm.getStatus(shopStatus);
+    }
 
-        final Button shipPriceButton = view.findViewById(R.id.btn_ship_price);
+    private void initViews(@NonNull View view) {
+        shopImage = view.findViewById(R.id.iv_ship);
+        levelHealth = view.findViewById(R.id.tv_health);
+        levelXScore = view.findViewById(R.id.tv_xscore);
+        levelBullet = view.findViewById(R.id.tv_bullet);
+        priceHealth = view.findViewById(R.id.btn_price_health);
+        priceBullet = view.findViewById(R.id.btn_price_bullet);
+        priceXScore = view.findViewById(R.id.btn_price_xscore);
+        shipPriceButton = view.findViewById(R.id.btn_ship_price);
+    }
+
+    private void initLevelText(String health, String weaponPower, String xScore) {
+        levelHealth.setText(health);
+        levelBullet.setText(weaponPower);
+        levelXScore.setText(xScore);
+    }
+
+    private void initButtonsText(String health, String weaponPower, String xScore, String shipPrice) {
+        priceHealth.setText(health.equals(MAX) ? "" : shopItem.getUpgradePrice());
+        priceBullet.setText(weaponPower.equals(MAX) ? "" : shopItem.getUpgradePrice());
+        priceXScore.setText(xScore.equals(MAX) ? "" : shopItem.getUpgradePrice());
         shipPriceButton.setText(shipPrice);
-        shipPriceButton.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initButtonsOnClickListeners() {
+        priceHealth.setOnClickListener(handleUpgradeButton(HEALTH, priceHealth, levelHealth));
+        priceBullet.setOnClickListener(handleUpgradeButton(WEAPON_POWER, priceBullet, levelBullet));
+        priceXScore.setOnClickListener(handleUpgradeButton(XSCORE, priceXScore, levelXScore));
+        shipPriceButton.setOnClickListener(handleBuyShipButton());
+    }
+
+    private View.OnClickListener handleUpgradeButton(final String upgradeName, final Button priceButton, final TextView levelView) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shop.processUpgrade(shopItem, upgradeName, priceButton, levelView, maxValue);
+                parentFragment.loadMoney();
+            }
+        };
+    }
+
+    private View.OnClickListener handleBuyShipButton() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 shop.processShip(shopItem, shipPriceButton);
                 parentFragment.loadMoney();
             }
-        });
-
-        // All buttons are added to one map (needed to set "USE" status for items)
-        shop.addPriceButtonToMap(currentTag, shipPriceButton);
+        };
     }
 
     /*
