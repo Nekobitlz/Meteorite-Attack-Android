@@ -1,5 +1,7 @@
 package com.nekobitlz.meteorite_attack.views.fragments;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,12 +28,18 @@ import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
 */
 public class GameOverFragment extends DialogFragment {
 
-    private String score;
     private String meteorDestroyed;
     private String money;
     private String enemyShipDestroyed;
     private String borderDestroyed;
     private String exploderDestroyed;
+
+    private TextView moneyCount;
+    private TextView meteorCount;
+    private TextView enemyShipCount;
+    private TextView borderCount;
+    private TextView exploderCount;
+    private ConstraintLayout constraintLayout;
 
     public static GameOverFragment newInstance() {
         return new GameOverFragment();
@@ -40,7 +48,26 @@ public class GameOverFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        score = String.valueOf(GameView.SCORE);
+
+        initArguments();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setRoundedStyle();
+
+        View view = inflater.inflate(R.layout.fragment_game_over, container, false);
+
+        initViews(view);
+        initViewsText();
+
+        constraintLayout.setOnClickListener(closeActivity());
+
+        return view;
+    }
+
+    private void initArguments() {
         money = String.valueOf(GameView.MONEY);
         meteorDestroyed = String.valueOf(GameView.METEOR_DESTROYED);
         enemyShipDestroyed = String.valueOf(GameView.ENEMY_SHIP_DESTROYED);
@@ -48,35 +75,35 @@ public class GameOverFragment extends DialogFragment {
         exploderDestroyed = String.valueOf(GameView.EXPLODER_DESTROYED);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    private void setRoundedStyle() {
+        if (getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+    }
 
-        View view = inflater.inflate(R.layout.fragment_game_over, container, false);
+    private void initViews(View view) {
+        moneyCount = view.findViewById(R.id.tv_money);
+        meteorCount = view.findViewById(R.id.tv_meteor_count);
+        enemyShipCount = view.findViewById(R.id.tv_enemy_ship_count);
+        borderCount = view.findViewById(R.id.tv_border_count);
+        exploderCount = view.findViewById(R.id.tv_exploder_count);
+        constraintLayout = view.findViewById(R.id.container_game_over);
+    }
 
-        TextView moneyCount = view.findViewById(R.id.money);
+    private void initViewsText() {
         moneyCount.setText(formatMoney(money));
-
-        TextView meteorCount = view.findViewById(R.id.meteor_count);
         meteorCount.setText(meteorDestroyed);
-
-        TextView enemyShipCount = view.findViewById(R.id.enemy_ship_count);
         enemyShipCount.setText(enemyShipDestroyed);
-
-        TextView borderCount = view.findViewById(R.id.border_count);
         borderCount.setText(borderDestroyed);
-
-        TextView exploderCount = view.findViewById(R.id.exploder_count);
         exploderCount.setText(exploderDestroyed);
+    }
 
-        ConstraintLayout constraintLayout = view.findViewById(R.id.game_over_container);
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener closeActivity() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                if (getActivity() != null) getActivity().finish();
             }
-        });
-
-        return view;
+        };
     }
 }
