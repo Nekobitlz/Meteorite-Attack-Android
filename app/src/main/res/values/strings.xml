@@ -11,7 +11,7 @@
     <string name="new_high_score">New High Score</string>
     <string name="fragment_high_score_score">SCORE:</string>
     <string name="money">MONEY:</string>
-    <string name="game_over">Game Over</string>
+    <string name="fragment_game_over_title">Game Over</string>
 
     <string name="fragment_shop_title">SHOP</string>
     <string name="shop_item_level">LEVEL</string>
@@ -33,5 +33,9 @@
     <string name="main_menu_to_shop_content_description">To shop activity</string>
     <string name="main_menu_to_high_score_content_description">To high score activity</string>
     <string name="main_menu_to_settings_content_description">To settings activity</string>
+    <string name="fragment_game_over_meteor_destroyed">METEOR DESTROYED:</string>
+    <string name="fragment_game_over_enemy_ship_destroyed">ENEMY SHIP DESTROYED:</string>
+    <string name="fragment_game_over_exploder_destroyed">EXPLODER DESTROYED:</string>
+    <string name="fragment_game_over_border_destroyed">BORDER DESTROYED:</string>
 
 </resources>

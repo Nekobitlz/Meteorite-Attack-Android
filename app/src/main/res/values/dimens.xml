@@ -26,4 +26,6 @@
 
     <!--back_btn_padding = 16 + 16, back_btn_size = 36 => fragment_title_80 - 32 - 36 = 12 -->
     <dimen name="fragment_high_score_title_margin_12">12dp</dimen>
+    <dimen name="font_fragment_game_over_title_45">45sp</dimen>
+    <dimen name="font_game_over_text_25">25sp</dimen>
 </resources>

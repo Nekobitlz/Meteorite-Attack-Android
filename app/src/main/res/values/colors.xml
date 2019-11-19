@@ -8,4 +8,5 @@
     <color name="defaultTextColor">#000</color>
     <color name="colorMenuText">#FFF</color>
     <color name="shopItemUpgradeTextColor">#000</color>
+    <color name="colorGameOverTitle">#F00</color>
 </resources>
