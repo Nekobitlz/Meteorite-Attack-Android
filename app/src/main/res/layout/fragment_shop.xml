@@ -29,19 +29,17 @@
         android:textColor="@color/colorMenuText"
         android:textSize="@dimen/font_fragment_money_25"
         android:textStyle="bold"
-        android:visibility="visible"
         app:fontFamily="@font/iceberg_regular"
         app:layout_constraintBottom_toBottomOf="@+id/iv_back_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_back_btn"
-        tools:text="25"
-        tools:textColor="@android:color/white" />
+        tools:text="25" />
 
     <TextView
         android:id="@+id/tv_shop_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fragment_title_margin_80"
+        android:layout_marginTop="@dimen/spacing_fragment_title_80"
         android:text="@string/fragment_shop_title"
         android:textColor="@color/colorMenuText"
         android:textSize="@dimen/font_fragment_title_32"
