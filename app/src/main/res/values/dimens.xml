@@ -1,31 +1,35 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="shop_item_upgrade_width_80">80dp</dimen>
     <dimen name="shop_item_image_height_25">25dp</dimen>
-    <dimen name="spacing_small_8">8dp</dimen>
-    <dimen name="font_default_18">18sp</dimen>
     <dimen name="shop_item_ship_width_300">300dp</dimen>
-    <dimen name="spacing_medium_16">16dp</dimen>
-    <dimen name="spacing_very_huge_200">200dp</dimen>
-    <dimen name="font_fragment_money_25">25sp</dimen>
-    <dimen name="spacing_fragment_title_80">80dp</dimen>
-    <dimen name="font_fragment_title_32">32sp</dimen>
-    <dimen name="spacing_huge_32">32dp</dimen>
+
     <dimen name="settings_seek_bar_height_32">32dp</dimen>
-    <dimen name="main_menu_fragments_button_size_50">50dp</dimen>
+
     <dimen name="spacing_tiny_4">4dp</dimen>
+    <dimen name="spacing_small_8">8dp</dimen>
+    <dimen name="spacing_medium_16">16dp</dimen>
+    <dimen name="spacing_huge_32">32dp</dimen>
+    <dimen name="spacing_fragment_title_80">80dp</dimen>
+    <dimen name="spacing_very_huge_200">200dp</dimen>
+
+    <dimen name="main_menu_fragments_button_size_50">50dp</dimen>
     <dimen name="main_menu_play_button_width_250">250dp</dimen>
     <dimen name="main_menu_play_button_height_75">75dp</dimen>
     <dimen name="main_menu_play_button_margin_100">100dp</dimen>
-    <dimen name="font_main_menu_play_btn_40">40sp</dimen>
     <dimen name="main_menu_exit_btn">175dp</dimen>
-    <dimen name="font_main_menu_exit_btn_20">20sp</dimen>
-    <dimen name="high_score_container_padding_48">48dp</dimen>
+
+    <dimen name="fragment_high_score_container_padding_48">48dp</dimen>
     <dimen name="fragment_high_score_object_size_50">50dp</dimen>
     <dimen name="fragment_high_score_border_height_40">40dp</dimen>
-
     <!--back_btn_padding = 16 + 16, back_btn_size = 36 => fragment_title_80 - 32 - 36 = 12 -->
     <dimen name="fragment_high_score_title_margin_12">12dp</dimen>
-    <dimen name="font_fragment_game_over_title_45">45sp</dimen>
+
+    <dimen name="font_default_18">18sp</dimen>
     <dimen name="font_game_over_text_25">25sp</dimen>
+    <dimen name="font_fragment_money_25">25sp</dimen>
+    <dimen name="font_main_menu_exit_btn_20">20sp</dimen>
+    <dimen name="font_main_menu_play_btn_40">40sp</dimen>
+    <dimen name="font_fragment_game_over_title_45">45sp</dimen>
+    <dimen name="font_fragment_title_32">32sp</dimen>
+
 </resources>

@@ -34,9 +34,9 @@
         android:background="@color/defaultBackgroundColor"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/high_score_container_padding_48"
+        android:paddingLeft="@dimen/fragment_high_score_container_padding_48"
         android:paddingTop="@dimen/spacing_medium_16"
-        android:paddingRight="@dimen/high_score_container_padding_48"
+        android:paddingRight="@dimen/fragment_high_score_container_padding_48"
         android:paddingBottom="@dimen/spacing_medium_16">
 
         <LinearLayout
