@@ -13,18 +13,25 @@
     <string name="money">MONEY:</string>
     <string name="game_over">Game Over</string>
 
+    <string name="fragment_shop_title">SHOP</string>
     <string name="shop_item_level">LEVEL</string>
     <string name="shop_item_max_health">Max health</string>
     <string name="shop_item_bullet_damage">Bullet damage</string>
     <string name="shop_item_score_multiplier">Score multiplier</string>
-    <string name="health_image_content_description">HEALTH</string>
-    <string name="ship_image_content_description">Ship image</string>
-    <string name="bullet_image_content_description">Bullet damage</string>
-    <string name="score_image_content_description">Score multiplier</string>
-    <string name="fragment_shop_title">SHOP</string>
     <string name="back_btn_content_description">Return to previous screen</string>
+
     <string name="fragment_settings_title">SETTINGS</string>
     <string name="fragment_settings_sounds_on_off">SOUNDS ON/OFF</string>
     <string name="fragment_settings_effects_volume">EFFECTS VOLUME</string>
     <string name="fragment_settings_music_volume">MUSIC VOLUME</string>
+
+    <string name="health_image_content_description">HEALTH</string>
+    <string name="ship_image_content_description">Ship image</string>
+    <string name="bullet_image_content_description">Bullet damage</string>
+    <string name="score_image_content_description">Score multiplier</string>
+    <string name="game_logo_content_description">Game logo</string>
+    <string name="main_menu_to_shop_content_description">To shop activity</string>
+    <string name="main_menu_to_high_score_content_description">To high score activity</string>
+    <string name="main_menu_to_settings_content_description">To settings activity</string>
+
 </resources>
