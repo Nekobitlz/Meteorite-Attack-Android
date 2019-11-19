@@ -15,15 +15,11 @@ import java.util.Random;
 */
 public class Bonus {
 
-    private Context context;
-    private SoundPlayer soundPlayer;
     private BonusType bonusType;
-    private int screenSizeX;
     private int screenSizeY;
 
     private int x;
     private int y;
-    private int maxX;
     private int speed;
     private int image;
 
@@ -33,11 +29,8 @@ public class Bonus {
     /*
         Bonus initialization
     */
-    public Bonus(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer, BonusType bonusType) {
-        this.context = context;
-        this.screenSizeX = screenSizeX;
+    public Bonus(Context context, int screenSizeX, int screenSizeY, BonusType bonusType) {
         this.screenSizeY = screenSizeY;
-        this.soundPlayer = soundPlayer;
         this.bonusType = bonusType;
 
         speed = 1;
@@ -70,7 +63,7 @@ public class Bonus {
                 bitmap,bitmap.getWidth() / 20, bitmap.getHeight() / 20, false);
 
         Random random = new Random();
-        maxX = screenSizeX - bitmap.getWidth();
+        int maxX = screenSizeX - bitmap.getWidth();
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();
 

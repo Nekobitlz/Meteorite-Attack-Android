@@ -18,12 +18,9 @@ public class Player {
 
     private float x;
     private float y;
-    private int screenSizeX;
-    private int screenSizeY;
 
     private int margin = 16; //indent from edge
     private Rect collision;
-    private SharedPreferencesManager spm;
     private int health;
 
     private ArrayList<Laser> lasers;
@@ -34,11 +31,9 @@ public class Player {
         Player initialization
     */
     public Player(Context context, int screenSizeX, int screenSizeY, SoundPlayer soundPlayer) {
-        this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
         this.context = context;
         this.soundPlayer = soundPlayer;
-        spm = new SharedPreferencesManager(context);
+        SharedPreferencesManager spm = new SharedPreferencesManager(context);
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), spm.getPlayerImage());
         bitmap = Bitmap.createScaledBitmap(
@@ -93,13 +88,11 @@ public class Player {
     */
     public void fire(boolean tripleShotMode) {
         if (tripleShotMode) {
-            lasers.add(new Laser(context, screenSizeX, screenSizeY,
-                    (int) (x + bitmap.getWidth() / 2), (int) y, bitmap));
-            lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
-            lasers.add(new Laser(context, screenSizeX, screenSizeY,
-                    (int) (x - bitmap.getWidth() / 2), (int) y, bitmap));
+            lasers.add(new Laser(context, (int) (x + bitmap.getWidth() / 2), (int) y, bitmap));
+            lasers.add(new Laser(context, (int) x, (int) y, bitmap));
+            lasers.add(new Laser(context, (int) (x - bitmap.getWidth() / 2), (int) y, bitmap));
         } else {
-            lasers.add(new Laser(context, screenSizeX, screenSizeY, (int) x, (int) y, bitmap));
+            lasers.add(new Laser(context, (int) x, (int) y, bitmap));
         }
         soundPlayer.playLaser();
     }

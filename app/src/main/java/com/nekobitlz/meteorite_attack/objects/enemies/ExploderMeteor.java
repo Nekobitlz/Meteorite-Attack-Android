@@ -22,7 +22,6 @@ public class ExploderMeteor extends Enemy {
 
     private int x;
     private int y;
-    private int maxX;
 
     private int speed;
     private int health;
@@ -49,7 +48,7 @@ public class ExploderMeteor extends Enemy {
         //Set random speed
         speed = random.nextInt(3) + 1;
 
-        maxX = screenSizeX - bitmap.getWidth();
+        int maxX = screenSizeX - bitmap.getWidth();
 
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();

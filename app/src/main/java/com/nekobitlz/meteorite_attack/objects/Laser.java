@@ -18,16 +18,11 @@ public class Laser {
 
     private int x;
     private int y;
-    private int screenSizeX;
-    private int screenSizeY;
 
     /*
         Laser initialization
     */
-    public Laser(Context context, int screenSizeX, int screenSizeY, int playerX,
-                 int playerY, Bitmap playerBitmap) {
-        this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
+    public Laser(Context context, int playerX, int playerY, Bitmap playerBitmap) {
         spm = new SharedPreferencesManager(context);
 
         //Set laser image

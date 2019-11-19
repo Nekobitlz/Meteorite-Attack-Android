@@ -22,13 +22,10 @@ public class Meteorite extends Enemy {
 
     private int x;
     private int y;
-    private int maxX;
 
-    private int meteors[];
     private int speed;
     private int health;
     private int value; //"value" coins are awarded for killing
-    private int size;
     private boolean isDestroyed;
 
     /*
@@ -40,12 +37,12 @@ public class Meteorite extends Enemy {
         isDestroyed = false;
         health = getRandomHealth(level);
         value = health;
-        meteors = new int[] { R.drawable.meteor_1, R.drawable.meteor_2, R.drawable.meteor_3, R.drawable.meteor_4 };
+        int[] meteors = new int[]{R.drawable.meteor_1, R.drawable.meteor_2, R.drawable.meteor_3, R.drawable.meteor_4};
 
         //Set random meteor image
         Random random = new Random();
 
-        size = random.nextInt(5) + 2;
+        int size = random.nextInt(5) + 2;
         bitmap = BitmapFactory.decodeResource(context.getResources(), meteors[random.nextInt(4)]);
         bitmap = Bitmap.createScaledBitmap(
                 bitmap, bitmap.getWidth() * size / 5, bitmap.getHeight() * size / 5, false);
@@ -53,7 +50,7 @@ public class Meteorite extends Enemy {
         //Set random speed
         speed = random.nextInt(3) + 1;
 
-        maxX = screenSizeX - bitmap.getWidth();
+        int maxX = screenSizeX - bitmap.getWidth();
 
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();

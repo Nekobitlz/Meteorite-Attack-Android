@@ -16,29 +16,26 @@ public class Star {
 
     private int x;
     private int y;
-    private int maxX;
-    private int screenSizeX;
-    private int screenSizeY;
 
     private int speed;
-    private int[] stars = new int[] { R.drawable.star_1, R.drawable.star_2, R.drawable.star_3 }; //TODO(): More stars
 
     /*
         Star initialization
     */
     public Star(Context context, int screenSizeX, int screenSizeY, boolean randomY){
-        this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
 
         Random random = new Random();
         float scale = (float)(random.nextInt(3) + 1) / 5;
 
         //Set random image of star
+        //TODO(): More stars
+        int[] stars = new int[]{R.drawable.star_1, R.drawable.star_2, R.drawable.star_3};
+
         bitmap = BitmapFactory.decodeResource(context.getResources(), stars[random.nextInt(3)]);
         bitmap = Bitmap.createScaledBitmap(
                 bitmap, (int)(bitmap.getWidth() * scale), (int)(bitmap.getHeight() * scale), false);
 
-        maxX = screenSizeX - bitmap.getWidth();
+        int maxX = screenSizeX - bitmap.getWidth();
         x = random.nextInt(maxX);
 
         speed = random.nextInt(1) + 1;

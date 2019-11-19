@@ -73,7 +73,6 @@ public class GameView extends SurfaceView implements Runnable {
     private SharedPreferencesManager spm;
 
     private long beforeTime;
-    private long sleepTime;
     private long delay = 30;
     private GameOverFragment gameOverFragment;
 
@@ -204,7 +203,7 @@ public class GameView extends SurfaceView implements Runnable {
             int pick = new Random().nextInt(BonusType.values().length);
             BonusType bonusType = BonusType.values()[pick];
 
-            bonuses.add(new Bonus(getContext(), screenSizeX, screenSizeY, soundPlayer, bonusType));
+            bonuses.add(new Bonus(getContext(), screenSizeX, screenSizeY, bonusType));
         }
 
         //Limited bonus time
@@ -284,7 +283,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             //If enemy collides with laser -> enemy gets damage
             for (Laser l : player.getLasers()) {
-                if (Rect.intersects(enemy.getCollision(), l.getCollision())  && !enemy.isDestroyed()) {
+                if (Rect.intersects(enemy.getCollision(), l.getCollision()) && !enemy.isDestroyed()) {
                     enemy.hit();
                     l.destroy();
                 }
@@ -296,7 +295,7 @@ public class GameView extends SurfaceView implements Runnable {
         Updates bonuses state
     */
     private void bonusUpdate(ArrayList<Bonus> bonuses) {
-        for (Bonus bonus: bonuses) {
+        for (Bonus bonus : bonuses) {
             bonus.update();
 
             if (Rect.intersects(bonus.getCollision(), player.getCollision())) {
@@ -394,7 +393,7 @@ public class GameView extends SurfaceView implements Runnable {
           Time required to sleep to keep game consistent
           This allows game to render smoothly
         */
-        sleepTime = delay - ((System.nanoTime() - beforeTime) / 1000000L);
+        long sleepTime = delay - ((System.nanoTime() - beforeTime) / 1000000L);
 
         try {
             if (fps == 10000) {

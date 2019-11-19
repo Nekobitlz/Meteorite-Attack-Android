@@ -23,12 +23,10 @@ public class EnemyShip extends Enemy {
 
     private int x;
     private int y;
-    private int maxX;
 
     private Rect collision;
     private Direction currentDirection;
 
-    private int enemyShips[]; //list of enemy ships sprites
     private int health;
     private int speed;
     private int value; //"value" coins are awarded for killing
@@ -43,7 +41,8 @@ public class EnemyShip extends Enemy {
         isDestroyed = false;
         health = getRandomHealth(level);
         value = health;
-        enemyShips = new int[] { R.drawable.enemy_black_1, R.drawable.enemy_black_2, R.drawable.enemy_black_3 };
+        //list of enemy ships sprites
+        int[] enemyShips = new int[]{R.drawable.enemy_black_1, R.drawable.enemy_black_2, R.drawable.enemy_black_3};
 
         //Set random image of enemy ship
         Random random = new Random();
@@ -53,7 +52,7 @@ public class EnemyShip extends Enemy {
 
         speed = random.nextInt(3) + 1;
 
-        maxX = screenSizeX - bitmap.getWidth();
+        int maxX = screenSizeX - bitmap.getWidth();
 
         x = random.nextInt(maxX);
         y = -bitmap.getHeight();
