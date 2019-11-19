@@ -28,13 +28,10 @@ import static com.nekobitlz.meteorite_attack.views.GameView.SCORE;
      Draws all objects and game states
 */
 public class Drawer {
-    private int screenSizeX;
-    private int screenSizeY;
 
     private Player player;
     private Paint paint;
     private Paint alphaPaint;
-    private SharedPreferencesManager spm;
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
     private Bitmap coinBitmap;
@@ -48,16 +45,12 @@ public class Drawer {
     /*
         Drawer initialization
     */
-    public Drawer(Context context, int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
-                  SurfaceHolder surfaceHolder, SharedPreferencesManager spm) {
+    public Drawer(Context context,
+                  SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
-        this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
-        this.paint = paint;
-        this.spm = spm;
-        this.canvas = canvas;
 
         typeface = ResourcesCompat.getFont(context, R.font.iceberg_regular);
+        paint = new Paint();
         paint.setTypeface(typeface);
 
         alphaPaint = new Paint();
@@ -69,14 +62,11 @@ public class Drawer {
                 coinBitmap, coinBitmap.getWidth() / 10, coinBitmap.getHeight() / 10, false);
     }
 
-    public Drawer(Context context, int screenSizeX, int screenSizeY, Canvas canvas, Paint paint,
-                 SurfaceHolder surfaceHolder, AnimatedBackground animatedBackground) {
+    public Drawer(SurfaceHolder surfaceHolder, AnimatedBackground animatedBackground) {
         this.surfaceHolder = surfaceHolder;
-        this.screenSizeX = screenSizeX;
-        this.screenSizeY = screenSizeY;
-        this.paint = paint;
-        this.canvas = canvas;
         this.background = animatedBackground;
+
+        paint = new Paint();
     }
 
     /*
@@ -143,7 +133,6 @@ public class Drawer {
     /*
         Draws enemies health
     */
-    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void drawHealth(Enemy enemy, int x, int y, Paint paint) {
         if (!enemy.isDestroyed()) {
             //Shift health drawing point, it is necessary so that

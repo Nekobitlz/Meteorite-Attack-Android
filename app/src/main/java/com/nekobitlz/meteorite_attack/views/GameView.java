@@ -2,8 +2,6 @@ package com.nekobitlz.meteorite_attack.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 import android.support.v4.app.FragmentManager;
@@ -47,9 +45,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     private Context context;
     private Player player;
-    private Paint paint;
-    private Canvas canvas;
-    private SurfaceHolder surfaceHolder;
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Bonus> bonuses;
@@ -94,10 +89,8 @@ public class GameView extends SurfaceView implements Runnable {
         spm = new SharedPreferencesManager(context);
 
         soundPlayer = new SoundPlayer(context);
-        paint = new Paint();
-        surfaceHolder = getHolder();
 
-        drawer = new Drawer(context, screenSizeX, screenSizeY, canvas, paint, surfaceHolder, spm);
+        drawer = new Drawer(context, getHolder());
         initDrawer();
 
         reset();
