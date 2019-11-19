@@ -20,4 +20,10 @@
     <dimen name="font_main_menu_play_btn_40">40sp</dimen>
     <dimen name="main_menu_exit_btn">175dp</dimen>
     <dimen name="font_main_menu_exit_btn_20">20sp</dimen>
+    <dimen name="high_score_container_padding_48">48dp</dimen>
+    <dimen name="fragment_high_score_object_size_50">50dp</dimen>
+    <dimen name="fragment_high_score_border_height_40">40dp</dimen>
+
+    <!--back_btn_padding = 16 + 16, back_btn_size = 36 => fragment_title_80 - 32 - 36 = 12 -->
+    <dimen name="fragment_high_score_title_margin_12">12dp</dimen>
 </resources>

@@ -1,250 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:background="@drawable/menu_background">
 
     <ImageView
-        android:id="@+id/back"
+        android:id="@+id/iv_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_gravity="start"
+        android:layout_margin="@dimen/spacing_medium_16"
+        android:contentDescription="@string/back_btn_content_description"
         android:src="@drawable/arrow_left_circle" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_high_score"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="@dimen/fragment_high_score_title_margin_12"
+        android:text="@string/fragment_high_score_title"
+        android:textColor="@color/colorMenuText"
+        android:textSize="@dimen/font_fragment_title_32"
+        app:fontFamily="@font/iceberg_regular" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium_16"
+        android:background="@color/defaultBackgroundColor"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/high_score_container_padding_48"
+        android:paddingTop="@dimen/spacing_medium_16"
+        android:paddingRight="@dimen/high_score_container_padding_48"
+        android:paddingBottom="@dimen/spacing_medium_16">
 
-        <TextView
-            android:id="@+id/high_score"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/high_score"
-            android:textColor="@android:color/white"
-            android:textSize="32sp"
-            app:fontFamily="@font/iceberg_regular" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceberg_regular"
+                android:text="@string/fragment_high_score_score"
+                android:textSize="@dimen/font_default_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_score_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny_4"
+                android:layout_marginLeft="@dimen/spacing_tiny_4"
+                android:layout_weight="1"
+                android:fontFamily="@font/iceberg_regular"
+                android:textSize="@dimen/font_default_18"
+                android:textStyle="bold"
+                tools:text="100" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/null_high_score"
+            android:id="@+id/tv_meteor_count"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="@dimen/fragment_high_score_object_size_50"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/spacing_small_8"
+            android:layout_marginLeft="@dimen/spacing_small_8"
+            android:layout_marginTop="@dimen/spacing_small_8"
+            android:drawableStart="@drawable/ic_custom_meteor"
+            android:drawableLeft="@drawable/ic_custom_meteor"
+            android:drawablePadding="@dimen/spacing_small_8"
             android:fontFamily="@font/iceberg_regular"
-            android:text="@string/new_high_score"
-            android:textColor="@android:color/white" />
+            android:gravity="center_vertical"
+            android:textSize="@dimen/font_default_18"
+            android:textStyle="bold"
+            tools:text="x100" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/high_score_container"
+        <TextView
+            android:id="@+id/tv_enemy_ship_count"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingLeft="48dp"
-            android:paddingTop="16dp"
-            android:paddingRight="48dp"
-            android:paddingBottom="16dp">
+            android:layout_height="@dimen/fragment_high_score_object_size_50"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/spacing_small_8"
+            android:layout_marginLeft="@dimen/spacing_small_8"
+            android:layout_marginTop="@dimen/spacing_small_8"
+            android:drawableStart="@drawable/ic_custom_enemy_ship"
+            android:drawableLeft="@drawable/ic_custom_enemy_ship"
+            android:drawablePadding="@dimen/spacing_small_8"
+            android:fontFamily="@font/iceberg_regular"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/font_default_18"
+            android:textStyle="bold"
+            tools:text="x100" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/tv_exploder_count"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fragment_high_score_object_size_50"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/spacing_small_8"
+            android:layout_marginLeft="@dimen/spacing_small_8"
+            android:layout_marginTop="@dimen/spacing_small_8"
+            android:drawableStart="@drawable/ic_custom_exploder"
+            android:drawableLeft="@drawable/ic_custom_exploder"
+            android:drawablePadding="@dimen/spacing_small_8"
+            android:fontFamily="@font/iceberg_regular"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/font_default_18"
+            android:textStyle="bold"
+            tools:text="x100" />
 
-                <TextView
-                    android:id="@+id/score_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/iceberg_regular"
-                    android:text="@string/score"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/score_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/iceberg_regular"
-                    android:text="100"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/meteor_image"
-                    app:layout_constraintStart_toEndOf="@+id/meteor_image"
-                    app:layout_constraintTop_toTopOf="@+id/meteor_image" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintDimensionRatio="w,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-                <ImageView
-                    android:id="@+id/meteor_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/meteor_4"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-                    app:layout_constraintHorizontal_bias="0.3"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-                <TextView
-                    android:id="@+id/meteor_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:fontFamily="@font/iceberg_regular"
-                    android:text="x100"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/meteor_image"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/meteor_image"
-                    app:layout_constraintTop_toTopOf="@+id/meteor_image" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-                <ImageView
-                    android:id="@+id/enemy_ship_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/enemy_black_1"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-                    app:layout_constraintHorizontal_bias="0.3"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                    tools:layout_editor_absoluteX="7dp"
-                    tools:layout_editor_absoluteY="155dp" />
-
-                <TextView
-                    android:id="@+id/enemy_ship_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:fontFamily="@font/iceberg_regular"
-                    android:text="x100"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/enemy_ship_image"
-                    app:layout_constraintStart_toEndOf="@+id/enemy_ship_image"
-                    app:layout_constraintTop_toTopOf="@+id/enemy_ship_image" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-                <ImageView
-                    android:id="@+id/exploder_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/meteor_grey_big_3"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-                    app:layout_constraintHorizontal_bias="0.3"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-                <TextView
-                    android:id="@+id/exploder_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:fontFamily="@font/iceberg_regular"
-                    android:text="x100"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout5"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-                <ImageView
-                    android:id="@+id/border_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/meteor_brown_big_1"
-                    app:layout_constraintEnd_toEndOf="@+id/exploder_image"
-                    app:layout_constraintStart_toStartOf="@+id/exploder_image"
-                    app:layout_constraintTop_toBottomOf="@+id/exploder_image" />
-
-                <TextView
-                    android:id="@+id/border_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/iceberg_regular"
-                    android:text="x100"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/border_image"
-                    app:layout_constraintStart_toEndOf="@+id/border_image"
-                    app:layout_constraintTop_toTopOf="@+id/border_image" />
-            </LinearLayout>
-        </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_border_count"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fragment_high_score_object_size_50"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/spacing_small_8"
+            android:layout_marginLeft="@dimen/spacing_small_8"
+            android:layout_marginTop="@dimen/spacing_small_8"
+            android:drawableStart="@drawable/ic_custom_border"
+            android:drawableLeft="@drawable/ic_custom_border"
+            android:drawablePadding="@dimen/spacing_small_8"
+            android:fontFamily="@font/iceberg_regular"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/font_default_18"
+            android:textStyle="bold"
+            tools:text="x100" />
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
