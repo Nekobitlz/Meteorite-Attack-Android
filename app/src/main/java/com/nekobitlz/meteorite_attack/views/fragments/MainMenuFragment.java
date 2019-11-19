@@ -34,7 +34,6 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     private TextView money;
 
     private FragmentManager fragmentManager;
-
     private SharedPreferencesManager spm;
 
     public static MainMenuFragment newInstance() {
@@ -44,37 +43,18 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_menu, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        play = view.findViewById(R.id.play);
-        highScore = view.findViewById(R.id.high_score);
-        exit = view.findViewById(R.id.exit);
-        money = view.findViewById(R.id.money);
-        shop = view.findViewById(R.id.shop);
-        settings = view.findViewById(R.id.settings);
-
-        play.setOnClickListener(this);
-        shop.setOnClickListener(this);
-        highScore.setOnClickListener(this);
-        exit.setOnClickListener(this);
-        settings.setOnClickListener(this);
-
-        fragmentManager = getActivity().getSupportFragmentManager();
-
-        ClickShrinkEffect.applyClickShrink(play);
-        ClickShrinkEffect.applyClickShrink(shop);
-        ClickShrinkEffect.applyClickShrink(highScore);
-        ClickShrinkEffect.applyClickShrink(settings);
-        ClickShrinkEffect.applyClickShrink(exit);
-
+        fragmentManager = getActivity() != null ? getActivity().getSupportFragmentManager() : null;
         spm = new SharedPreferencesManager(getContext());
-        loadMoney();
+
+        initViews(view);
+        initOnClickListeners();
+        initClickShrinkEffect();
     }
 
     @Override
@@ -83,60 +63,75 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         loadMoney();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_play: {
+                if (getActivity() != null) ((MainMenuActivity) getActivity()).setToOtherActivity(true);
+                startActivity(new Intent(getContext(), MainActivity.class));
+            }
+            break;
+
+            case R.id.ib_shop: {
+                ShopFragment fragment = ShopFragment.newInstance();
+                replaceFragment(fragment);
+            }
+            break;
+
+            case R.id.ib_high_score: {
+                HighScoreFragment fragment = HighScoreFragment.newInstance();
+                replaceFragment(fragment);
+            }
+            break;
+
+            case R.id.ib_settings: {
+                SettingsFragment fragment = SettingsFragment.newInstance();
+                replaceFragment(fragment);
+            }
+            break;
+
+            case R.id.btn_exit: {
+                if (getActivity() != null) getActivity().finish();
+            }
+            break;
+        }
+    }
+
+    private void initViews(@NonNull View view) {
+        play = view.findViewById(R.id.btn_play);
+        highScore = view.findViewById(R.id.ib_high_score);
+        exit = view.findViewById(R.id.btn_exit);
+        money = view.findViewById(R.id.tv_money);
+        shop = view.findViewById(R.id.ib_shop);
+        settings = view.findViewById(R.id.ib_settings);
+    }
+
+    private void initOnClickListeners() {
+        play.setOnClickListener(this);
+        shop.setOnClickListener(this);
+        highScore.setOnClickListener(this);
+        exit.setOnClickListener(this);
+        settings.setOnClickListener(this);
+    }
+
+    private void initClickShrinkEffect() {
+        ClickShrinkEffect.applyClickShrink(play);
+        ClickShrinkEffect.applyClickShrink(shop);
+        ClickShrinkEffect.applyClickShrink(highScore);
+        ClickShrinkEffect.applyClickShrink(settings);
+        ClickShrinkEffect.applyClickShrink(exit);
+    }
+
     public void loadMoney() {
         String moneyText = String.valueOf(spm.getMoney());
         money.setText(formatMoney(moneyText));
     }
 
-    /*
-           Reads views clicks
-    */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.play: {
-                ((MainMenuActivity) getActivity()).setToOtherActivity(true);
-                startActivity(new Intent(getContext(), MainActivity.class));
-            }
-            break;
-
-            case R.id.shop: {
-                ShopFragment fragment = ShopFragment.newInstance();
-
-                fragmentManager.beginTransaction()
-                        .addToBackStack(BACK_STACK)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.content, fragment)
-                        .commit();
-            }
-            break;
-
-            case R.id.high_score: {
-                HighScoreFragment fragment = HighScoreFragment.newInstance();
-
-                fragmentManager.beginTransaction()
-                        .addToBackStack(BACK_STACK)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.content, fragment)
-                        .commit();
-            }
-            break;
-
-            case R.id.settings: {
-                SettingsFragment fragment = SettingsFragment.newInstance();
-
-                fragmentManager.beginTransaction()
-                        .addToBackStack(BACK_STACK)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.content, fragment)
-                        .commit();
-            }
-            break;
-
-            case R.id.exit: {
-                getActivity().finish();
-            }
-            break;
-        }
+    private void replaceFragment(Fragment fragment) {
+        fragmentManager.beginTransaction()
+                .addToBackStack(BACK_STACK)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.content, fragment)
+                .commit();
     }
 }
