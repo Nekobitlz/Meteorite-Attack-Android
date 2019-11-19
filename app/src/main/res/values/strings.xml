@@ -1,30 +1,32 @@
 <resources>
     <string name="app_name">Meteorite Attack</string>
     <string name="title_activity_main_menu">Meteorite Attack</string>
-    <string name="status_used">USED</string>
-    <string name="status_use">USE</string>
-    <string name="status_buy">BUY</string>
-    <string name="button_play">PLAY</string>
-    <string name="button_shop">SHOP</string>
-    <string name="button_exit">EXIT</string>
+
+    <string name="fragment_main_menu_play_btn">PLAY</string>
+    <string name="fragment_main_menu_shop_btn">SHOP</string>
+    <string name="fragment_main_menu_exit_btn">EXIT</string>
+
     <string name="fragment_high_score_title">HIGH SCORE</string>
-    <string name="new_high_score">New High Score</string>
     <string name="fragment_high_score_score">SCORE:</string>
-    <string name="money">MONEY:</string>
+
     <string name="fragment_game_over_title">Game Over</string>
+    <string name="fragment_game_over_meteor_destroyed">METEOR DESTROYED:</string>
+    <string name="fragment_game_over_enemy_ship_destroyed">ENEMY SHIP DESTROYED:</string>
+    <string name="fragment_game_over_exploder_destroyed">EXPLODER DESTROYED:</string>
+    <string name="fragment_game_over_border_destroyed">BORDER DESTROYED:</string>
 
     <string name="fragment_shop_title">SHOP</string>
     <string name="shop_item_level">LEVEL</string>
     <string name="shop_item_max_health">Max health</string>
     <string name="shop_item_bullet_damage">Bullet damage</string>
     <string name="shop_item_score_multiplier">Score multiplier</string>
-    <string name="back_btn_content_description">Return to previous screen</string>
 
     <string name="fragment_settings_title">SETTINGS</string>
     <string name="fragment_settings_sounds_on_off">SOUNDS ON/OFF</string>
     <string name="fragment_settings_effects_volume">EFFECTS VOLUME</string>
     <string name="fragment_settings_music_volume">MUSIC VOLUME</string>
 
+    <string name="back_btn_content_description">Return to previous screen</string>
     <string name="health_image_content_description">HEALTH</string>
     <string name="ship_image_content_description">Ship image</string>
     <string name="bullet_image_content_description">Bullet damage</string>
@@ -33,9 +35,5 @@
     <string name="main_menu_to_shop_content_description">To shop activity</string>
     <string name="main_menu_to_high_score_content_description">To high score activity</string>
     <string name="main_menu_to_settings_content_description">To settings activity</string>
-    <string name="fragment_game_over_meteor_destroyed">METEOR DESTROYED:</string>
-    <string name="fragment_game_over_enemy_ship_destroyed">ENEMY SHIP DESTROYED:</string>
-    <string name="fragment_game_over_exploder_destroyed">EXPLODER DESTROYED:</string>
-    <string name="fragment_game_over_border_destroyed">BORDER DESTROYED:</string>
 
 </resources>
