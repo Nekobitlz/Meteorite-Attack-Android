@@ -3,7 +3,7 @@
 <img src="/images/menu_logo.png">
 </p>
 
-[LATEST VERSION APK FILE](https://github.com/Nekobitlz/Meteorite-Attack-Android/blob/master/apks/Meteorite_Attack_1.06.apk)
+[LATEST VERSION APK FILE](https://github.com/Nekobitlz/Meteorite-Attack-Android/blob/master/apks/Meteorite_Attack_1.06.apk)  |  [YOUTUBE GAMEPLAY PREVIEW](http://www.youtube.com/watch?feature=player_embedded&v=ogEbqUpPv1Y)
 
 ## Technology stack
 The source code of the game was written in Java. Canvas and Bitmap used to draw on SurfaceView. All data is saved in the SharedPreferences. Runnable was used as streams. To work with the background music used MediaPlayer with the Service and the SoundPool. For testing, Espresso and JUnit were used.
