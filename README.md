@@ -68,12 +68,12 @@ The source code of the game was written in Java. Canvas and Bitmap used to draw 
 but increases damage by 2 times
 
 ## Setup for Developers
-    1. Make sure you have downloaded the latest version of [Android Studio](https://developer.android.com/sdk/index.html). It works on Linux, Windows and Mac. Download the correct version for your OS.
-    2. Go to [the project repo](https://github.com/Nekobitlz/Meteorite-Attack-Android) and fork it by clicking "Fork"
-    3. If you are working on Windows, download [Git Bash for Windows](https://git-for-windows.github.io/) to get a full Unix bash with Git functionality
-    4. Clone the repo to your desktop `git clone https://github.com/YOUR_USERNAME/Meteorite-Attack-Android.git`
-    5. Open the project with Android Studio
-    6. Build a 'app' application which is inside the base directory.
+1. Make sure you have downloaded the latest version of [Android Studio](https://developer.android.com/sdk/index.html). It works on Linux, Windows and Mac. Download the correct version for your OS.
+2. Go to [the project repo](https://github.com/Nekobitlz/Meteorite-Attack-Android) and fork it by clicking "Fork"
+3. If you are working on Windows, download [Git Bash for Windows](https://git-for-windows.github.io/) to get a full Unix bash with Git functionality
+4. Clone the repo to your desktop `git clone https://github.com/YOUR_USERNAME/Meteorite-Attack-Android.git`
+5. Open the project with Android Studio
+6. Build a 'app' application which is inside the base directory.
 
 ## License
 
