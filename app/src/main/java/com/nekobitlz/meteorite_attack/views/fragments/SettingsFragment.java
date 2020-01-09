@@ -48,7 +48,7 @@ public class SettingsFragment extends Fragment {
         initViews(view);
         initProgress();
 
-        back.setOnClickListener(closeActivity());
+        back.setOnClickListener(closeFragment());
         effectsVolume.setOnSeekBarChangeListener(saveEffectsVolume());
         musicVolume.setOnSeekBarChangeListener(saveMusicVolume());
         soundStatus.setOnCheckedChangeListener(handleOnChecked());
@@ -68,7 +68,7 @@ public class SettingsFragment extends Fragment {
         soundStatus.setChecked(spm.getSoundStatus());
     }
 
-    private View.OnClickListener closeActivity() {
+    private View.OnClickListener closeFragment() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
