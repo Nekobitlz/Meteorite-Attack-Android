@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import com.nekobitlz.meteorite_attack.views.GameView;
 
 /*
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;
     private long backPressed;
+    public static MainMenuActivity.BackgroundSound backgroundSound;
+    private boolean isStopped = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         Point point = new Point();
         display.getSize(point);
 
+        backgroundSound = MainMenuActivity.backgroundSound;
+
         gameView = new GameView(this, point.x, point.y);
         setContentView(gameView);
     }
@@ -42,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         gameView.resume();
+
+        if (isStopped) {
+            isStopped = false;
+
+            if (backgroundSound != null) {
+                backgroundSound.getPlayer().start();
+            }
+        }
     }
 
     /*
@@ -51,12 +64,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
+        isStopped = true;
+
+        if (backgroundSound != null && backgroundSound.getPlayer() != null) {
+            backgroundSound.getPlayer().pause();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         gameView.getSoundPlayer().release();
+        if (isStopped) {
+            isStopped = false;
+
+            if (backgroundSound != null) {
+                backgroundSound.getPlayer().start();
+            }
+        }
     }
 
     /*

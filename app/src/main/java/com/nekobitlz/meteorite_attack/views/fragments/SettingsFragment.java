@@ -14,7 +14,6 @@ import android.widget.SeekBar;
 
 import com.nekobitlz.meteorite_attack.R;
 import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
-import com.nekobitlz.meteorite_attack.services.MusicService;
 import com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity;
 
 public class SettingsFragment extends Fragment {
@@ -25,7 +24,7 @@ public class SettingsFragment extends Fragment {
     private ImageView back;
 
     private SharedPreferencesManager spm;
-    private MusicService musicService;
+    private MainMenuActivity.BackgroundSound backgroundSound;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -43,7 +42,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         spm = new SharedPreferencesManager(getContext());
-        musicService = getActivity() == null ? null : ((MainMenuActivity) getActivity()).getMusicService();
+        backgroundSound = MainMenuActivity.backgroundSound;
 
         initViews(view);
         initProgress();
@@ -104,7 +103,7 @@ public class SettingsFragment extends Fragment {
                 //Progress == volume level
                 //        float volume = (float) (1 - (Math.log(100 - progress) / Math.log(100)));
                 spm.saveSound(spm.getSoundStatus(), spm.getEffectsVolume(), progress);
-                musicService.setVolume(progress);
+                backgroundSound.setVolume(progress);
             }
 
             @Override
@@ -125,10 +124,10 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     spm.saveSound(true, spm.getEffectsVolume(), spm.getMusicVolume());
-                    musicService.setEnabled(true);
+                    backgroundSound.setEnabled(true);
                 } else {
                     spm.saveSound(false, spm.getEffectsVolume(), spm.getMusicVolume());
-                    musicService.setEnabled(false);
+                    backgroundSound.setEnabled(false);
                 }
             }
         };

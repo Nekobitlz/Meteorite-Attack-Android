@@ -1,12 +1,10 @@
 package com.nekobitlz.meteorite_attack.views.activities;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,27 +13,18 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.nekobitlz.meteorite_attack.R;
-import com.nekobitlz.meteorite_attack.services.MusicService;
+import com.nekobitlz.meteorite_attack.options.SharedPreferencesManager;
 import com.nekobitlz.meteorite_attack.views.StarsView;
 import com.nekobitlz.meteorite_attack.views.fragments.MainMenuFragment;
 
+import java.lang.ref.WeakReference;
+
 public class MainMenuActivity extends AppCompatActivity {
 
+    public static BackgroundSound backgroundSound;
+    private boolean isStopped = false;
     private boolean toOtherActivity;
     private StarsView starsView;
-    private boolean isBound = false;
-    private MusicService musicService;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            musicService = ((MusicService.ServiceBinder) iBinder).getService();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            musicService = null;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +36,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Make the display always turn on if the activity is active
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        doBindService();
-        startService();
 
         MainMenuFragment fragment = MainMenuFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -63,60 +49,131 @@ public class MainMenuActivity extends AppCompatActivity {
         starsView = new StarsView(this, point.x, point.y);
         content.addView(starsView);
 
+        backgroundSound = new BackgroundSound(getApplicationContext());
+        backgroundSound.execute();
+
         fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .add(R.id.content, fragment)
                 .commit();
     }
 
-    private void doBindService() {
-        bindService(new Intent(this, MusicService.class),
-                serviceConnection, Context.BIND_AUTO_CREATE);
-
-        isBound = true;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        starsView.resume();
     }
 
-    private void startService() {
-        Intent music = new Intent();
-        music.setClass(this, MusicService.class);
-        startService(music);
-    }
+    @Override
+    public void onStart() {
+        super.onStart();
 
-    private void doUnbindService() {
-        if (isBound) {
-            unbindService(serviceConnection);
-            isBound = false;
+        if (toOtherActivity) {
+            toOtherActivity = false;
+        }
+
+        if (isStopped) {
+            isStopped = false;
+
+            if (backgroundSound != null) {
+                backgroundSound.getPlayer().start();
+            }
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        starsView.resume();
-        if (musicService != null && musicService.isEnabled() && !toOtherActivity) musicService.resumeMusic();
+    protected void onPause() {
+        super.onPause();
+        starsView.pause();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
 
-        starsView.pause();
-        if (musicService != null && !toOtherActivity && !musicService.isEnabled()) musicService.pauseMusic();
+        if (!toOtherActivity) {
+            isStopped = true;
+
+            if (backgroundSound != null && backgroundSound.getPlayer() != null) {
+                backgroundSound.getPlayer().pause();
+            }
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        musicService.stopMusic();
-        doUnbindService();
+        backgroundSound.releaseMP();
     }
 
     public void setToOtherActivity(boolean toOtherActivity) {
         this.toOtherActivity = toOtherActivity;
     }
 
-    public MusicService getMusicService() {
-        return musicService;
+    public static class BackgroundSound extends AsyncTask<Void, Void, Void> {
+
+        private WeakReference<Context> weakContext;
+        private SharedPreferencesManager spm;
+        private MediaPlayer player;
+        private float volume;
+        private boolean isEnabled;
+        private boolean isPlayerPlaying;
+
+        public BackgroundSound(Context context) {
+            weakContext = new WeakReference<>(context);
+            spm = new SharedPreferencesManager(weakContext.get());
+            volume = spm.getMusicVolume() / 100f;
+            isEnabled = spm.getSoundStatus();
+            isPlayerPlaying = true;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            player = MediaPlayer.create(weakContext.get(), R.raw.main_music);
+            player.setLooping(true);
+            player.start();
+
+            while (!isCancelled()) {
+                if (isEnabled) {
+                    if (isPlayerPlaying) {
+                        player.setVolume(volume, volume);
+                    } else {
+                        player.start();
+                        isPlayerPlaying = true;
+                    }
+                } else {
+                    player.pause();
+                    isPlayerPlaying = false;
+                }
+            }
+
+            releaseMP();
+
+            return null;
+        }
+
+        public void setVolume(int volume) {
+            this.volume = volume / 100f;
+        }
+
+        public void setEnabled(boolean enabled) {
+            isEnabled = enabled;
+        }
+
+        public void releaseMP() {
+            if (player != null) {
+                try {
+                    player.stop();
+                    player.release();
+                    player = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public MediaPlayer getPlayer() {
+            return player;
+        }
     }
 }

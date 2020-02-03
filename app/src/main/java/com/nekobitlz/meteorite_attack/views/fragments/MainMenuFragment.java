@@ -21,6 +21,7 @@ import com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity;
 import com.nekobitlz.meteorite_attack.views.custom.ClickShrinkEffect;
 
 import static com.nekobitlz.meteorite_attack.options.Utils.formatMoney;
+import static com.nekobitlz.meteorite_attack.views.activities.MainMenuActivity.backgroundSound;
 
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
@@ -67,7 +68,9 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_play: {
-                if (getActivity() != null) ((MainMenuActivity) getActivity()).setToOtherActivity(true);
+                if (getActivity() != null) {
+                    ((MainMenuActivity) getActivity()).setToOtherActivity(true);
+                }
                 startActivity(new Intent(getContext(), MainActivity.class));
             }
             break;
@@ -91,7 +94,12 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
             break;
 
             case R.id.btn_exit: {
-                if (getActivity() != null) getActivity().finish();
+                if (backgroundSound != null) {
+                    backgroundSound.releaseMP();
+                }
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
             }
             break;
         }
