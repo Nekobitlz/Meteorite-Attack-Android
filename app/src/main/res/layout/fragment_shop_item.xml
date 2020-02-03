@@ -185,7 +185,7 @@
         android:layout_marginTop="@dimen/spacing_medium_16"
         android:layout_marginEnd="@dimen/spacing_small_8"
         android:layout_marginRight="@dimen/spacing_small_8"
-        android:background="@drawable/custom_button_background"
+        android:background="@drawable/button_shadow"
         android:fontFamily="@font/iceberg_regular"
         android:textColor="@color/colorMenuText"
         app:layout_constraintEnd_toEndOf="@+id/iv_ship"
