@@ -3,6 +3,8 @@
 <img src="/images/menu_logo.png">
 </p>
 
+[![Android app on Google Play](http://ligi.de/img/play_badge.png)](https://play.google.com/store/apps/details?id=com.nekobitlz.meteorite_attack)
+
 [LATEST VERSION APK FILE](https://github.com/Nekobitlz/Meteorite-Attack-Android/blob/master/apks/Meteorite_Attack_1.06.apk)  |  [YOUTUBE GAMEPLAY PREVIEW](http://www.youtube.com/watch?feature=player_embedded&v=ogEbqUpPv1Y)
 
 ## Technology stack
